@@ -1,0 +1,29 @@
+{
+    "name": "kambo/httpmessage",
+    "description": "Kambo httpmessage a PSR-7 implementation",
+    "license": "MIT",
+    "type": "library",    
+    "keywords": ["http", "httpmessage", "PSR-7"],
+    "authors": [
+        {
+            "name": "Bohuslav Simek",
+            "email": "bohuslav@simek.si"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "psr/http-message": "*"
+    },
+    "provide": {
+        "psr/http-message-implementation": "1.0"
+    },    
+    "require-dev": {
+        "phpunit/phpunit": "4.6.10",
+        "mikey179/vfsStream": "~1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kambo\\HttpMessage\\": "src"
+        }
+    }
+}
