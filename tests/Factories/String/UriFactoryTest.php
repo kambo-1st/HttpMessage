@@ -25,7 +25,7 @@ class UriFactoryTest extends \PHPUnit_Framework_TestCase
             'http://user:password@test.com:1111/path/123?q=abc#test'
         );
 
-        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $uri);
+        $this->assertInstanceOf(Uri::class, $uri);
         $this->assertEquals('http', $uri->getScheme());
         $this->assertEquals('user:password', $uri->getUserInfo());
         $this->assertEquals('test.com', $uri->getHost());
