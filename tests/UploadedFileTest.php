@@ -114,7 +114,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
         vfsStream::newDirectory('target')->at($this->root);
         vfsStream::newFile('test.txt')->at($tempDir)->setContent($fileContent);
 
-        $uploadFileMock = $this->getMockBuilder('Kambo\HttpMessage\Utils\UploadFile')->getMock();
+        $uploadFileMock = $this->getMockBuilder(UploadFileUtils::class)->getMock();
         $uploadFileMock->method('is')->willReturn(true);
         $uploadFileMock->method('move')->will(
             $this->returnCallback(
@@ -150,7 +150,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
         vfsStream::newDirectory('target')->at($this->root);
         vfsStream::newFile('test.txt')->at($tempDir)->setContent($fileContent);
 
-        $uploadFileMock = $this->getMockBuilder('Kambo\HttpMessage\Utils\UploadFile')->getMock();
+        $uploadFileMock = $this->getMockBuilder(UploadFileUtils::class)->getMock();
         $uploadFileMock->method('is')->willReturn(true);
         $uploadFileMock->method('move')->will(
             $this->returnCallback(
@@ -186,7 +186,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
         vfsStream::newDirectory('target')->at($this->root);
         vfsStream::newFile('test.txt')->at($tempDir)->setContent($fileContent);
 
-        $uploadFileMock = $this->getMockBuilder('Kambo\HttpMessage\Utils\UploadFile')->getMock();
+        $uploadFileMock = $this->getMockBuilder(UploadFileUtils::class)->getMock();
         $uploadFileMock->method('is')->willReturn(true);
         $uploadFileMock->method('move')->willReturn(false);
 
@@ -216,7 +216,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
         vfsStream::newDirectory('target')->at($this->root);
         vfsStream::newFile('test.txt')->at($tempDir)->setContent($fileContent);
 
-        $uploadFileMock = $this->getMockBuilder('Kambo\HttpMessage\Utils\UploadFile')->getMock();
+        $uploadFileMock = $this->getMockBuilder(UploadFileUtils::class)->getMock();
         $uploadFileMock->method('is')->willReturn(true);
         $uploadFileMock->method('move')->will(
             $this->returnCallback(

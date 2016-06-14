@@ -525,7 +525,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $messageStub = new Message();
 
-        $reflectionClass    = new ReflectionClass('Kambo\HttpMessage\Message');
+        $reflectionClass    = new ReflectionClass(Message::class);
         $reflectionProperty = $reflectionClass->getProperty('protocolVersion');
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($messageStub, '1.0');
