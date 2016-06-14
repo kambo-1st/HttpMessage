@@ -104,7 +104,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $url           = 'http://user:password@test.com:1111/path/123?q=abc#test';
         $serverRequest = new Request('GET', $url);
 
-        $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $serverRequest->getUri());
         $this->assertEquals($url, (string)$serverRequest->getUri());
     }
 
@@ -122,10 +122,10 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $serverRequest = new Request('GET', $url);
         $newRequest    = $serverRequest->withUri(UriFactory::create($newUrl));
 
-        $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $serverRequest->getUri());
         $this->assertEquals($url, (string)$serverRequest->getUri());
 
-        $this->assertInstanceOf(Uri::class, $newRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $newRequest->getUri());
         $this->assertEquals($newUrl, (string)$newRequest->getUri());
     }
 
@@ -144,10 +144,10 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $serverRequest = new Request('GET', $url);
         $newRequest    = $serverRequest->withUri(UriFactory::create($newUrl), true);
 
-        $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $serverRequest->getUri());
         $this->assertEquals($url, (string)$serverRequest->getUri());
 
-        $this->assertInstanceOf(Uri::class, $newRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $newRequest->getUri());
         $this->assertEquals($newUrl, (string)$newRequest->getUri());
     }
 
@@ -167,10 +167,10 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $newRequest    = $serverRequest->withoutHeader('Host');
         $newRequest    = $newRequest->withUri(UriFactory::create($newUrl), true);
 
-        $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $serverRequest->getUri());
         $this->assertEquals($url, (string)$serverRequest->getUri());
 
-        $this->assertInstanceOf(Uri::class, $newRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $newRequest->getUri());
         $this->assertEquals($newUrl, (string)$newRequest->getUri());
 
         $this->assertEquals(['foo.com'], $newRequest->getHeader('Host'));

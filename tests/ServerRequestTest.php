@@ -176,7 +176,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
     {
         $serverRequest = $this->getEnviromentForTest();
 
-        $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $serverRequest->getUri());
     }
 
     /**
@@ -194,10 +194,10 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
         $serverRequest = $this->getEnviromentForTest();
         $newRequest    = $serverRequest->withUri(UriFactory::create($newUrl));
 
-        $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $serverRequest->getUri());
         $this->assertEquals($url, (string)$serverRequest->getUri());
 
-        $this->assertInstanceOf(Uri::class, $newRequest->getUri());
+        $this->assertInstanceOf('Kambo\HttpMessage\Uri', $newRequest->getUri());
         $this->assertEquals($newUrl, (string)$newRequest->getUri());
     }
 
