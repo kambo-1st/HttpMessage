@@ -30,6 +30,20 @@ trait RequestTrait
     private $requestTarget = null;
 
     /**
+     * Method of incoming request - GET, POST, DELETE, PUT or PATCH.
+     *
+     * @var string
+     */
+    protected $requestMethod;
+
+    /**
+     * Uri of incoming request
+     *
+     * @var Psr\Http\Message\UriInterface;
+     */
+    protected $uri;
+
+    /**
      * Retrieves the message's request target.
      *
      * Retrieves the message's request-target either as it will appear (for
@@ -122,11 +136,6 @@ trait RequestTrait
 
         return $clone;
     }
-    
-    /*private function _resolveRequestMethod() {
-        // todo add support for X-Http-Method-Override
-        return $this->_enviroment->getRequestMethod();
-    }*/
 
     /**
      * Retrieves the URI instance.
@@ -176,7 +185,7 @@ trait RequestTrait
      */
     public function withUri(UriInterface $uri, $preserveHost = false)
     {
-        $clone       = clone $this;
+        $clone      = clone $this;
         $clone->uri = $uri;
 
         if (!$preserveHost) {
@@ -192,6 +201,41 @@ trait RequestTrait
         return $clone;
     }
 
+    /**
+     * Checks if a header exists by the given case-insensitive name.
+     *
+     * @param string $name Case-insensitive header field name.
+     * @return bool Returns true if any header names match the given header
+     *     name using a case-insensitive string comparison. Returns false if
+     *     no matching header name is found in the message.
+     */
+    abstract public function hasHeader($name);
+
+    /**
+     * Retrieves a message header value by the given case-insensitive name.
+     *
+     * This method returns an array of all the header values of the given
+     * case-insensitive header name.
+     *
+     * If the header does not appear in the message, this method MUST return an
+     * empty array.
+     *
+     * @param string $name Case-insensitive header field name.
+     * @return string[] An array of string values as provided for the given
+     *    header. If the header does not appear in the message, this method MUST
+     *    return an empty array.
+     */
+    abstract public function getHeader($name);
+
+    /**
+     * Validate request method.
+     *
+     * @param string $method Case-sensitive request method.
+     *
+     * @return void
+     *
+     * @throws \InvalidArgumentException for invalid HTTP methods.
+     */
     protected function validateMethod($method)
     {
         $valid = [

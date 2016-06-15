@@ -71,12 +71,6 @@ class ServerRequest extends Message implements ServerRequestInterface
      */
     private $serverVariables;
 
-    /**
-     * Uri of incoming request
-     *
-     * @var Psr\Http\Message\UriInterface;
-     */
-    private $uri;
 
     /**
      * Deserialized query string arguments, if any.
@@ -100,13 +94,6 @@ class ServerRequest extends Message implements ServerRequestInterface
     private $attributes = [];
 
     /**
-     * Method of incoming request - GET, POST, DELETE, PUT or PATCH.
-     *
-     * @var string
-     */
-    private $requestMethod;
-
-    /**
      * Uploaded files of incoming request, if any.
      *
      * @var array
@@ -125,17 +112,16 @@ class ServerRequest extends Message implements ServerRequestInterface
      * Create new HTTP request.
      *
      * Adds a host header when none was provided and a host is defined in uri.
-     *
      * 
-     * @param UriInterface          $uri             The request URI object
-     * @param array|null            $cookies         The request cookies collection
-     * @param string                $requestMethod   The request method
-     * @param array                 $uploadedFiles   The request uploadedFiles collection
-     * @param HeadersInterface      $headers         The request headers collection
-     * @param StreamInterface|null  $body            The request body object
-     * @param array                 $serverVariables The server environment variables
-     * @param string                $protocol        The request version of the protocol
-     * @param array                 $attributes      The request attributs
+     * @param UriInterface                 $uri             The request URI object
+     * @param array|null                   $cookies         The request cookies collection
+     * @param string                       $requestMethod   The request method
+     * @param array                        $uploadFiles     The request uploadedFiles collection
+     * @param HeadersInterface             $headers         The request headers collection
+     * @param StreamInterface|string|null  $body            The request body object
+     * @param array                        $serverVariables The server environment variables
+     * @param string                       $protocol        The request version of the protocol
+     * @param array                        $attributes      The request attributs
      * 
      */
     public function __construct(
@@ -323,7 +309,6 @@ class ServerRequest extends Message implements ServerRequestInterface
     }
 
     /**
-     * XXXXX todo rewind *********
      * Return an instance with the specified body parameters.
      *
      * If the request Content-Type is either application/x-www-form-urlencoded

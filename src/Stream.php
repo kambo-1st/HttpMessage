@@ -37,7 +37,7 @@ class Stream implements StreamInterface
     /**
      * Metadata of file
      *
-     * @var array
+     * @var array|null
      */
     private $meta = null;
 

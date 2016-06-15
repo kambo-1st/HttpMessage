@@ -41,9 +41,9 @@ class Message implements MessageInterface
     protected $headers;
 
     /**
-     * Body object
+     * Body data
      *
-     * @var \Psr\Http\Message\StreamInterface
+     * @var StreamInterface|string|null
      */
     protected $body;
 

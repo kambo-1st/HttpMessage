@@ -63,23 +63,26 @@ class FilesFactory implements Factory
     private function parseFile($uploadedFile)
     {
         $item = [];
-        if (!is_array($uploadedFile['error'])) {
-            $item[] = new UploadedFile(
-                $uploadedFile['tmp_name'],
-                isset($uploadedFile['name']) ? $uploadedFile['name'] : null,
-                isset($uploadedFile['type']) ? $uploadedFile['type'] : null,
-                isset($uploadedFile['size']) ? $uploadedFile['size'] : null,
-                $uploadedFile['error']
-            );
-        } elseif (is_array($uploadedFile['error'])) {
-            foreach ($uploadedFile['error'] as $fieldIndex => $void) {
+
+        if (is_array($uploadedFile)) {
+            if (!is_array($uploadedFile['error'])) {
                 $item[] = new UploadedFile(
-                    $uploadedFile['tmp_name'][$fieldIndex],
-                    isset($uploadedFile['name']) ? $uploadedFile['name'][$fieldIndex] : null,
-                    isset($uploadedFile['type']) ? $uploadedFile['type'][$fieldIndex] : null,
-                    isset($uploadedFile['size']) ? $uploadedFile['size'][$fieldIndex] : null,
-                    $uploadedFile['error'][$fieldIndex]
+                    $uploadedFile['tmp_name'],
+                    isset($uploadedFile['name']) ? $uploadedFile['name'] : null,
+                    isset($uploadedFile['type']) ? $uploadedFile['type'] : null,
+                    isset($uploadedFile['size']) ? $uploadedFile['size'] : null,
+                    $uploadedFile['error']
                 );
+            } else {
+                foreach ($uploadedFile['error'] as $fieldIndex => $void) {
+                    $item[] = new UploadedFile(
+                        $uploadedFile['tmp_name'][$fieldIndex],
+                        isset($uploadedFile['name']) ? $uploadedFile['name'][$fieldIndex] : null,
+                        isset($uploadedFile['type']) ? $uploadedFile['type'][$fieldIndex] : null,
+                        isset($uploadedFile['size']) ? $uploadedFile['size'][$fieldIndex] : null,
+                        $uploadedFile['error'][$fieldIndex]
+                    );
+                }
             }
         }
 

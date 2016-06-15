@@ -25,7 +25,7 @@ class Headers
     /**
      * Header data
      *
-     * @var array
+     * @var array|null
      */
     private $data;
 

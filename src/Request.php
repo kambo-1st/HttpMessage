@@ -42,15 +42,26 @@ class Request extends Message implements RequestInterface
 {
     use RequestTrait;
 
-    private $uri;
-    private $requestMethod;
-
+    /**
+     * Create new outgoing HTTP request.
+     *
+     * Adds a host header when none was provided and a host is defined in uri.
+     *
+     * @param string                      $requestMethod The request method
+     * @param UriInterface|string         $uri           The request URI object
+     * @param HeadersInterface            $headers       The request headers collection
+     * @param StreamInterface|string|null $body          The request body object
+     * @param string                      $protocol      The request version of the protocol
+     *
+     * @throws \InvalidArgumentException if an unsupported argument type is
+     *     provided.
+     */
     public function __construct(
         $requestMethod,
         $uri,
         $headers = null,
         $body = null,
-        $protocolVersion = '1.1'
+        $protocol = '1.1'
     ) {
         if (is_string($uri)) {
             $this->uri = UriFactory::create($uri);
@@ -68,7 +79,7 @@ class Request extends Message implements RequestInterface
         $this->requestMethod   = $requestMethod;
         $this->headers         = $headers;
         $this->body            = $body;
-        $this->protocolVersion = $protocolVersion;
+        $this->protocolVersion = $protocol;
 
         if ($this->uri->getHost() !== '' && (!$this->hasHeader('Host') || $this->getHeader('Host') === null)) {
             $this->headers->set('Host', $this->uri->getHost());
