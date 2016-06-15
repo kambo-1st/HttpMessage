@@ -71,7 +71,7 @@ class FilesFactory implements Factory
                 isset($uploadedFile['size']) ? $uploadedFile['size'] : null,
                 $uploadedFile['error']
             );
-        } else {
+        } elseif (is_array($uploadedFile['error'])) {
             foreach ($uploadedFile['error'] as $fieldIndex => $void) {
                 $item[] = new UploadedFile(
                     $uploadedFile['tmp_name'][$fieldIndex],

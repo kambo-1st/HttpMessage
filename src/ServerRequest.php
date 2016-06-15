@@ -117,7 +117,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      * Parsed incoming request body - this value is filled 
      * when method getParsedBody or withParsedBody is called.
      *
-     * @var array
+     * @var array|null
      */
     private $parsedBody = null;
 
@@ -126,13 +126,17 @@ class ServerRequest extends Message implements ServerRequestInterface
      *
      * Adds a host header when none was provided and a host is defined in uri.
      *
-     * @param string           $method        The request method
-     * @param UriInterface     $uri           The request URI object
-     * @param HeadersInterface $headers       The request headers collection
-     * @param array            $cookies       The request cookies collection
-     * @param array            $serverParams  The server environment variables
-     * @param String           $body          The request body object
-     * @param array            $uploadedFiles The request uploadedFiles collection
+     * 
+     * @param UriInterface          $uri             The request URI object
+     * @param array|null            $cookies         The request cookies collection
+     * @param string                $requestMethod   The request method
+     * @param array                 $uploadedFiles   The request uploadedFiles collection
+     * @param HeadersInterface      $headers         The request headers collection
+     * @param StreamInterface|null  $body            The request body object
+     * @param array                 $serverVariables The server environment variables
+     * @param string                $protocolVersion The request version of the protocol
+     * @param array                 $attributes      The request attributs
+     * 
      */
     public function __construct(
         Uri $uri,

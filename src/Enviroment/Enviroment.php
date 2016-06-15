@@ -44,16 +44,14 @@ class Enviroment implements EnviromentInterface
     /**
      * Constructor
      *
-     * @param string $providerName 
-     * @param array  $server       An associative array containing information such as headers, paths, 
-     *                             and script locations, must have same structure as $_SERVER 
-     * @param array  $cookie       An associative array of variables, must have same structure as $_COOKIE. 
-     * @param array  $files        An Associative array of uploaded items, must have same structure as $_FILES.  
-     * @param string $body         Raw data from the request body.
+     * @param array  $server An associative array containing information such as headers, paths, 
+     *                       and script locations, must have same structure as $_SERVER 
+     * @param array  $cookie An associative array of variables, must have same structure as $_COOKIE. 
+     * @param array  $files  An associative array of uploaded items, must have same structure as $_FILES.  
+     * @param string $body   Raw data from the request body.
      *
-     * @return void
      */
-    public function __construct(array $server = null, $cookie = null, $files = null, $body = null)
+    public function __construct(array $server, $cookie = null, $files = null, $body = null)
     {
         $this->enviromentData = $server;
         $this->cookies        = $cookie;
@@ -133,7 +131,7 @@ class Enviroment implements EnviromentInterface
     /**
      * Get cookies
      *
-     * @return array
+     * @return array|null
      */
     public function getCookies()
     {

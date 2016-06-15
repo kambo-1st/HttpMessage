@@ -16,7 +16,7 @@ class UriFactory
     /**
      * Create new Uri from provided string.
      *
-     * @param string $url url that will be parsed into URI object
+     * @param string $uri uri that will be parsed into URI object
      *
      * @return Uri Instance of Uri based on provided string
      */

@@ -20,7 +20,6 @@ class Parser
      * @param string $type data type for parsing a proper parsing method will be used
      *                     according this value.
      *
-     * @return void
      */
     public function __construct($type)
     {

@@ -23,21 +23,21 @@ class Stream implements StreamInterface
     /**
      * Underline stream
      *
-     * @var string
+     * @var Resource
      */
     private $stream = null;
 
     /**
      * Size of file
      *
-     * @var string
+     * @var int|null
      */
     private $size = null;
 
     /**
      * Metadata of file
      *
-     * @var string
+     * @var array
      */
     private $meta = null;
 
@@ -55,11 +55,11 @@ class Stream implements StreamInterface
     /**
      * Constructor
      *
-     * @param Resource $stream UNderline resource stream
+     * @param Resource $stream Underline resource stream
      */
     public function __construct($stream)
     {
-        $this->atach($stream);
+        $this->stream = $stream;
     }
 
     /**
@@ -307,17 +307,5 @@ class Stream implements StreamInterface
         } catch (RuntimeException $e) {
             return '';
         }
-    }
-
-    // ------------ PRIVATE METHODS
-
-    /**
-     * XXX
-     *
-     * @return void
-     */
-    private function atach($stream)
-    {
-        $this->stream = $stream;
     }
 }

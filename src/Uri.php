@@ -557,12 +557,9 @@ class Uri implements UriInterface
     {
         $scheme    = $this->getScheme();
         $authority = $this->getAuthority();
-        $host      = $this->getHost();
-        $port      = $this->getPort();
         $path      = $this->getPath();
         $query     = $this->getQuery();
         $fragment  = $this->getFragment();
-        $userInfo  = $this->getUserInfo();
 
         $path = '/' . ltrim($path, '/');
 
@@ -660,16 +657,16 @@ class Uri implements UriInterface
     }
 
     /**
-     * Validate Uri path. 
+     * Validate query. 
      *
-     * Path must NOT contain query string or URI fragment. It can be object,
+     * Path must NOT contain URI fragment. It can be object,
      * but then the class must implement __toString method.
      *
-     * @param  string|object $path The Uri path
+     * @param  string|object $query The query path
      *
      * @return void
      *
-     * @throws InvalidArgumentException If the path is invalid.
+     * @throws InvalidArgumentException If the query is invalid.
      */
     private function validateQuery($query)
     {

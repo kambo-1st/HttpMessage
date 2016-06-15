@@ -32,9 +32,8 @@ class Headers
     /**
      * Constructor
      *
-     * @param array $headers
+     * @param array|null $headers
      *
-     * @return void
      */
     public function __construct(
         $headers = null
@@ -169,8 +168,8 @@ class Headers
     /**
      * Normalize header value
      *
-     * @param array $name Name of header - some headers should not be normalized.
-     * @param array $data Header data for normalization.
+     * @param string $name Name of header - some headers should not be normalized.
+     * @param string $data Header data for normalization.
      *  
      * @return array Normalized value of header
      */
@@ -186,9 +185,9 @@ class Headers
     /**
      * Normalize header name
      *
-     * @param array $name Name of header for normalization
+     * @param string $name Name of header for normalization
      *  
-     * @return array Normalized name of header
+     * @return string Normalized name of header
      */
     private function normalizeName($name)
     {
