@@ -88,7 +88,7 @@ class ServerRequest extends Message implements ServerRequestInterface
     /**
      * Cookies sent by the client to the server.
      *
-     * @var array
+     * @var array|null
      */
     private $cookies;
 
@@ -102,7 +102,7 @@ class ServerRequest extends Message implements ServerRequestInterface
     /**
      * Method of incoming request - GET, POST, DELETE, PUT or PATCH.
      *
-     * @var array
+     * @var string
      */
     private $requestMethod;
 
@@ -117,7 +117,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      * Parsed incoming request body - this value is filled 
      * when method getParsedBody or withParsedBody is called.
      *
-     * @var array|null
+     * @var array|object|null
      */
     private $parsedBody = null;
 
@@ -134,7 +134,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      * @param HeadersInterface      $headers         The request headers collection
      * @param StreamInterface|null  $body            The request body object
      * @param array                 $serverVariables The server environment variables
-     * @param string                $protocolVersion The request version of the protocol
+     * @param string                $protocol        The request version of the protocol
      * @param array                 $attributes      The request attributs
      * 
      */

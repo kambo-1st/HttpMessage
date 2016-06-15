@@ -23,7 +23,7 @@ class Stream implements StreamInterface
     /**
      * Underline stream
      *
-     * @var Resource
+     * @var Resource|null
      */
     private $stream = null;
 
