@@ -49,8 +49,8 @@ class Headers
      * Add header value
      * If the header already exists data are merged, method DOES NOT replace previous value.
      *
-     * @param string $name  name of header
-     * @param mixed  $value value of header can be scalar data type or string
+     * @param string $name  Name of the header.
+     * @param mixed  $value Value of the header can be scalar data type or string.
      *
      */
     public function add($name, $value)
@@ -70,8 +70,8 @@ class Headers
      * Set header value
      * If the header already exist value will be replaced.
      *
-     * @param string $name  name of header
-     * @param mixed  $value value of header can be scalar data type or string
+     * @param string $name  Name of the header.
+     * @param mixed  $value Value of the header can be scalar data type or string.
      *
      */
     public function set($name, $value)
@@ -84,7 +84,7 @@ class Headers
     /**
      * Get header by provided name
      *
-     * @param string $name name of header  
+     * @param string $name Name of the header.
      *   
      * @return mixed value of header
      */
@@ -102,7 +102,7 @@ class Headers
     /**
      * Get header values separated by comma
      *
-     * @param string $name name of header  
+     * @param string $name Name of the header.
      *   
      * @return string value of header separated by comma
      */
@@ -123,6 +123,13 @@ class Headers
         return $this->data;
     }
 
+    /**
+     * Remove header by provided name
+     *
+     * @param string $name Name of the header.
+     *   
+     * @return self
+     */
     public function remove($name)
     {
         $name = $this->normalizeName($name);
@@ -136,7 +143,7 @@ class Headers
     /**
      * Check if header exist
      *
-     * @param string $name name of header  
+     * @param string $name Name of the header.  
      *   
      * @return boolean Returns TRUE if exists or FALSE if not.
      */

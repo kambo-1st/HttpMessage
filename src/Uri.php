@@ -40,7 +40,7 @@ class Uri implements UriInterface
      *
      * @var integer
      */
-    const HTTP_PORT  = 80;
+    const HTTP_PORT = 80;
 
     /**
      * Https port
@@ -198,7 +198,7 @@ class Uri implements UriInterface
         $port     = $this->getPort();
         $userInfo = $this->getUserInfo();
 
-        return ($userInfo ? $userInfo. '@' : '').$this->getHost().($port ? ':' . $port : '');
+        return ($userInfo ? $userInfo. '@' : '') . $this->getHost() . ($port ? ':' . $port : '');
     }
 
     /**
@@ -220,7 +220,7 @@ class Uri implements UriInterface
         if (!empty($this->user)) {
             $userInfo = $this->user;
             if (!empty($this->password)) {
-                $userInfo .= ':'.$this->password;
+                $userInfo .= ':' . $this->password;
             }
         }
 
@@ -470,7 +470,7 @@ class Uri implements UriInterface
         $this->validatePath($path);
 
         $clone       = clone $this;
-        $clone->path = $this->urlEncode((string)$path);
+        $clone->path = $this->urlEncode((string) $path);
 
         return $clone;
     }
@@ -497,7 +497,7 @@ class Uri implements UriInterface
         $this->validateQuery($query);
 
         $clone        = clone $this;
-        $clone->query = $this->urlEncode((string)$query);
+        $clone->query = $this->urlEncode((string) $query);
 
         return $clone;
     }
@@ -551,6 +551,7 @@ class Uri implements UriInterface
      *       scheme     authority       path        query   fragment   
      *  
      * @see http://tools.ietf.org/html/rfc3986#section-4.1
+     *
      * @return string
      */
     public function __toString()
@@ -563,8 +564,8 @@ class Uri implements UriInterface
 
         $path = '/' . ltrim($path, '/');
 
-        return ($scheme ? $scheme.':' : '').($authority ? '//'.$authority : '')
-            .$path.($query ? '?' . $query : '').($fragment ? '#' . $fragment : '');
+        return ($scheme ? $scheme . ':' : '') . ($authority ? '//' . $authority : '')
+            . $path . ($query ? '?' . $query : '')  .($fragment ? '#' . $fragment : '');
     }
 
     // ------------ PRIVATE METHODS
@@ -585,7 +586,7 @@ class Uri implements UriInterface
      *
      * @param  string $scheme Raw Uri scheme.
      *
-     * @return string
+     * @return string Normalized Uri
      *
      * @throws InvalidArgumentException If the Uri scheme is not a string.
      * @throws InvalidArgumentException If Uri scheme is not "", "https", or "http".
@@ -596,7 +597,7 @@ class Uri implements UriInterface
             throw new InvalidArgumentException('Uri scheme must be a string');
         }
 
-        $scheme = str_replace('://', '', strtolower((string)$scheme));
+        $scheme = str_replace('://', '', strtolower((string) $scheme));
         if (!isset($this->validSchema[$scheme])) {
             throw new InvalidArgumentException('Uri scheme must be one of: "", "https", "http"');
         }
@@ -692,7 +693,9 @@ class Uri implements UriInterface
      * percent-encoded.
      *
      * @param  string $path The raw uri path.
-     * @return string       The RFC 3986 percent-encoded uri path.
+     *
+     * @return string The RFC 3986 percent-encoded uri path.
+     *
      * @link   http://www.faqs.org/rfcs/rfc3986.html
      */
     private function urlEncode($path)

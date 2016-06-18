@@ -9,7 +9,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
 // \HttpMessage
-use Kambo\HttpMessage\Uri;
 use Kambo\HttpMessage\Message;
 use Kambo\HttpMessage\Headers;
 use Kambo\HttpMessage\RequestTrait;

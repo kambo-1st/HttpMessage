@@ -5,13 +5,11 @@ namespace Kambo\HttpMessage;
 use InvalidArgumentException;
 
 // \Psr
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
 // \HttpMessage
 use Kambo\HttpMessage\Uri;
 use Kambo\HttpMessage\Message;
-use Kambo\HttpMessage\Headers;
 
 /**
  * Shared methods for outgoing, client-side request and server request.
@@ -30,7 +28,7 @@ trait RequestTrait
     private $requestTarget = null;
 
     /**
-     * Method of incoming request - GET, POST, DELETE, PUT or PATCH.
+     * Method of incoming request - GET, POST, DELTE, PUT, PATCH, HEAD or OPTIONS.
      *
      * @var string
      */
@@ -55,7 +53,7 @@ trait RequestTrait
      * withRequestTarget() below).
      *
      * If no URI is available, and no request-target has been specifically
-     * provided, this method MUST return the string "/".
+     * provided, this method return the string "/".
      *
      * @return string
      */
@@ -65,7 +63,7 @@ trait RequestTrait
             $target = '/';
             if ($this->uri->getPath() !== null) {
                 $target = $this->uri->getPath();
-                $target .= (!empty($this->uri->getQuery())) ? '?'.$this->uri->getQuery() : '';
+                $target .= (!empty($this->uri->getQuery())) ? '?' . $this->uri->getQuery() : '';
             }
 
             $this->requestTarget = $target;
@@ -82,10 +80,9 @@ trait RequestTrait
      * this method may be used to create an instance with the specified
      * request-target, verbatim.
      *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * changed request target.
-     *
+     * This method retains the state of the current instance, and return
+     * an instance that has the changed request target.
+     *     
      * @link http://tools.ietf.org/html/rfc7230#section-2.7 (for the various
      *     request-target forms allowed in request messages)
      *
@@ -115,12 +112,11 @@ trait RequestTrait
      * Return an instance with the provided HTTP method.
      *
      * While HTTP method names are typically all uppercase characters, HTTP
-     * method names are case-sensitive and thus implementations SHOULD NOT
+     * method names are case-sensitive and thus implementations not
      * modify the given string.
      *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * changed request method.
+     * This method retains the state of the current instance, and return
+     * an instance that changed request method.
      *
      * @param string $method Case-sensitive method.
      *
@@ -140,11 +136,11 @@ trait RequestTrait
     /**
      * Retrieves the URI instance.
      *
-     * This method MUST return a UriInterface instance.
+     * This method return a UriInterface instance.
      *
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @return UriInterface Returns a UriInterface instance
-     *     representing the URI of the request.
+     *
+     * @return UriInterface Returns a UriInterface instance representing the URI of the request.                
      */
     public function getUri()
     {
@@ -154,9 +150,9 @@ trait RequestTrait
     /**
      * Returns an instance with the provided URI.
      *
-     * This method MUST update the Host header of the returned request by
+     * This method update the Host header of the returned request by
      * default if the URI contains a host component. If the URI does not
-     * contain a host component, any pre-existing Host header MUST be carried
+     * contain a host component, any pre-existing Host header is carried
      * over to the returned request.
      *
      * You can opt-in to preserving the original state of the Host header by
@@ -164,22 +160,21 @@ trait RequestTrait
      * `true`, this method interacts with the Host header in the following ways:
      *
      * - If the the Host header is missing or empty, and the new URI contains
-     *   a host component, this method MUST update the Host header in the returned
+     *   a host component, this method update the Host header in the returned
      *   request.
      * - If the Host header is missing or empty, and the new URI does not contain a
-     *   host component, this method MUST NOT update the Host header in the returned
+     *   host component, this method not update the Host header in the returned
      *   request.
-     * - If a Host header is present and non-empty, this method MUST NOT update
+     * - If a Host header is present and non-empty, this method not update
      *   the Host header in the returned request.
      *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new UriInterface instance.
-     *
+     * This method retains the state of the current instance, and return
+     * an instance that contains the new UriInterface instance.
+     *     
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @param UriInterface $uri New request URI to use.
      *
-     * @param bool $preserveHost Preserve the original state of the Host header.
+     * @param UriInterface $uri          New request URI to use.
+     * @param bool         $preserveHost Preserve the original state of the Host header.
      *
      * @return self
      */
@@ -205,9 +200,10 @@ trait RequestTrait
      * Checks if a header exists by the given case-insensitive name.
      *
      * @param string $name Case-insensitive header field name.
-     * @return bool Returns true if any header names match the given header
-     *     name using a case-insensitive string comparison. Returns false if
-     *     no matching header name is found in the message.
+     *
+     * @return bool Returns true if any header names match the given header name using
+     *              a case-insensitive string comparison. Returns false if no matching
+     *              header name is found in the message.
      */
     abstract public function hasHeader($name);
 
@@ -217,13 +213,14 @@ trait RequestTrait
      * This method returns an array of all the header values of the given
      * case-insensitive header name.
      *
-     * If the header does not appear in the message, this method MUST return an
+     * If the header does not appear in the message, this method return an
      * empty array.
      *
      * @param string $name Case-insensitive header field name.
-     * @return string[] An array of string values as provided for the given
-     *    header. If the header does not appear in the message, this method MUST
-     *    return an empty array.
+     *
+     * @return string[] An array of string values as provided for the given header.
+     *                  If the header does not appear in the message, this method MUST
+     *                  return an empty array.
      */
     abstract public function getHeader($name);
 
@@ -250,7 +247,7 @@ trait RequestTrait
 
         if (!isset($valid[$method])) {
             throw new InvalidArgumentException(
-                'Invalid method version. Must be one of: GET, POST, DELTE, PUT or PATCH'
+                'Invalid method version. Must be one of: GET, POST, DELTE, PUT, PATCH, HEAD or OPTIONS'
             );
         }
     }

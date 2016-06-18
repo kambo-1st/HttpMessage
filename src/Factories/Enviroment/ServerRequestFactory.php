@@ -1,9 +1,6 @@
 <?php
 namespace Kambo\HttpMessage\Factories\Enviroment;
 
-// \Spl
-use InvalidArgumentException;
-
 // \Psr
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
