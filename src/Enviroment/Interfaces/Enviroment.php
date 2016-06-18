@@ -55,7 +55,7 @@ interface Enviroment
     /**
      * Get body
      *
-     * @return string
+     * @return resource
      */
     public function getBody();
 

@@ -567,7 +567,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
             'PHP_AUTH_PW' => 'password'
         ];
 
-        $enviroment = new Enviroment($headersForTest);
+        $enviroment = new Enviroment($headersForTest, fopen('php://memory','r+'));
         return HeadersFactory::fromEnviroment($enviroment);
     }
 }

@@ -132,7 +132,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function testFromEnviroment()
     {
-        $enviroment = new Enviroment($this->getTestData());
+        $enviroment = new Enviroment($this->getTestData(), fopen('php://memory','r+'));
         $uri        = UriFactory::fromEnviroment($enviroment);
 
         $this->assertEquals(null, $uri->getFragment());
@@ -157,7 +157,8 @@ class UriTest extends \PHPUnit_Framework_TestCase
                     'PHP_AUTH_USER' => null,
                     'PHP_AUTH_PW' => null,
                 ]
-            )
+            ),
+            fopen('php://memory','r+')
         );
         $uri = UriFactory::fromEnviroment($enviroment);
 
@@ -183,7 +184,8 @@ class UriTest extends \PHPUnit_Framework_TestCase
                     'QUERY_STRING' => 'foo%20foo=bar',
                     'REQUEST_URI' => '/path/123?foo%20foo=bar',
                 ]
-            )
+            ),
+            fopen('php://memory','r+')
         );
         $uri = UriFactory::fromEnviroment($enviroment);
 
@@ -208,7 +210,8 @@ class UriTest extends \PHPUnit_Framework_TestCase
                     'QUERY_STRING' => 'foo foo=bar',
                     'REQUEST_URI' => '/path/123?foo foo=bar',
                 ]
-            )
+            ),
+            fopen('php://memory','r+')
         );
         $uri = UriFactory::fromEnviroment($enviroment);
 

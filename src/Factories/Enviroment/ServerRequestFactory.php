@@ -10,6 +10,7 @@ use Kambo\HttpMessage\Uri;
 use Kambo\HttpMessage\UploadedFile;
 use Kambo\HttpMessage\Headers;
 use Kambo\HttpMessage\ServerRequest;
+use Kambo\HttpMessage\Stream;
 
 // \HttpMessage\Enviroment
 use Kambo\HttpMessage\Enviroment\Enviroment;
@@ -44,7 +45,7 @@ class ServerRequestFactory implements Factory
 
         $cookies       = $enviroment->getCookies();
         $requestMethod = $enviroment->getRequestMethod();
-        $body          = $enviroment->getBody();
+        $bodyStream    = new Stream($enviroment->getBody());
         $protocol      = $enviroment->getProtocolVersion();
 
         $serverParams = $enviroment->getServer();
@@ -55,7 +56,7 @@ class ServerRequestFactory implements Factory
             $requestMethod,
             $uploadFiles,
             $headers,
-            $body,
+            $bodyStream,
             $serverParams,
             $protocol
         );

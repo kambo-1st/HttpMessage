@@ -19,7 +19,7 @@ Creation of ServerRequest instance that encapsulates all data as it has arrived 
 application from the CGI and/or PHP environment:
 
 ```php
-$enviroment    = new Enviroment($_SERVER, $_COOKIE, $_FILES, file_get_contents('php://input'));
+$enviroment    = new Enviroment($_SERVER, fopen('php://input', 'w+'), $_COOKIE, $_FILES);
 $serverRequest = ServerRequestFactory::fromEnviroment($enviroment);
 ```
 

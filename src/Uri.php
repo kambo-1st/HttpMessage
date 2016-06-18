@@ -198,7 +198,7 @@ class Uri implements UriInterface
         $port     = $this->getPort();
         $userInfo = $this->getUserInfo();
 
-        return ($userInfo ? $userInfo. '@' : '') . $this->getHost() . ($port ? ':' . $port : '');
+        return ($userInfo ? $userInfo . '@' : '') . $this->getHost() . ($port ? ':' . $port : '');
     }
 
     /**
@@ -565,7 +565,7 @@ class Uri implements UriInterface
         $path = '/' . ltrim($path, '/');
 
         return ($scheme ? $scheme . ':' : '') . ($authority ? '//' . $authority : '')
-            . $path . ($query ? '?' . $query : '')  .($fragment ? '#' . $fragment : '');
+            . $path . ($query ? '?' . $query : '') . ($fragment ? '#' . $fragment : '');
     }
 
     // ------------ PRIVATE METHODS

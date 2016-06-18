@@ -82,7 +82,7 @@ class ServerRequest extends Message implements ServerRequestInterface
     /**
      * Cookies sent by the client to the server.
      *
-     * @var array|null
+     * @var array
      */
     private $cookies;
 
@@ -113,27 +113,27 @@ class ServerRequest extends Message implements ServerRequestInterface
      *
      * Adds a host header when none was provided and a host is defined in uri.
      * 
-     * @param UriInterface                 $uri             The request URI object
-     * @param array|null                   $cookies         The request cookies collection
-     * @param string                       $requestMethod   The request method
-     * @param array                        $uploadFiles     The request uploadedFiles collection
-     * @param HeadersInterface             $headers         The request headers collection
-     * @param StreamInterface|string|null  $body            The request body object
-     * @param array                        $serverVariables The server environment variables
-     * @param string                       $protocol        The request version of the protocol
-     * @param array                        $attributes      The request attributs
+     * @param UriInterface     $uri             The request URI object
+     * @param array            $cookies         The request cookies collection
+     * @param string           $requestMethod   The request method
+     * @param array            $uploadFiles     The request uploadedFiles collection
+     * @param Headers          $headers         The request headers collection
+     * @param StreamInterface  $body            The request body object
+     * @param array            $serverVariables The server environment variables
+     * @param string           $protocol        The request version of the protocol
+     * @param array            $attributes      The request attributs
      * 
      */
     public function __construct(
         Uri $uri,
-        $cookies,
+        array $cookies,
         $requestMethod,
-        $uploadFiles,
+        array $uploadFiles,
         Headers $headers,
-        $body,
-        $serverVariables,
+        StreamInterface $body,
+        array $serverVariables,
         $protocol,
-        $attributes = []
+        array $attributes = []
     ) {
         $this->validateMethod($requestMethod);
         $this->uri             = $uri;

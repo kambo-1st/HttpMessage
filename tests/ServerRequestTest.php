@@ -481,7 +481,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      * 
      * @return ServerRequest ServerRequest for the test
      */
-    private function getEnviromentForTest($change = [], $body = null, $attributes = null, $cookies = null)
+    private function getEnviromentForTest($change = [], $body = '', $attributes = null, $cookies = [])
     {
         $serverForTest = array_merge([
             'HTTP_HOST' => 'test.com',
@@ -503,7 +503,11 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
             'PHP_AUTH_PW' => 'password',
         ], $change);
 
-        $enviroment = new Enviroment($serverForTest, $cookies, null, $body);
+        $memoryStream = fopen('php://memory','r+');
+        fwrite($memoryStream, $body);
+        rewind($memoryStream);
+
+        $enviroment = new Enviroment($serverForTest, $memoryStream, $cookies);
         return ServerRequestFactory::fromEnviroment($enviroment);
     }
 }

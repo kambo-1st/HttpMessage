@@ -42,7 +42,7 @@ class Message implements MessageInterface
     /**
      * Body data
      *
-     * @var StreamInterface|string|null
+     * @var StreamInterface
      */
     protected $body;
 

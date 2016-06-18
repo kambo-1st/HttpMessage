@@ -140,7 +140,19 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBody()
     {
-        $this->assertEquals('body', $this->getTestObject()->getBody());
+        $this->assertInternalType('resource', $this->getTestObject()->getBody());
+    }
+
+    /**
+     * Test creating Enviroment with invalid body parameter - body must be resource.
+     *
+     * @expectedException \InvalidArgumentException
+     * 
+     * @return void
+     */
+    public function testGetBodyInvalid()
+    {
+        return new Enviroment([], 'invalid input');
     }
 
     /**
@@ -190,6 +202,6 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
             'PHP_AUTH_PW' => 'password',
         ];
 
-        return new Enviroment($server, ['cookies'], ['files'], 'body');
+        return new Enviroment($server, fopen('php://memory','r+'), ['cookies'], ['files']);
     }
 }

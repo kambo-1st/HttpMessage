@@ -295,7 +295,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
      */
     private function getUploadedFilesForTest()
     {
-        $enviroment = new Enviroment([], null, $this->getTestData());
+        $enviroment = new Enviroment([], fopen('php://memory','r+'), [], $this->getTestData());
         return FilesFactory::fromEnviroment($enviroment);
     }
 
@@ -306,7 +306,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
      */
     private function getUploadedFilesForTest2()
     {
-        $enviroment = new Enviroment([], null, $this->getTestData2());
+        $enviroment = new Enviroment([], fopen('php://memory','r+'), [], $this->getTestData2());
         return FilesFactory::fromEnviroment($enviroment);
     }
 

@@ -1,6 +1,9 @@
 <?php
 namespace Kambo\HttpMessage\Enviroment;
 
+// \Spl
+use InvalidArgumentException;
+
 // \HttpMessage
 use Kambo\HttpMessage\Enviroment\Interfaces\Enviroment as EnviromentInterface;
 
@@ -14,49 +17,53 @@ use Kambo\HttpMessage\Enviroment\Interfaces\Enviroment as EnviromentInterface;
 class Enviroment implements EnviromentInterface
 {
     /**
-     * Get query string
+     * Enviroment data, must have same structure as $_SERVER superglobal.
      *
-     * @return array
+     * @var array
      */
-    private $enviromentData = null;
+    private $enviromentData;
 
     /**
-     * Get query string
+     * Raw data from the request body.
      *
-     * @return array
+     * @var resource
      */
-    private $cookies = null;
+    private $body;
 
     /**
-     * Get query string
+     * An associative array constructed from cookies, must have same structure as $_COOKIE.
      *
-     * @return array
+     * @var array
      */
-    private $files = null;
+    private $cookies;
 
     /**
-     * Get query string
+     * An associative array of uploaded items, must have same structure as $_FILES.
      *
-     * @return string
+     * @var array
      */
-    private $body = null;
+    private $files;
 
     /**
      * Constructor
      *
-     * @param array  $server An associative array containing information such as headers, paths, 
-     *                       and script locations, must have same structure as $_SERVER 
-     * @param array  $cookie An associative array of variables, must have same structure as $_COOKIE. 
-     * @param array  $files  An associative array of uploaded items, must have same structure as $_FILES.  
-     * @param string $body   Raw data from the request body.
+     * @param array    $server An associative array containing information such as headers, paths, 
+     *                         and script locations. Must have same structure as $_SERVER.
+     * @param resource $body   Raw data from the request body.
+     * @param array    $cookie An associative array constructed from cookies, must have same structure as $_COOKIE. 
+     * @param array    $files  An associative array of uploaded items, must have same structure as $_FILES.
      *
      */
-    public function __construct(array $server, $cookie = null, $files = null, $body = null)
+    public function __construct(array $server, $body, $cookie = [], $files = [])
     {
+        if (!is_resource($body)) {
+            throw new InvalidArgumentException('Provided body must be of type resource.');
+        }
+
         $this->enviromentData = $server;
+        $this->body           = $body;
         $this->cookies        = $cookie;
         $this->files          = $files;
-        $this->body           = $body;
     }
 
     /**
@@ -121,7 +128,7 @@ class Enviroment implements EnviromentInterface
     /**
      * Get body
      *
-     * @return string
+     * @return resource
      */
     public function getBody()
     {
@@ -131,7 +138,7 @@ class Enviroment implements EnviromentInterface
     /**
      * Get cookies
      *
-     * @return array|null
+     * @return array
      */
     public function getCookies()
     {

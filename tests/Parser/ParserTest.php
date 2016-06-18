@@ -68,13 +68,13 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test parsing default.
-     * If the data type is not support input data are returned without any modification.
+     * If the data type is not support null value will be returned.
      * 
      * @return void
      */
     public function testParseDefault()
     {
         $parseDefault = new Parser('');
-        $this->assertEquals('foo', $parseDefault->parse('foo'));
+        $this->assertEquals(null, $parseDefault->parse('foo'));
     }
 }

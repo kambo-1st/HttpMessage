@@ -4,7 +4,7 @@ namespace Kambo\HttpMessage\Utils;
 /**
  * Simple wrapper for methods connected with upload.
  *
- * @package Kambo\HttpMessage\Factories\Enviroment\Superglobal
+ * @package Kambo\HttpMessage\Utils
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  *

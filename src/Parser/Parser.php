@@ -28,14 +28,12 @@ class Parser
 
     /**
      * Parse data according their type.
-     * If the data type is not support input data are returned without any modification.
      *
      * @param mixed $data data for parsing
      *
      * @return mixed Type of returned valus is based on type of data if the type is XML 
      *               an instance of SimpleXMLElement is returned, else an array is returned
-     *               If the data type is not support input data are returned without any 
-     *               modification. 
+     *               If the data type is not support a null is returned.
      */
     public function parse($data)
     {
@@ -55,7 +53,7 @@ class Parser
                 parse_str($data, $parsedData);
                 break;
             default:
-                $parsedData = $data;
+                $parsedData = null;
                 break;
         }
 
