@@ -276,6 +276,9 @@ class Message implements MessageInterface
         return $clone;
     }
 
+    /**
+     * @param string $headerName
+     */
     private function validateHeaderName($headerName)
     {
         if (is_array($headerName)) {
@@ -283,6 +286,9 @@ class Message implements MessageInterface
         }
     }
 
+    /**
+     * @param string $version
+     */
     private function validateProtocol($version)
     {
         $valid = [
