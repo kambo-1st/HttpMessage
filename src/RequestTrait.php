@@ -42,13 +42,6 @@ trait RequestTrait
     protected $uri;
 
     /**
-     * Headers of the request
-     *
-     * @var Headers
-     */
-    protected $headers;
-
-    /**
      * Retrieves the message's request target.
      *
      * Retrieves the message's request-target either as it will appear (for
