@@ -54,7 +54,7 @@ class Message implements MessageInterface
     /**
      * Create a new message
      *
-     * @param HeadersInterface            $headers  The request headers collection
+     * @param Headers                     $headers  The request headers collection
      * @param StreamInterface|string|null $body     The request body object
      * @param string                      $protocol The request version of the protocol
      *

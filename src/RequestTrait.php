@@ -28,7 +28,7 @@ trait RequestTrait
     private $requestTarget = null;
 
     /**
-     * Method of incoming request - GET, POST, DELTE, PUT, PATCH, HEAD or OPTIONS.
+     * Method of incoming request - GET, POST, DELETE, PUT, PATCH, HEAD or OPTIONS.
      *
      * @var string
      */
@@ -40,6 +40,13 @@ trait RequestTrait
      * @var Psr\Http\Message\UriInterface;
      */
     protected $uri;
+
+    /**
+     * Headers of the request
+     *
+     * @var Headers
+     */
+    protected $headers;
 
     /**
      * Retrieves the message's request target.
@@ -84,7 +91,7 @@ trait RequestTrait
      * an instance that has the changed request target.
      *     
      * @link http://tools.ietf.org/html/rfc7230#section-2.7 (for the various
-     *     request-target forms allowed in request messages)
+     *       request-target forms allowed in request messages)
      *
      * @param mixed $requestTarget
      *
