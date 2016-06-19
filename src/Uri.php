@@ -19,10 +19,9 @@ use Kambo\HttpMessage\Enviroment;
  * Its primary use is for HTTP requests, but may also be used in other
  * contexts.
  *
- * Instances of this interface are considered immutable; all methods that
- * might change state are implemented such that they retain the internal
- * state of the current instance and return an instance that contains the
- * changed state.
+ * Instances of the uri are considered immutable; all methods that
+ * change state retain the internal state of the current message and return
+ * an instance that contains the changed state.
  *
  * @link http://tools.ietf.org/html/rfc3986 (the URI specification)
  *

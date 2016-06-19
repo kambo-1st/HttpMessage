@@ -4,6 +4,10 @@ namespace Kambo\HttpMessage;
 // \Spl
 use InvalidArgumentException;
 
+// \HttpMessage
+use Kambo\HttpMessage\Stream;
+use Kambo\HttpMessage\Headers;
+
 // \Psr
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
@@ -14,7 +18,8 @@ use Psr\Http\Message\StreamInterface;
  * each.
  *
  * Messages are considered immutable; all methods that change state retain the 
- * internal state of the current message and return an instance that contains the changed state.
+ * internal state of the current message and return an instance that contains 
+ * the changed state.
  *
  * @link http://www.ietf.org/rfc/rfc7230.txt
  * @link http://www.ietf.org/rfc/rfc7231.txt
@@ -45,6 +50,25 @@ class Message implements MessageInterface
      * @var StreamInterface
      */
     protected $body;
+
+    /**
+     * Create a new message
+     *
+     * @param HeadersInterface            $headers  The request headers collection
+     * @param StreamInterface|string|null $body     The request body object
+     * @param string                      $protocol The request version of the protocol
+     *
+     * @throws \InvalidArgumentException If an unsupported argument type is provided for the body.
+     */
+    public function __construct(
+        $headers = null,
+        $body = null,
+        $protocol = '1.1'
+    ) {
+        $this->headers         = $headers ? $headers : new Headers();
+        $this->body            = $this->normalizeBody($body);
+        $this->protocolVersion = $protocol;
+    }
 
     /**
      * Retrieves the HTTP protocol version as a string.
@@ -276,6 +300,32 @@ class Message implements MessageInterface
     }
 
     // ------------ PRIVATE METHODS
+
+    /**
+     * Normalize provided body and ensure that the result object is stream
+     *
+     * @param StreamInterface|string|null $body The request body object
+     *
+     * @return Stream Provided body
+     *
+     * @throws \InvalidArgumentException If an unsupported argument type is provided.
+     */
+    private function normalizeBody($body = null)
+    {
+        $body = $body ? $body : new Stream(fopen('php://temp', 'r+'));
+        if (is_string($body)) {
+            $memoryStream = fopen('php://temp', 'r+');
+            fwrite($memoryStream, $body);
+            rewind($memoryStream);
+            $body = new Stream($memoryStream);
+        } elseif (!($body instanceof StreamInterface)) {
+            throw new InvalidArgumentException(
+                'Body must be a string, null or implement Psr\Http\Message\StreamInterface'
+            );
+        }
+
+        return $body;
+    }
 
     /**
      * Validate name of the header - it must not be array.

@@ -1,5 +1,4 @@
 <?php
-
 namespace Kambo\HttpMessage;
 
 // \Spl
@@ -7,14 +6,17 @@ use \InvalidArgumentException;
 
 // \Psr
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 // \HttpMessage
 use Kambo\HttpMessage\Message;
+use Kambo\HttpMessage\Headers;
+use Kambo\HttpMessage\Stream;
 
 /**
  * Representation of an outgoing, server-side response.
  *
- * Per the HTTP specification, this interface includes properties for
+ * Per the HTTP specification, this class encapsulate properties for
  * each of the following:
  *
  * - Protocol version
@@ -107,6 +109,21 @@ class Response extends Message implements ResponseInterface
         510 => 'Not Extended',
         511 => 'Network Authentication Required',
     ];
+
+    /**
+     * Create new outgoing, server-side response.
+     *
+     * @param int                   $status  The response status code.
+     * @param Headers|null          $headers The response headers.
+     * @param StreamInterface|null  $body    The response body.
+     */
+    public function __construct($status = 200, Headers $headers = null, StreamInterface $body = null)
+    {
+        parent::__construct($headers, $body);
+        $this->validateStatus($status);
+
+        $this->status  = $status;
+    }
 
     /**
      * Gets the response status code.

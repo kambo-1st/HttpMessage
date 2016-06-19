@@ -18,14 +18,37 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test creating object with invalid parameters
+     * 
+     * @return void
+     */
+    public function testObjectCreationWithBodyString()
+    {
+        $serverRequest = new Request('GET', 'www.test.com', null, 'body');
+        $this->assertEquals('body', (string)$serverRequest->getBody());
+    }
+
+    /**
+     * Test creating object with invalid parameters
      *
      * @expectedException \InvalidArgumentException
      * 
      * @return void
      */
-    public function testInvalidObjectCreation()
+    public function testInvalidUriObjectCreation()
     {
         $serverRequest = new Request('GET', []);
+    }
+
+    /**
+     * Test creating object with invalid parameters
+     *
+     * @expectedException \InvalidArgumentException
+     * 
+     * @return void
+     */
+    public function testInvalidBodyObjectCreation()
+    {
+        $serverRequest = new Request('GET', 'www.test.com', null, new \stdClass);
     }
 
     /**

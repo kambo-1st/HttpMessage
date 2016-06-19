@@ -13,6 +13,7 @@ use Kambo\HttpMessage\Message;
 use Kambo\HttpMessage\Headers;
 use Kambo\HttpMessage\RequestTrait;
 use Kambo\HttpMessage\Factories\String\UriFactory;
+use Kambo\HttpMessage\Stream;
 
 /**
  * Representation of an outgoing, client-side request.
@@ -26,12 +27,12 @@ use Kambo\HttpMessage\Factories\String\UriFactory;
  * - Headers
  * - Message body
  *
- * During construction, implementations MUST attempt to set the Host header from
+ * During construction, implementations attempt to set the Host header from
  * a provided URI if no Host header is provided.
  *
- * Requests are considered immutable; all methods that might change state MUST
- * be implemented such that they retain the internal state of the current
- * message and return an instance that contains the changed state.
+ * Requests are considered immutable; all methods that change state retain
+ * the internal state of the current message and return an instance that
+ * contains the changed state.
  *
  * @package Kambo\HttpMessage
  * @author  Bohuslav Simek <bohuslav@simek.si>
@@ -44,7 +45,7 @@ class Request extends Message implements RequestInterface
     /**
      * Create new outgoing HTTP request.
      *
-     * Adds a host header when none was provided and a host is defined in uri.
+     * Adds a host header when none was provided and a host is defined in URI.
      *
      * @param string                      $requestMethod The request method
      * @param UriInterface|string         $uri           The request URI object
@@ -52,8 +53,8 @@ class Request extends Message implements RequestInterface
      * @param StreamInterface|string|null $body          The request body object
      * @param string                      $protocol      The request version of the protocol
      *
-     * @throws \InvalidArgumentException if an unsupported argument type is
-     *     provided.
+     * @throws \InvalidArgumentException If an unsupported argument type is
+     *                                   provided for URI or body.
      */
     public function __construct(
         $requestMethod,
@@ -62,23 +63,18 @@ class Request extends Message implements RequestInterface
         $body = null,
         $protocol = '1.1'
     ) {
+        parent::__construct($headers, $body, $protocol);
+
         if (is_string($uri)) {
             $this->uri = UriFactory::create($uri);
         } elseif (!($uri instanceof UriInterface)) {
             throw new InvalidArgumentException(
-                'URI must be a string or Psr\Http\Message\UriInterface'
+                'URI must be a string or implement Psr\Http\Message\UriInterface'
             );
-        }
-
-        if (!isset($headers)) {
-            $headers = new Headers();
         }
 
         $this->validateMethod($requestMethod);
         $this->requestMethod   = $requestMethod;
-        $this->headers         = $headers;
-        $this->body            = $body;
-        $this->protocolVersion = $protocol;
 
         if ($this->uri->getHost() !== '' && (!$this->hasHeader('Host') || $this->getHeader('Host') === null)) {
             $this->headers->set('Host', $this->uri->getHost());

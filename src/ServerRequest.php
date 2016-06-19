@@ -51,9 +51,9 @@ use Kambo\HttpMessage\RequestTrait;
  * content, matching authorization headers to users, etc). These parameters
  * are stored in an "attributes" property.
  *
- * Requests are considered immutable; all methods that might change state MUST
- * be implemented such that they retain the internal state of the current
- * message and return an instance that contains the changed state.
+ * Requests are considered immutable; all methods that change state retain
+ * the internal state of the current message and return an instance that
+ * contains the changed state.
  *
  * @package Kambo\HttpMessage
  * @author  Bohuslav Simek <bohuslav@simek.si>
@@ -70,7 +70,6 @@ class ServerRequest extends Message implements ServerRequestInterface
      * @var array
      */
     private $serverVariables;
-
 
     /**
      * Deserialized query string arguments, if any.
@@ -135,16 +134,14 @@ class ServerRequest extends Message implements ServerRequestInterface
         $protocol,
         array $attributes = []
     ) {
+        parent::__construct($headers, $body, $protocol);
         $this->validateMethod($requestMethod);
         $this->uri             = $uri;
         $this->cookies         = $cookies;
         $this->requestMethod   = $requestMethod;
         $this->uploadedFiles   = $uploadFiles;
-        $this->headers         = $headers;
-        $this->body            = $body;
         $this->attributes      = $attributes;
         $this->serverVariables = $serverVariables;
-        $this->protocolVersion = $protocol;
     }
 
     /**
@@ -191,7 +188,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      *
      * @param array $cookies Array of key/value pairs representing cookies.
      *
-     * @return self
+     * @return self for fluent interface
      */
     public function withCookieParams(array $cookies)
     {
@@ -236,7 +233,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      *
      * @param array $query Array of query string arguments, typically from $_GET.
      *
-     * @return self
+     * @return self for fluent interface
      */
     public function withQueryParams(array $query)
     {
@@ -256,7 +253,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      * instantiation, or can be injected via withUploadedFiles().
      *
      * @return array An array tree of UploadedFileInterface instances; an empty
-     *     array MUST be returned if no data is present.
+     *               array is returned if no data is present.
      */
     public function getUploadedFiles()
     {
@@ -279,6 +276,7 @@ class ServerRequest extends Message implements ServerRequestInterface
     {
         $clone                = clone $this;
         $clone->uploadedFiles = $uploadedFiles;
+
         // todo check structure if is valid
         return $clone;
     }
@@ -296,7 +294,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      * the absence of body content.
      *
      * @return null|array|object The deserialized body parameters, if any.
-     *     These will typically be an array or object.
+     *                           These will typically be an array or object.
      */
     public function getParsedBody()
     {
@@ -324,21 +322,18 @@ class ServerRequest extends Message implements ServerRequestInterface
      * is a JSON payload, this method could be used to create a request
      * instance with the deserialized parameters.
      *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * updated body parameters.
-     *
+     * This method retain the immutability of the message, and return an 
+     * instance that has the updated body parameters.
+     *     
      * @param null|array|object $data The deserialized body data. This will
-     *     typically be in an array or object.
+     *                                typically be in an array or object.
      *
      * @return self for fluent interface
      *
-     * @throws \InvalidArgumentException if an unsupported argument type is
-     *     provided.
+     * @throws \InvalidArgumentException if an unsupported argument type is provided.    
      */
     public function withParsedBody($data)
     {
-        // todo move to the separate method
         if (!is_null($data) && !is_object($data) && !is_array($data)) {
             throw new InvalidArgumentException('Value must be an array, an object, or null');
         }
@@ -356,7 +351,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      * parameters derived from the request: e.g., the results of path
      * match operations; the results of decrypting cookies; the results of
      * deserializing non-form-encoded message bodies; etc. Attributes
-     * will be application and request specific, and CAN be mutable.
+     * will be application and request specific, and is mutable.
      *
      * @return array Attributes derived from the request.
      */
@@ -398,9 +393,8 @@ class ServerRequest extends Message implements ServerRequestInterface
      * This method allows setting a single derived request attribute as
      * described in getAttributes().
      *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * updated attribute.
+     * This method retains the state of the current instance, and return
+     * an instance that has the updated attribute.
      *
      * @see getAttributes()
      *
@@ -423,9 +417,8 @@ class ServerRequest extends Message implements ServerRequestInterface
      * This method allows removing a single derived request attribute as
      * described in getAttributes().
      *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that removes
-     * the attribute.
+     * This method retains the state of the current instance, and return
+     * an instance that removes the attribute.
      *
      * @see getAttributes()
      *

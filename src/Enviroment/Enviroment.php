@@ -187,7 +187,7 @@ class Enviroment implements EnviromentInterface
     public function getAuthUser()
     {
         if (isset($this->enviromentData['PHP_AUTH_USER'])) {
-                return $this->enviromentData['PHP_AUTH_USER'];
+            return $this->enviromentData['PHP_AUTH_USER'];
         }
 
         return null;
@@ -201,7 +201,7 @@ class Enviroment implements EnviromentInterface
     public function getAuthPassword()
     {
         if (isset($this->enviromentData['PHP_AUTH_PW'])) {
-                return $this->enviromentData['PHP_AUTH_PW'];
+            return $this->enviromentData['PHP_AUTH_PW'];
         }
 
         return null;
