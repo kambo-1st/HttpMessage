@@ -76,7 +76,7 @@ class Request extends Message implements RequestInterface
         $this->validateMethod($requestMethod);
         $this->requestMethod   = $requestMethod;
 
-        if ($this->uri->getHost() !== '' && (!$this->hasHeader('Host') || $this->getHeader('Host') === null)) {
+        if ($this->shouldSetHost()) {
             $this->headers->set('Host', $this->uri->getHost());
         }
     }

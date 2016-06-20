@@ -299,10 +299,22 @@ class Message implements MessageInterface
         return $clone;
     }
 
+    // ------------ PROTECTED METHODS
+
+    /**
+     * Provide message headers
+     *
+     * @return Headers Message headers
+     */
+    protected function provideHeaders()
+    {
+        return $this->headers;
+    }
+
     // ------------ PRIVATE METHODS
 
     /**
-     * Normalize provided body and ensure that the result object is stream
+     * Normalize provided body and ensure that the result object is stream.
      *
      * @param StreamInterface|string|null $body The request body object
      *

@@ -42,6 +42,41 @@ trait RequestTrait
     protected $uri;
 
     /**
+     * Checks if a header exists by the given case-insensitive name.
+     *
+     * @param string $name Case-insensitive header field name.
+     *
+     * @return bool Returns true if any header names match the given header name using
+     *              a case-insensitive string comparison. Returns false if no matching
+     *              header name is found in the message.
+     */
+    abstract public function hasHeader($name);
+
+    /**
+     * Retrieves a message header value by the given case-insensitive name.
+     *
+     * This method returns an array of all the header values of the given
+     * case-insensitive header name.
+     *
+     * If the header does not appear in the message, this method return an
+     * empty array.
+     *
+     * @param string $name Case-insensitive header field name.
+     *
+     * @return string[] An array of string values as provided for the given header.
+     *                  If the header does not appear in the message, this method MUST
+     *                  return an empty array.
+     */
+    abstract public function getHeader($name);
+
+    /**
+     * Provide message headers
+     *
+     * @return Headers Message headers
+     */
+    abstract public function provideHeaders();
+
+    /**
      * Retrieves the message's request target.
      *
      * Retrieves the message's request-target either as it will appear (for
@@ -127,7 +162,8 @@ trait RequestTrait
     public function withMethod($method)
     {
         $this->validateMethod($method);
-        $clone = clone $this;
+
+        $clone                = clone $this;
         $clone->requestMethod = $method;
 
         return $clone;
@@ -185,11 +221,11 @@ trait RequestTrait
 
         if (!$preserveHost) {
             if ($uri->getHost() !== '') {
-                $clone->headers->set('Host', $uri->getHost());
+                $clone->provideHeaders()->set('Host', $uri->getHost());
             }
         } else {
-            if ($this->uri->getHost() !== '' && (!$this->hasHeader('Host') || $this->getHeader('Host') === null)) {
-                $clone->headers->set('Host', $uri->getHost());
+            if ($this->shouldSetHost()) {
+                $clone->provideHeaders()->set('Host', $uri->getHost());
             }
         }
 
@@ -197,32 +233,14 @@ trait RequestTrait
     }
 
     /**
-     * Checks if a header exists by the given case-insensitive name.
+     * Check if the host header should be set.
      *
-     * @param string $name Case-insensitive header field name.
-     *
-     * @return bool Returns true if any header names match the given header name using
-     *              a case-insensitive string comparison. Returns false if no matching
-     *              header name is found in the message.
+     * @return bool true if should be
      */
-    abstract public function hasHeader($name);
-
-    /**
-     * Retrieves a message header value by the given case-insensitive name.
-     *
-     * This method returns an array of all the header values of the given
-     * case-insensitive header name.
-     *
-     * If the header does not appear in the message, this method return an
-     * empty array.
-     *
-     * @param string $name Case-insensitive header field name.
-     *
-     * @return string[] An array of string values as provided for the given header.
-     *                  If the header does not appear in the message, this method MUST
-     *                  return an empty array.
-     */
-    abstract public function getHeader($name);
+    protected function shouldSetHost()
+    {
+        return $this->uri->getHost() !== '' && (!$this->hasHeader('Host') || $this->getHeader('Host') === null);
+    }
 
     /**
      * Validate request method.
@@ -247,7 +265,7 @@ trait RequestTrait
 
         if (!isset($valid[$method])) {
             throw new InvalidArgumentException(
-                'Invalid method version. Must be one of: GET, POST, DELTE, PUT, PATCH, HEAD or OPTIONS'
+                'Invalid method version. Must be one of: GET, POST, DELETE, PUT, PATCH, HEAD or OPTIONS'
             );
         }
     }
