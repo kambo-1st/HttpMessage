@@ -42,6 +42,21 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test changing status code and readon phrase, operation must be immutable - a new
+     * instance of object must be created and previous instance must retain its value.
+     * 
+     * @return void
+     */
+    public function testWithStatusCustom()
+    {
+        $serverResponse = new Response();
+        $withNewStatus  = $serverResponse->withStatus(419, 'Authentication Timeout');
+
+        $this->assertEquals(200, $serverResponse->getStatusCode());
+        $this->assertEquals(419, $withNewStatus->getStatusCode());
+    }
+
+    /**
      * Test with status method, with invalid reponse code
      * An exception must be thrown.
      * 
@@ -56,8 +71,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get reason phrase - defualt value is OK as 
-     * the defualt status code is 200
+     * Test get reason phrase - defualt value is OK for 
+     * the defualt status code 200
      * 
      * @return void
      */
@@ -66,4 +81,30 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $serverResponse = new Response();
         $this->assertEquals('OK', $serverResponse->getReasonPhrase());
     }
+
+    /**
+     * Test get reason phrase for custom response code - empty
+     * string is returned
+     * 
+     * @return void
+     */
+    public function testGetReasonPhraseEmpty()
+    {
+        $serverResponse = new Response(520);
+        $this->assertEquals('', $serverResponse->getReasonPhrase());
+    }
+
+    /**
+     * Test get reason phrase for custom response code and reason phrase - same
+     * reason phrase must be returne.
+     * 
+     * @return void
+     */
+    public function testGetReasonPhraseCustom()
+    {
+        $serverResponse = new Response();
+        $withNewStatus  = $serverResponse->withStatus(419, 'Authentication Timeout');
+
+        $this->assertEquals('Authentication Timeout', $withNewStatus->getReasonPhrase());
+    }    
 }

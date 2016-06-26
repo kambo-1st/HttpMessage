@@ -152,7 +152,7 @@ class Response extends Message implements ResponseInterface
      *
      * @param int    $code         The 3-digit integer result code to set.
      * @param string $reasonPhrase The reason phrase to use with the provided status code;
-     *                             if none is provided, implementations MAY use the defaults
+     *                             if none is provided, implementations use the defaults
      *                             as suggested in the HTTP specification.
      *
      * @return self
@@ -171,7 +171,7 @@ class Response extends Message implements ResponseInterface
             $reasonPhrase = $this->messages[$code];
         }
 
-        $this->reasonPhrase = $reasonPhrase;
+        $clone->reasonPhrase = $reasonPhrase;
 
         return $clone;
     }
@@ -185,11 +185,19 @@ class Response extends Message implements ResponseInterface
      * @link http://tools.ietf.org/html/rfc7231#section-6
      * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
      *
-     * @return string Reason phrase; must return an empty string if none present.
+     * @return string Reason phrase; return an empty string if none present.
      */
     public function getReasonPhrase()
     {
-        return $this->messages[$this->status];
+        if ($this->reasonPhrase) {
+            return $this->reasonPhrase;
+        }
+
+        if (isset($this->messages[$this->status])) {
+            return $this->messages[$this->status];
+        }
+
+        return '';
     }
 
     // ------------ PRIVATE METHODS
@@ -204,8 +212,14 @@ class Response extends Message implements ResponseInterface
      */
     private function validateStatus($code)
     {
-        if (!isset($this->messages[$code])) {
-            throw new InvalidArgumentException('A proper HTTP code from RFC 7231 must be provided.');
+        if (!is_numeric($code)
+            || is_float($code)
+            || $code < 100
+            || $code >= 600
+        ) {
+            throw new InvalidArgumentException(
+                'Status code must be an integer between 100 and 599, inclusive'
+            );
         }
     }
 }
