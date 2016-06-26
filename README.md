@@ -3,6 +3,7 @@
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/kambo-1st/HttpMessage.svg?style=flat-square)](https://scrutinizer-ci.com/g/kambo-1st/HttpMessage/?branch=master)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/kambo-1st/HttpMessage.svg?style=flat-square)](https://scrutinizer-ci.com/g/kambo-1st/HttpMessage/)
 [![Dependency Status](https://www.versioneye.com/user/projects/5761a83a0a82b20053182cce/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5761a83a0a82b20053182cce)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 Just another PHP implementation of PSR-7 - HTTP message interfaces
 

@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UploadedFileInterface;
 
 // \HttpMessage
 use Kambo\HttpMessage\Uri;
@@ -274,10 +275,10 @@ class ServerRequest extends Message implements ServerRequestInterface
      */
     public function withUploadedFiles(array $uploadedFiles)
     {
+        $this->validateUploadedFiles($uploadedFiles);
         $clone                = clone $this;
         $clone->uploadedFiles = $uploadedFiles;
 
-        // todo check structure if is valid
         return $clone;
     }
 
@@ -285,7 +286,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      * Retrieve any parameters provided in the request body.
      *
      * If the request Content-Type is either application/x-www-form-urlencoded
-     * or multipart/form-data, and the request method is POST, this method MUST
+     * or multipart/form-data, and the request method is POST, this method
      * return the contents of $_POST.
      *
      * Otherwise, this method may return any results of deserializing
@@ -478,5 +479,23 @@ class ServerRequest extends Message implements ServerRequestInterface
         }
 
         return $result;
+    }
+
+    /**
+     * Validate the structure in an uploaded files array.
+     *
+     * @param array $uploadedFiles
+     *
+     * @throws InvalidArgumentException if any entry is not an UploadedFileInterface instance.
+     */
+    private function validateUploadedFiles(array $uploadedFiles)
+    {
+        foreach ($uploadedFiles as $file) {
+            if (is_array($file)) {
+                $this->validateUploadedFiles($file);
+            } elseif (! $file instanceof UploadedFileInterface) {
+                throw new InvalidArgumentException('Invalid entry in uploaded files structure');
+            }
+        }
     }
 }

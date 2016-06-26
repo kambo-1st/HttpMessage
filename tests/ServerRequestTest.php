@@ -2,10 +2,11 @@
 namespace Test;
 
 // \HttpMessage
-use Kambo\HttpMessage\ServerRequest;
-use Kambo\HttpMessage\Uri;
-use Kambo\HttpMessage\Stream;
 use Kambo\HttpMessage\Enviroment\Enviroment;
+use Kambo\HttpMessage\ServerRequest;
+use Kambo\HttpMessage\Stream;
+use Kambo\HttpMessage\UploadedFile;
+use Kambo\HttpMessage\Uri;
 
 // \HttpMessage\Factories
 use Kambo\HttpMessage\Factories\Enviroment\ServerRequestFactory;
@@ -254,21 +255,44 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      * Test changing upload files.
      * Operation must be immutable - a new instance of object must be created and previous
      * instance must retain its value.
-     * 
+     *
      * @return void
      */
     public function testWithUploadedFiles()
     {
-        $expectedFiles = [
+        $newFiles = [
+            'upload-field' => [
+                new UploadedFile('tmp/test.txt', 'test.txt', 'text/plain', 1024, 0),
+                new UploadedFile('tmp/test2.txt', 'test2.txt', 'text/plain', 2048, 0)
+            ],
+            'second-upload-field' => [
+                new UploadedFile('tmp/test3.txt', 'test3.txt', 'text/plain', 4096, 0),
+                new UploadedFile('tmp/test4.txt', 'test4.txt', 'text/plain', 8192, 0)
+            ]            
         ];
-        $newFiles      = [
-            'foo' => 'bar'
-        ];
+
         $serverRequest = $this->getEnviromentForTest();
         $newRequest    = $serverRequest->WithUploadedFiles($newFiles);
 
-        $this->assertEquals($expectedFiles, $serverRequest->getUploadedFiles());
+        $this->assertEquals([], $serverRequest->getUploadedFiles());
         $this->assertEquals($newFiles, $newRequest->getUploadedFiles());
+    }
+
+    /**
+     * Test changing upload files with invalid values.
+     *
+     * @expectedException \InvalidArgumentException
+     *
+     * @return void
+     */
+    public function testWithUploadedFilesInvalid()
+    {
+        $newFiles = [
+            'foo' => 'bar'
+        ];
+
+        $serverRequest = $this->getEnviromentForTest();
+        $newRequest    = $serverRequest->WithUploadedFiles($newFiles);
     }
 
     /**
