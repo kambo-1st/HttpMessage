@@ -493,7 +493,7 @@ class ServerRequest extends Message implements ServerRequestInterface
         foreach ($uploadedFiles as $file) {
             if (is_array($file)) {
                 $this->validateUploadedFiles($file);
-            } elseif (! $file instanceof UploadedFileInterface) {
+            } elseif (!$file instanceof UploadedFileInterface) {
                 throw new InvalidArgumentException('Invalid entry in uploaded files structure');
             }
         }
