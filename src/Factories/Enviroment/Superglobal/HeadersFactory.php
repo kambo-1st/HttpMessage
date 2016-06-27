@@ -53,6 +53,15 @@ class HeadersFactory implements Factory
         $headers = [];
 
         foreach ($headersForResolve as $name => $value) {
+            if (strpos($name, 'REDIRECT_') === 0) {
+                $name = substr($name, 9);
+
+                // Do not replace existing variables
+                if (array_key_exists($name, $headersForResolve)) {
+                     continue;
+                }
+            }
+
             if (substr($name, 0, 5) == 'HTTP_' || isset($this->specialHeaders[$name])) {
                 $headers[$name] = $value;
             }
