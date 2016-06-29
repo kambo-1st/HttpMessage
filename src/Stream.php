@@ -2,7 +2,6 @@
 namespace Kambo\HttpMessage;
 
 // \Spl
-use InvalidArgumentException;
 use RuntimeException;
 
 // \Psr
