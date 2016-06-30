@@ -2,9 +2,7 @@
 namespace Test;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment;
 use Kambo\HttpMessage\Response;
-use Kambo\HttpMessage\Uri;
 
 /**
  * Unit test for the Response object.

@@ -2,7 +2,6 @@
 namespace Test;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment;
 use Kambo\HttpMessage\Request;
 use Kambo\HttpMessage\Uri;
 use Kambo\HttpMessage\Factories\String\UriFactory;
