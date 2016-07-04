@@ -9,7 +9,7 @@ use Kambo\HttpMessage\Factories\Enviroment\Superglobal\HeadersFactory;
 /**
  * Unit test for the HeadersFactory object.
  *
- * @package Test
+ * @package Test\Factories\Superglobal
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
@@ -123,15 +123,17 @@ class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Get instance of mocked Enviroment object for testing purpose.
      *
-     * @param Enviroment $enviroment enviroment data
+     * @param array $serverSuperglobal array in same format as server superglobal
+     *                                 variable ($_SERVER).
      *
      * @return Enviroment
      */
-    private function getEnviromentMock($serverSuperglobal=[])
+    private function getEnviromentMock(array $serverSuperglobal=[])
     {
         $enviromentMock = $this->getMockBuilder(Enviroment::class)
                                ->disableOriginalConstructor()
                                ->getMock();
+
         $enviromentMock->method('getServer')->will(
             $this->returnValue($serverSuperglobal)
         );

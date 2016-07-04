@@ -21,14 +21,14 @@ use org\bovigo\vfs\vfsStream;
 class StreamTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Virtual stream for the testing
+     * Virtual stream for the testing.
      *
      * @var vfsStream
      */
     private $root;
 
     /**
-     * Setting virtual stream for the testing
+     * Setting virtual stream for the testing.
      *
      * @return void
      */

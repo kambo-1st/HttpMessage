@@ -90,7 +90,10 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAuthUser()
     {
-        $this->assertEquals('user', $this->getTestObject()->getAuthUser());
+        $this->assertEquals(
+            'user',
+            $this->getTestObject(['PHP_AUTH_USER' => 'user'])->getAuthUser()
+        );
     }
 
     /**
@@ -100,7 +103,36 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAuthPassword()
     {
-        $this->assertEquals('password', $this->getTestObject()->getAuthPassword());
+        $this->assertEquals(
+            'password',
+            $this->getTestObject(['PHP_AUTH_PW' => 'password'])->getAuthPassword()
+        );
+    }
+
+    /**
+     * Test get auth user from the enviroment - auth user was not provided.
+     * 
+     * @return void
+     */
+    public function testGetAuthUserNotProvided()
+    {
+        $this->assertEquals(
+            null,
+            $this->getTestObject()->getAuthUser()
+        );
+    }
+
+    /**
+     * Test get auth password from the enviroment - password was not provided.
+     * 
+     * @return void
+     */
+    public function testGetAuthPasswordNotProvided()
+    {
+        $this->assertEquals(
+            null,
+            $this->getTestObject()->getAuthPassword()
+        );
     }
 
     /**
@@ -125,9 +157,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
             'QUERY_STRING' => 'q=abc',
             'REQUEST_URI' => '/path/123?q=abc',
             'SCRIPT_NAME' => '/index.php',
-            'PHP_SELF' => '/index.php',
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW' => 'password',
+            'PHP_SELF' => '/index.php'
         ];
 
         $this->assertEquals($expectedServer, $this->getTestObject()->getServer());
@@ -177,30 +207,33 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get instance of Enviroment for test with preset values.
-     * 
+     *
+     * @param string $scheme   Uri scheme.
+     *
      * @return Enviroment instance of Enviroment for test
      */
-    private function getTestObject()
+    private function getTestObject(array $additionalValues = [])
     {
-        $server = [
-            'HTTP_HOST' => 'test.com',
-            'SERVER_NAME' => 'test.com',
-            'SERVER_ADDR' => '10.0.2.15',
-            'SERVER_PORT' => '1111',
-            'REMOTE_ADDR' => '10.0.2.2',
-            'REQUEST_SCHEME' => 'http',
-            'REMOTE_PORT' => '64267',
-            'REDIRECT_QUERY_STRING' => 'q=abc',
-            'REDIRECT_URL' => '/path/123',
-            'SERVER_PROTOCOL' => 'HTTP/1.1',
-            'REQUEST_METHOD' => 'GET',
-            'QUERY_STRING' => 'q=abc',
-            'REQUEST_URI' => '/path/123?q=abc',
-            'SCRIPT_NAME' => '/index.php',
-            'PHP_SELF' => '/index.php',
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW' => 'password',
-        ];
+        $server = array_merge(
+            [
+                'HTTP_HOST' => 'test.com',
+                'SERVER_NAME' => 'test.com',
+                'SERVER_ADDR' => '10.0.2.15',
+                'SERVER_PORT' => '1111',
+                'REMOTE_ADDR' => '10.0.2.2',
+                'REQUEST_SCHEME' => 'http',
+                'REMOTE_PORT' => '64267',
+                'REDIRECT_QUERY_STRING' => 'q=abc',
+                'REDIRECT_URL' => '/path/123',
+                'SERVER_PROTOCOL' => 'HTTP/1.1',
+                'REQUEST_METHOD' => 'GET',
+                'QUERY_STRING' => 'q=abc',
+                'REQUEST_URI' => '/path/123?q=abc',
+                'SCRIPT_NAME' => '/index.php',
+                'PHP_SELF' => '/index.php'
+            ],
+            $additionalValues
+        );
 
         return new Enviroment($server, fopen('php://memory','r+'), ['cookies'], ['files']);
     }
