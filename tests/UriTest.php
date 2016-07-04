@@ -2,8 +2,6 @@
 namespace Test;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Enviroment;
-use Kambo\HttpMessage\Factories\Enviroment\Superglobal\UriFactory;
 use Kambo\HttpMessage\Uri;
 
 /**
@@ -15,6 +13,152 @@ use Kambo\HttpMessage\Uri;
  */
 class UriTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test create URI object with all parameters
+     *
+     * @return void
+     */
+    public function testCreateUri()
+    {
+        $uri = new Uri(
+            'http',
+            'www.example.com',
+            1111,
+            '/path/123',
+            'q=abc',
+            'fragment',
+            'user',
+            'password'
+        );
+
+        $this->assertEquals('fragment', $uri->getFragment());
+        $this->assertEquals('www.example.com', $uri->getHost());
+        $this->assertEquals('/path/123', $uri->getPath());
+        $this->assertEquals(1111, $uri->getPort());
+        $this->assertEquals('q=abc', $uri->getQuery());
+        $this->assertEquals('http', $uri->getScheme());
+        $this->assertEquals('user:password', $uri->getUserInfo());
+    }
+
+    /**
+     * Test create URI object with missing port information.
+     *
+     * @return void
+     */
+    public function testCreateUriNoPort()
+    {
+        $uri = new Uri(
+            'http',
+            'www.example.com'
+        );
+
+        $this->assertEquals(null, $uri->getPort());
+    }
+
+    /**
+     * Test creation of URI object with missing user info (password and username).
+     *
+     * @return void
+     */
+    public function testCreateUriMissingUserInfo()
+    {
+        $uri = new Uri(
+            'http',
+            'test.com'
+        );
+
+        $this->assertEquals(null, $uri->getUserInfo());
+    }
+
+    /**
+     * Test create URI object with already encoded query string. Uri MUST NOT
+     * double-encode characters that are already percent-encoded.
+     *
+     * @return void
+     */
+    public function testCreateUriQueryAlreadyEncoded()
+    {
+        $uri = new Uri(
+            'http',
+            'test.com',
+            null,
+            '/',
+            'foo%20foo=bar'
+        );
+
+        $this->assertEquals('foo%20foo=bar', $uri->getQuery());
+    }
+
+    /**
+     * Test create URI object with not encoded query string - query contains space.
+     *
+     * @return void
+     */
+    public function testCreateUriQueryNotEncoded()
+    {
+        $uri = new Uri(
+            'http',
+            'test.com',
+            null,
+            '/path/123',
+            'foo foo=bar'
+        );
+
+        $this->assertEquals('/path/123', $uri->getPath());
+        $this->assertEquals('foo%20foo=bar', $uri->getQuery());
+    }
+
+    /**
+     * Test create URI object with empty path - it must be preserved.
+     *
+     * @return void
+     */
+    public function testCreateUriPathEmpty()
+    {
+        $uri = new Uri(
+            'http',
+            'test.com',
+            null,
+            ''
+        );
+
+        $this->assertEquals('', $uri->getPath());
+    }
+
+    /**
+     * Test create URI object with invalid path.
+     *
+     * @expectedException \InvalidArgumentException
+     *
+     * @return void
+     */
+    public function testCreateUriPathInvalid()
+    {
+        $uri = new Uri(
+            'http',
+            'test.com',
+            null,
+            []
+        );
+    }
+
+    /**
+     * Test create URI object with empty path - it must be preserved.
+     *
+     * @return void
+     */
+    public function testCreateUriPathWithMultipleSlashes()
+    {
+        $uri = new Uri(
+            'http',
+            'test.com',
+            null,
+            '///'
+        );
+
+        $this->assertEquals('/', $uri->getPath());
+    }
+
     /**
      * Test creation of string representation of URI object.
      *
@@ -123,104 +267,6 @@ class UriTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals('http://domain.tld/foo/bar', (string)$uri);
-    }
-
-    /**
-     * Test create URI object from enviroment.
-     *
-     * @return void
-     */
-    public function testFromEnviroment()
-    {
-        $enviroment = new Enviroment($this->getTestData(), fopen('php://memory','r+'));
-        $uri        = UriFactory::fromEnviroment($enviroment);
-
-        $this->assertEquals(null, $uri->getFragment());
-        $this->assertEquals('test.com', $uri->getHost());
-        $this->assertEquals('/path/123', $uri->getPath());
-        $this->assertEquals(1111, $uri->getPort());
-        $this->assertEquals('q=abc', $uri->getQuery());
-        $this->assertEquals('http', $uri->getScheme());
-        $this->assertEquals('user:password', $uri->getUserInfo());
-    }
-
-    /**
-     * Test create URI object from enviroment with missing user info.
-     *
-     * @return void
-     */
-    public function testFromEnviromentMissingUserInfo()
-    {
-        $enviroment = new Enviroment(
-            $this->getTestData(
-                [
-                    'PHP_AUTH_USER' => null,
-                    'PHP_AUTH_PW' => null,
-                ]
-            ),
-            fopen('php://memory','r+')
-        );
-        $uri = UriFactory::fromEnviroment($enviroment);
-
-        $this->assertEquals(null, $uri->getFragment());
-        $this->assertEquals('test.com', $uri->getHost());
-        $this->assertEquals('/path/123', $uri->getPath());
-        $this->assertEquals(1111, $uri->getPort());
-        $this->assertEquals('q=abc', $uri->getQuery());
-        $this->assertEquals('http', $uri->getScheme());
-        $this->assertEquals(null, $uri->getUserInfo());
-    }
-
-    /**
-     * Test create URI object from enviroment but with already encoded query string.
-     *
-     * @return void
-     */
-    public function testFromEnviromentUrlAlreadyEncode()
-    {
-        $enviroment = new Enviroment(
-            $this->getTestData(
-                [
-                    'QUERY_STRING' => 'foo%20foo=bar',
-                    'REQUEST_URI' => '/path/123?foo%20foo=bar',
-                ]
-            ),
-            fopen('php://memory','r+')
-        );
-        $uri = UriFactory::fromEnviroment($enviroment);
-
-        $this->assertEquals(null, $uri->getFragment());
-        $this->assertEquals('test.com', $uri->getHost());
-        $this->assertEquals('/path/123', $uri->getPath());
-        $this->assertEquals(1111, $uri->getPort());
-        $this->assertEquals('foo%20foo=bar', $uri->getQuery());
-        $this->assertEquals('http', $uri->getScheme());
-    }
-
-    /**
-     * Test create URI object from enviroment.
-     *
-     * @return void
-     */
-    public function testFromEnviromentUrlNotEncode()
-    {
-        $enviroment = new Enviroment(
-            $this->getTestData(
-                [
-                    'QUERY_STRING' => 'foo foo=bar',
-                    'REQUEST_URI' => '/path/123?foo foo=bar',
-                ]
-            ),
-            fopen('php://memory','r+')
-        );
-        $uri = UriFactory::fromEnviroment($enviroment);
-
-        $this->assertEquals(null, $uri->getFragment());
-        $this->assertEquals('test.com', $uri->getHost());
-        $this->assertEquals('/path/123', $uri->getPath());
-        $this->assertEquals(1111, $uri->getPort());
-        $this->assertEquals('foo%20foo=bar', $uri->getQuery());
-        $this->assertEquals('http', $uri->getScheme());
     }
 
     /**
@@ -515,33 +561,6 @@ class UriTest extends \PHPUnit_Framework_TestCase
             '/data/test',
             'action=view',
             'fragment'
-        );
-    }
-
-    /**
-     * Get test data.
-     *
-     * @return Array Test data in same format as in $_SERVER variable.
-     */
-    private function getTestData(array $change = [])
-    {
-        return array_merge(
-            [
-                'HTTP_HOST' => 'test.com',
-                'SERVER_NAME' => 'test.com',
-                'SERVER_PORT' => '1111',
-                'REMOTE_ADDR' => '10.0.2.2',
-                'REQUEST_SCHEME' => 'http',
-                'REDIRECT_URL' => '/path/123',
-                'SERVER_PROTOCOL' => 'HTTP/1.1',
-                'REQUEST_METHOD' => 'GET',
-                'QUERY_STRING' => 'q=abc',
-                'REQUEST_URI' => '/path/123?q=abc',
-                'SCRIPT_NAME' => '/index.php',
-                'PHP_AUTH_USER' => 'user',
-                'PHP_AUTH_PW' => 'password',
-            ],
-            $change
         );
     }
 }
