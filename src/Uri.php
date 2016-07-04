@@ -147,7 +147,7 @@ class Uri implements UriInterface
         $this->scheme   = $this->normalizeScheme($scheme);
         $this->host     = strtolower($host);
         $this->port     = $port;
-        $this->path     = empty($path) ? '/' : $this->urlEncode($path);
+        $this->path     = $this->normalizePath($path);
         $this->query    = $this->urlEncode($query);
         $this->fragment = $fragment;
         $this->user     = $user;
@@ -581,9 +581,9 @@ class Uri implements UriInterface
     }
 
     /**
-     * Normalize Uri scheme.
+     * Normalize scheme part of Uri.
      *
-     * @param  string $scheme Raw Uri scheme.
+     * @param string $scheme Raw Uri scheme.
      *
      * @return string Normalized Uri
      *
@@ -602,6 +602,35 @@ class Uri implements UriInterface
         }
 
         return $scheme;
+    }
+
+    /**
+     * Normalize path part of Uri and ensure it is properly encoded..
+     *
+     * @param string $path Raw Uri path.
+     *
+     * @return string Normalized Uri path
+     *
+     * @throws InvalidArgumentException If the Uri scheme is not a string.
+     */
+    private function normalizePath($path)
+    {
+        if (!is_string($path) && !method_exists($path, '__toString')) {
+            throw new InvalidArgumentException('Uri path must be a string');
+        }
+
+        $path = $this->urlEncode($path);
+
+        if (empty($path)) {
+            return '';
+        }
+
+        if ($path[0] !== '/') {
+            return $path;
+        }
+
+        // Ensure only one leading slash
+        return '/' . ltrim($path, '/');
     }
 
     /**
