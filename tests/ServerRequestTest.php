@@ -465,8 +465,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     private function getServerRequestForTest($body = '', $cookies = [], $headersMock = null)
     {
-        $change = [];
-        $serverGlobals  = array_merge(['HTTP_HOST' => 'test.com'], $change);
+        $serverGlobals  = ['HTTP_HOST' => 'test.com'];
         $bodyStreamMock = $this->getMockBuilder(Stream::class)
                                ->disableOriginalConstructor()
                                ->getMock();
