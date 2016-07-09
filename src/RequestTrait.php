@@ -74,7 +74,7 @@ trait RequestTrait
      *
      * @return Headers Message headers
      */
-    abstract public function provideHeaders();
+    abstract protected function provideHeaders();
 
     /**
      * Retrieves the message's request target.
