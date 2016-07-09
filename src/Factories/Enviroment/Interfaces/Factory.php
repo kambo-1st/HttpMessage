@@ -20,5 +20,5 @@ interface Factory
      *
      * @return mixed instance of object based on Enviroment 
      */
-    public static function fromEnviroment(Enviroment $enviroment);
+    public function create(Enviroment $enviroment);
 }

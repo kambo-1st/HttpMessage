@@ -22,7 +22,7 @@ class UriFactory implements Factory
      *
      * @return Uri Instance of Uri object created from enviroment
      */
-    public static function fromEnviroment(Enviroment $enviroment)
+    public function create(Enviroment $enviroment)
     {
         $scheme = $enviroment->getRequestScheme();
         $host   = $enviroment->getHost();

@@ -178,7 +178,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
         $newUrl = 'http://foo.com/bar?parameter=value';
 
         $serverRequest = $this->getServerRequestForTest();
-        $newRequest    = $serverRequest->withUri(UriFactory::create($newUrl));
+        $newRequest    = $serverRequest->withUri((new UriFactory())->create($newUrl));
 
         $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
         $this->assertEquals($url, (string)$serverRequest->getUri());

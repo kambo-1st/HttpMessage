@@ -39,7 +39,7 @@ class ServerRequestFactoryTest extends \PHPUnit_Framework_TestCase
         $enviromentMock->method('getServer')->will($this->returnValue([]));
         $enviromentMock->method('getCookies')->will($this->returnValue([]));
 
-        $serverRequest = ServerRequestFactory::fromEnviroment($enviromentMock);
+        $serverRequest = (new ServerRequestFactory())->create($enviromentMock);
         $this->assertInstanceOf(ServerRequest::class, $serverRequest);
     }
 }

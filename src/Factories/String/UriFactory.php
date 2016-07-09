@@ -20,10 +20,9 @@ class UriFactory
      *
      * @return Uri Instance of Uri based on provided string
      */
-    public static function create($uri)
+    public function create($uri)
     {
-        list($scheme, $host, $port, $path, $query, $fragment, $user, $pass)
-            = (new self())->parseUrl($uri);
+        list($scheme, $host, $port, $path, $query, $fragment, $user, $pass) = $this->parseUrl($uri);
 
         return new Uri($scheme, $host, $port, $path, $query, $fragment, $user, $pass);
     }

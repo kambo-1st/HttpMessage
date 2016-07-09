@@ -66,7 +66,7 @@ class Request extends Message implements RequestInterface
         parent::__construct($headers, $body, $protocol);
 
         if (is_string($uri)) {
-            $this->uri = UriFactory::create($uri);
+            $this->uri = (new UriFactory())->create($uri);
         } elseif (!($uri instanceof UriInterface)) {
             throw new InvalidArgumentException(
                 'URI must be a string or implement Psr\Http\Message\UriInterface'

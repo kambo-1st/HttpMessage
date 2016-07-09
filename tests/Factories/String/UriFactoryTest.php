@@ -21,7 +21,7 @@ class UriFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
-        $uri = UriFactory::create(
+        $uri = (new UriFactory())->create(
             'http://user:password@test.com:1111/path/123?q=abc#test'
         );
 

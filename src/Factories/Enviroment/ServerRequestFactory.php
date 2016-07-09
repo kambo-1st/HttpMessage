@@ -37,11 +37,11 @@ class ServerRequestFactory implements Factory
      *
      * @return ServerRequest Instance of ServerRequest object
      */
-    public static function fromEnviroment(Enviroment $enviroment)
+    public function create(Enviroment $enviroment)
     {
-        $uri         = UriFactory::fromEnviroment($enviroment);
-        $uploadFiles = FilesFactory::fromEnviroment($enviroment);
-        $headers     = HeadersFactory::fromEnviroment($enviroment);
+        $uri         = (new UriFactory())->create($enviroment);
+        $uploadFiles = (new FilesFactory())->create($enviroment);
+        $headers     = (new HeadersFactory())->create($enviroment);
 
         $cookies       = $enviroment->getCookies();
         $requestMethod = $enviroment->getRequestMethod();

@@ -22,7 +22,7 @@ application from the CGI and/or PHP environment:
 
 ```php
 $enviroment    = new Enviroment($_SERVER, fopen('php://input', 'w+'), $_COOKIE, $_FILES);
-$serverRequest = ServerRequestFactory::fromEnviroment($enviroment);
+$serverRequest = (new ServerRequestFactory())->create($enviroment);
 ```
 
 ## License

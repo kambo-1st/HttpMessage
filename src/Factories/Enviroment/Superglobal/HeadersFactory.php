@@ -36,9 +36,9 @@ class HeadersFactory implements Factory
      *
      * @return Headers Instance of Headers object from enviroment
      */
-    public static function fromEnviroment(Enviroment $enviroment)
+    public function create(Enviroment $enviroment)
     {
-        return new Headers((new self())->resolveHeaders($enviroment->getServer()));
+        return new Headers($this->resolveHeaders($enviroment->getServer()));
     }
 
     /**

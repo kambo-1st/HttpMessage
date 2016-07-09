@@ -49,7 +49,7 @@ class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $headers = HeadersFactory::fromEnviroment($this->getEnviromentMock($serverSuperglobal));
+        $headers = (new HeadersFactory())->create($this->getEnviromentMock($serverSuperglobal));
 
         $this->assertInstanceOf(Headers::class, $headers);
         $this->assertEquals($expectedHeaders, $headers->all());
@@ -80,7 +80,7 @@ class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $headers = HeadersFactory::fromEnviroment($this->getEnviromentMock($serverSuperglobal));
+        $headers = (new HeadersFactory())->create($this->getEnviromentMock($serverSuperglobal));
 
         $this->assertInstanceOf(Headers::class, $headers);
         $this->assertEquals($expectedHeaders, $headers->all());
@@ -114,7 +114,7 @@ class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $headers = HeadersFactory::fromEnviroment($this->getEnviromentMock($serverSuperglobal));
+        $headers = (new HeadersFactory())->create($this->getEnviromentMock($serverSuperglobal));
 
         $this->assertInstanceOf(Headers::class, $headers);
         $this->assertEquals($expectedHeaders, $headers->all());

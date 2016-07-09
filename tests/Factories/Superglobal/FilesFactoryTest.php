@@ -33,7 +33,7 @@ class FilesFactoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         $enviroment    = $this->getEnviromentMock($uploadSuperglobal);
-        $uploadedFiles = FilesFactory::fromEnviroment($enviroment);
+        $uploadedFiles = (new FilesFactory())->create($enviroment);
 
         $this->assertInternalType('array', $uploadedFiles);
         $this->assertArrayHasKey('upload', $uploadedFiles);
@@ -103,7 +103,7 @@ class FilesFactoryTest extends \PHPUnit_Framework_TestCase
         ];
 
         $enviroment    = $this->getEnviromentMock($uploadSuperglobal);
-        $uploadedFiles = FilesFactory::fromEnviroment($enviroment);
+        $uploadedFiles = (new FilesFactory())->create($enviroment);
 
         $this->assertInternalType('array', $uploadedFiles);
         $this->assertArrayHasKey('upload', $uploadedFiles);

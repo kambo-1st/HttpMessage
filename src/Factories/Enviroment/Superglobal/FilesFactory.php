@@ -24,10 +24,10 @@ class FilesFactory implements Factory
      *               are no uploads an empty array will be returned:
      *               [<field name> => <instance of UploadedFile>, ...]
      */
-    public static function fromEnviroment(Enviroment $enviroment)
+    public function create(Enviroment $enviroment)
     {
         $files  = $enviroment->getFiles();
-        $parsed = (new self())->parseFiles($files);
+        $parsed = $this->parseFiles($files);
 
         return $parsed;
     }
@@ -46,7 +46,7 @@ class FilesFactory implements Factory
         $parsed = [];
         if (!empty($files)) {
             foreach ($files as $field => $file) {
-                $parsed[$field] = (new self())->parseFile($file);
+                $parsed[$field] = $this->parseFile($file);
             }
         }
 

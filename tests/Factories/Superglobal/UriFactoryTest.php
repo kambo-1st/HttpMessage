@@ -36,7 +36,7 @@ class UriFactoryTest extends \PHPUnit_Framework_TestCase
         $enviromentMock->method('getAuthUser')->will($this->returnValue('user'));
         $enviromentMock->method('getAuthPassword')->will($this->returnValue('password'));
 
-        $uri = UriFactory::fromEnviroment($enviromentMock);
+        $uri = (new UriFactory())->create($enviromentMock);
 
         $this->assertInstanceOf(Uri::class, $uri);
         $this->assertEquals(null, $uri->getFragment());
