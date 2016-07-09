@@ -490,13 +490,13 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         return new ServerRequest(
-            $requestUri,
-            $cookies,
             'GET',
-            [],
-            $headersMock,
+            $requestUri,
             $bodyStreamMock,
+            $headersMock,
             $serverGlobals,
+            $cookies,
+            [],
             '1.1'
         );
     }

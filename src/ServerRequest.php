@@ -113,25 +113,25 @@ class ServerRequest extends Message implements ServerRequestInterface
      *
      * Adds a host header when none was provided and a host is defined in uri.
      * 
-     * @param UriInterface     $uri             The request URI object
-     * @param array            $cookies         The request cookies collection
-     * @param string           $requestMethod   The request method
-     * @param array            $uploadFiles     The request uploadedFiles collection
-     * @param Headers          $headers         The request headers collection
-     * @param StreamInterface  $body            The request body object
-     * @param array            $serverVariables The server environment variables
-     * @param string           $protocol        The request version of the protocol
-     * @param array            $attributes      The request attributs
-     * 
+     * @param string          $requestMethod   The request method
+     * @param UriInterface    $uri             The request URI object
+     * @param StreamInterface $body            The request body object
+     * @param Headers         $headers         The request headers collection     
+     * @param array           $serverVariables The server environment variables
+     * @param array           $cookies         The request cookies collection
+     * @param array           $uploadFiles     The request uploadedFiles collection
+     * @param string          $protocol        The request version of the protocol
+     * @param array           $attributes      The request attributs
+     *
      */
     public function __construct(
-        Uri $uri,
-        array $cookies,
         $requestMethod,
-        array $uploadFiles,
-        Headers $headers,
+        Uri $uri,
         StreamInterface $body,
+        Headers $headers,
         array $serverVariables,
+        array $cookies,
+        array $uploadFiles,
         $protocol,
         array $attributes = []
     ) {

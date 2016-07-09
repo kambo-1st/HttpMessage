@@ -48,16 +48,16 @@ class ServerRequestFactory implements Factory
         $bodyStream    = new Stream($enviroment->getBody());
         $protocol      = $enviroment->getProtocolVersion();
 
-        $serverParams = $enviroment->getServer();
+        $serverVariables = $enviroment->getServer();
 
         return new ServerRequest(
-            $uri,
-            $cookies,
             $requestMethod,
-            $uploadFiles,
-            $headers,
+            $uri,
             $bodyStream,
-            $serverParams,
+            $headers,
+            $serverVariables,
+            $cookies,
+            $uploadFiles,
             $protocol
         );
     }
