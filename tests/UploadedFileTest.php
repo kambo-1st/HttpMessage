@@ -26,7 +26,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
      * Virtual stream for the testing.
      *
      * @var vfsStream
-     */    
+     */
     private $root;
 
     /**

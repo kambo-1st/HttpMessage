@@ -3,6 +3,7 @@ namespace Test;
 
 // \HttpMessage
 use Kambo\HttpMessage\Enviroment\Enviroment;
+use Kambo\HttpMessage\Headers;
 use Kambo\HttpMessage\ServerRequest;
 use Kambo\HttpMessage\Stream;
 use Kambo\HttpMessage\UploadedFile;
@@ -28,7 +29,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRequestTarget()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
 
         $this->assertEquals('/path/123?q=abc', $serverRequest->getRequestTarget());
     }
@@ -41,25 +42,9 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetServerParams()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $expected = [
             'HTTP_HOST' => 'test.com',
-            'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36'.
-            ' (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36',
-            'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch',
-            'HTTP_ACCEPT_LANGUAGE' => 'cs-CZ,cs;q=0.8,en;q=0.6',
-            'SERVER_NAME' => 'test.com',
-            'SERVER_ADDR' => '10.0.2.15',
-            'SERVER_PORT' => '1111',
-            'REMOTE_ADDR' => '10.0.2.2',
-            'REQUEST_SCHEME' => 'http',
-            'SERVER_PROTOCOL' => 'HTTP/1.1',
-            'REQUEST_METHOD' => 'GET',
-            'QUERY_STRING' => 'q=abc',
-            'REQUEST_URI' => '/path/123?q=abc',
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW' => 'password',
         ];
 
         $this->assertEquals($expected, $serverRequest->getServerParams());
@@ -73,7 +58,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
     public function testGetCookieParams()
     {
         $cookie        = ['foo' => 'bar', 'name' => 'value'];
-        $serverRequest = $this->getEnviromentForTest([], null, null, $cookie);
+        $serverRequest = $this->getServerRequestForTest(null, $cookie);
         $expected      = [
             "foo" => "bar",
             "name" => "value"
@@ -92,7 +77,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
     public function testWithCookieParams()
     {
         $cookie        = ['foo' => 'bar', 'name' => 'value'];
-        $serverRequest = $this->getEnviromentForTest([], null, null, $cookie);
+        $serverRequest = $this->getServerRequestForTest(null, $cookie);
         $expected      = [
             "foo" => "bar",
             "name" => "value"
@@ -118,7 +103,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithRequestTarget()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->withRequestTarget('/foo/?bar=test');
 
         // check if was not changed
@@ -133,7 +118,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
 
         $this->assertEquals('GET', $serverRequest->getMethod());
     }
@@ -147,7 +132,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithMethod()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->withMethod('POST');
 
         // check if was not changed in original instance of object
@@ -164,7 +149,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithMethodInvalid()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->withMethod('TEST');
     }
 
@@ -175,7 +160,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUri()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
 
         $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
     }
@@ -189,10 +174,10 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithUri()
     {
-        $url    = 'http://user:password@test.com:1111/path/123?q=abc';
+        $url    = 'http://user:password@www.example.com:1111/path/123?q=abc#fragment';
         $newUrl = 'http://foo.com/bar?parameter=value';
 
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->withUri(UriFactory::create($newUrl));
 
         $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
@@ -209,7 +194,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetQueryParams()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $expected      = [
             'q' => 'abc'
         ];
@@ -226,11 +211,12 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithQueryParams()
     {
-        $serverRequest = $this->getEnviromentForTest();
-        $expected      = [
+        $serverRequest = $this->getServerRequestForTest();
+
+        $expected = [
             'q' => 'abc'
         ];
-        $newQuery      = [
+        $newQuery = [
             'foo' => 'bar'
         ];
 
@@ -247,7 +233,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUploadedFiles()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $this->assertEquals([], $serverRequest->getUploadedFiles());
     }
 
@@ -268,10 +254,10 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
             'second-upload-field' => [
                 new UploadedFile('tmp/test3.txt', 'test3.txt', 'text/plain', 4096, 0),
                 new UploadedFile('tmp/test4.txt', 'test4.txt', 'text/plain', 8192, 0)
-            ]            
+            ]
         ];
 
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->WithUploadedFiles($newFiles);
 
         $this->assertEquals([], $serverRequest->getUploadedFiles());
@@ -291,7 +277,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
             'foo' => 'bar'
         ];
 
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->WithUploadedFiles($newFiles);
     }
 
@@ -302,7 +288,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetParsedBody()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $this->assertEquals(null, $serverRequest->getParsedBody());
     }
 
@@ -313,11 +299,18 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetParsedBodyFormEncode()
     {
-        $serverRequest = $this->getEnviromentForTest(
-            [
-                'CONTENT_TYPE'=>'application/x-www-form-urlencoded'
-            ],
-            'test=test&submit=Test'
+
+        $headersMock = $this->getMockBuilder(Headers::class)
+                            ->disableOriginalConstructor()
+                            ->getMock();
+
+        $headersMock->method('exists')->will($this->returnValue(true));
+        $headersMock->method('get')->will($this->returnValue(['application/x-www-form-urlencoded']));
+
+        $serverRequest = $this->getServerRequestForTest(
+            'test=test&submit=Test',
+            [],
+            $headersMock
         );
         $expected = [
             "test" => "test",
@@ -325,50 +318,6 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expected, $serverRequest->getParsedBody());
-    }
-
-    /**
-     * Test get json parsed body of the request.
-     * 
-     * @return void
-     */
-    public function testGetParsedBodyJson()
-    {
-        $expected = [
-            "test" => "test",
-            "submit" => "Test"
-        ];
-
-        $serverRequest = $this->getEnviromentForTest(
-            [
-                'CONTENT_TYPE'=>'application/json'
-            ],
-            json_encode($expected)
-        );
-
-        $this->assertEquals($expected, $serverRequest->getParsedBody());
-    }
-
-    /**
-     * Test get xml parsed body of the request.
-     * 
-     * @return void
-     */
-    public function testGetParsedBodyXml()
-    {
-        $expected = [
-            "test" => "test",
-            "submit" => "Test"
-        ];
-
-        $bodyXml = "<?xml version='1.0'?> 
-        <document>
-         <test>data</test>
-         <example>here</example>
-        </document>";
-
-        $serverRequest = $this->getEnviromentForTest(['CONTENT_TYPE'=>'text/xml'], $bodyXml);
-        $this->assertEquals(simplexml_load_string($bodyXml), $serverRequest->getParsedBody());
     }
 
     /**
@@ -380,9 +329,17 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithParsedBody()
     {
-        $serverRequest = $this->getEnviromentForTest(
-            ['CONTENT_TYPE'=>'application/x-www-form-urlencoded'],
-            'test=test&submit=Test'
+        $headersMock = $this->getMockBuilder(Headers::class)
+                            ->disableOriginalConstructor()
+                            ->getMock();
+
+        $headersMock->method('exists')->will($this->returnValue(true));
+        $headersMock->method('get')->will($this->returnValue(['application/x-www-form-urlencoded']));
+
+        $serverRequest = $this->getServerRequestForTest(
+            'test=test&submit=Test',
+            [],
+            $headersMock
         );
         $expected = [
             "test" => "test",
@@ -408,10 +365,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithParsedBodyInvalidArgument()
     {
-        $serverRequest = $this->getEnviromentForTest(
-            ['CONTENT_TYPE'=>'application/x-www-form-urlencoded'],
-            'test=test&submit=Test'
-        );
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest = $serverRequest->withParsedBody('value cannot be string');
     }
 
@@ -422,7 +376,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAttributes()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $this->assertEquals([], $serverRequest->getAttributes());
     }
 
@@ -435,7 +389,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithAttribute()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->withAttribute('foo', 'bar');
 
         $this->assertEquals('bar', $newRequest->getAttribute('foo'));
@@ -449,7 +403,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAttribute()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->withAttribute('foo', 'bar');
 
         $this->assertEquals('bar', $newRequest->getAttribute('foo'));
@@ -462,7 +416,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAttributeDefualtValue()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->withAttribute('foo', 'bar');
 
         $this->assertEquals('foo', $newRequest->getAttribute('foo2', 'foo'));
@@ -475,7 +429,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithoutAttribute()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $newRequest    = $serverRequest->withAttribute('foo', 'bar');
 
         $this->assertEquals('bar', $newRequest->getAttribute('foo'));
@@ -494,7 +448,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetProtocolVersion()
     {
-        $serverRequest = $this->getEnviromentForTest();
+        $serverRequest = $this->getServerRequestForTest();
         $this->assertEquals('1.1', $serverRequest->getProtocolVersion());
     }
 
@@ -502,36 +456,48 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get instance of ServerRequest for the test
-     * 
+     *
+     * @param string       $body        Body that will be injected into request.
+     * @param array        $cookies     Cookies in format compatible with $_COOKIES.
+     * @param Headers|null $headersMock Mock of headers object.
+     *     
      * @return ServerRequest ServerRequest for the test
      */
-    private function getEnviromentForTest($change = [], $body = '', $attributes = null, $cookies = [])
+    private function getServerRequestForTest($body = '', $cookies = [], $headersMock = null)
     {
-        $serverForTest = array_merge([
-            'HTTP_HOST' => 'test.com',
-            'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36'.
-            ' (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36',
-            'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch',
-            'HTTP_ACCEPT_LANGUAGE' => 'cs-CZ,cs;q=0.8,en;q=0.6',
-            'SERVER_NAME' => 'test.com',
-            'SERVER_ADDR' => '10.0.2.15',
-            'SERVER_PORT' => '1111',
-            'REMOTE_ADDR' => '10.0.2.2',
-            'REQUEST_SCHEME' => 'http',
-            'SERVER_PROTOCOL' => 'HTTP/1.1',
-            'REQUEST_METHOD' => 'GET',
-            'QUERY_STRING' => 'q=abc',
-            'REQUEST_URI' => '/path/123?q=abc',
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW' => 'password',
-        ], $change);
+        $change = [];
+        $serverGlobals  = array_merge(['HTTP_HOST' => 'test.com'], $change);
+        $bodyStreamMock = $this->getMockBuilder(Stream::class)
+                               ->disableOriginalConstructor()
+                               ->getMock();
+        $bodyStreamMock->method('__toString')->will($this->returnValue($body));
 
-        $memoryStream = fopen('php://memory','r+');
-        fwrite($memoryStream, $body);
-        rewind($memoryStream);
+        if (!isset($headersMock)) {
+            $headersMock = $this->getMockBuilder(Headers::class)
+                                ->disableOriginalConstructor()
+                                ->getMock();
+        }
 
-        $enviroment = new Enviroment($serverForTest, $memoryStream, $cookies);
-        return ServerRequestFactory::fromEnviroment($enviroment);
+        $requestUri = new Uri(
+            'http',
+            'www.example.com',
+            1111,
+            '/path/123',
+            'q=abc',
+            'fragment',
+            'user',
+            'password'
+        );
+
+        return new ServerRequest(
+            $requestUri,
+            $cookies,
+            'GET',
+            [],
+            $headersMock,
+            $bodyStreamMock,
+            $serverGlobals,
+            '1.1'
+        );
     }
 }

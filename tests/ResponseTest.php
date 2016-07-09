@@ -104,5 +104,5 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $withNewStatus  = $serverResponse->withStatus(419, 'Authentication Timeout');
 
         $this->assertEquals('Authentication Timeout', $withNewStatus->getReasonPhrase());
-    }    
+    }
 }

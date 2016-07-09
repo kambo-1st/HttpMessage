@@ -128,7 +128,7 @@ class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
      *
      * @return Enviroment
      */
-    private function getEnviromentMock(array $serverSuperglobal=[])
+    private function getEnviromentMock(array $serverSuperglobal = [])
     {
         $enviromentMock = $this->getMockBuilder(Enviroment::class)
                                ->disableOriginalConstructor()

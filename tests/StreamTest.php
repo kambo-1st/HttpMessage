@@ -38,7 +38,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test creating stream from file.
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test detaching stream - setached stream must be returned.
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test closing stream.
      *
      * @return void
      */
@@ -88,7 +88,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test get size of stream.
      *
      * @return void
      */
@@ -104,7 +104,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test seek and tell function.
      *
      * @return void
      */
@@ -121,13 +121,13 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test seeking on the detached stream - an exception must be raised.
      *
      * @expectedException \RuntimeException
      * 
      * @return void
      */
-    public function testSeekException()
+    public function testSeekOnDetached()
     {
         $fileContent = 'content of file';
 
@@ -139,13 +139,13 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test tell on the detached stream - an exception must be raised.
      *
      * @expectedException \RuntimeException
      * 
      * @return void
      */
-    public function testTellException()
+    public function testTellOnDetached()
     {
         $fileContent = 'content of file';
 
@@ -157,7 +157,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test if the stream is on end - in this test it is not.
      *
      * @return void
      */
@@ -172,11 +172,11 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test if the stream is on end - in this test is it.
      *
      * @return void
      */
-    public function testEofTrue()
+    public function testEofOnEndOfFile()
     {
         $fileContent = 'content of file';
 
@@ -188,25 +188,8 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test write into the stream.
      *
-     *
-     * @expectedException \RuntimeException
-     * 
-     * @return void
-     */
-    public function testWriteException()
-    {
-        $fileContent = 'content of file';
-
-        $temp = vfsStream::newDirectory('test')->at($this->root);
-        vfsStream::newFile('test.txt')->at($temp)->setContent($fileContent);
-        $testStream = new Stream(fopen($this->root->url().'/test/test.txt', 'r'));
-        $testStream->write('test');
-    }
-
-    /**
-     *
-     * 
      * @return void
      */
     public function testWrite()
@@ -221,8 +204,25 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test write into the read only stream - an exception must be raised.
      *
-     * 
+     * @expectedException \RuntimeException
+     *
+     * @return void
+     */
+    public function testWriteException()
+    {
+        $fileContent = 'content of file';
+
+        $temp = vfsStream::newDirectory('test')->at($this->root);
+        vfsStream::newFile('test.txt')->at($temp)->setContent($fileContent);
+        $testStream = new Stream(fopen($this->root->url().'/test/test.txt', 'r'));
+        $testStream->write('test');
+    }
+
+    /**
+     * Test reading from the stream.
+     *
      * @return void
      */
     public function testRead()
@@ -236,10 +236,10 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test reading from the detached stream - an exception must be raised.
      *
      * @expectedException \RuntimeException
-     * 
+     *
      * @return void
      */
     public function testReadExpection()
@@ -254,8 +254,8 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test get contents from the stream.
      *
-     * 
      * @return void
      */
     public function testGetContents()
@@ -270,10 +270,10 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test get contents from the detached stream - an exception must be raised.
      *
      * @expectedException \RuntimeException
-     * 
+     *
      * @return void
      */
     public function testGetContentsExpection()
@@ -288,8 +288,8 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test get metadata from the stream.
      *
-     * 
      * @return void
      */
     public function testGetMetadata()
@@ -299,8 +299,6 @@ class StreamTest extends \PHPUnit_Framework_TestCase
             'timed_out' => false,
             'blocked' => true,
             'eof' => false,
-            'wrapper_type' => 'user-space',
-            'stream_type' => 'user-space',
             'mode' => 'r',
             'unread_bytes' => 0,
             'seekable' => true,
@@ -313,12 +311,14 @@ class StreamTest extends \PHPUnit_Framework_TestCase
 
         $streamMetadata = $testStream->getMetadata();
         unset($streamMetadata['wrapper_data']);
+        unset($streamMetadata['wrapper_type']);
+        unset($streamMetadata['stream_type']);
         $this->assertEquals($expected, $streamMetadata);
     }
 
     /**
+     * Test get metadata mode from the stream.
      *
-     * 
      * @return void
      */
     public function testGetMetadataMode()
@@ -333,11 +333,11 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test stream typecasting to the string.
      *
-     * 
      * @return void
      */
-    public function testStringCasting()
+    public function testStringTypeCasting()
     {
         $fileContent = 'content of file';
 
@@ -349,11 +349,11 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test typecasting of detached stream to the string - an empty value must be returned.
      *
-     * 
      * @return void
      */
-    public function testStringCastingNoStream()
+    public function testStringTypeCastingNoStream()
     {
         $fileContent = 'content of file';
 
@@ -365,8 +365,11 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test typecasting of unreadable stream to string, an underline implemenation will 
+     * raise an exception. But this method must not allow propagation of this exception
+     * as PHP's string casting operations should not raise an exceptions. Instead an empty
+     * value will be returned.
      *
-     * 
      * @return void
      */
     public function testStringCastingNoSeekable()
@@ -375,18 +378,8 @@ class StreamTest extends \PHPUnit_Framework_TestCase
 
         $temp = vfsStream::newDirectory('test')->at($this->root);
         vfsStream::newFile('test.txt')->at($temp)->setContent($fileContent);
+        $testStream = new Stream(fopen($this->root->url().'/test/test.txt', 'c'));
 
-        $testStream = new StubStream(fopen($this->root->url().'/test/test.txt', 'r'));
         $this->assertEquals('', (string)$testStream);
     }
 }
-
-// @codingStandardsIgnoreStart
-class StubStream extends Stream
-{
-    public function rewind()
-    {
-        throw new RuntimeException('Could not read from stream');
-    }
-}
-// @codingStandardsIgnoreEnd

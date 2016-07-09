@@ -52,6 +52,7 @@ class Headers
      * @param string $name  Name of the header.
      * @param mixed  $value Value of the header can be scalar data type or string.
      *
+     * @return void
      */
     public function add($name, $value)
     {
@@ -73,6 +74,7 @@ class Headers
      * @param string $name  Name of the header.
      * @param mixed  $value Value of the header can be scalar data type or string.
      *
+     * @return void
      */
     public function set($name, $value)
     {

@@ -112,14 +112,14 @@ class FilesFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $uploadedFiles['second_upload']);
 
         list($firstFile) = $uploadedFiles['upload'];
-        $this->assertInstanceOf(UploadedFile::class, $firstFile);        
+        $this->assertInstanceOf(UploadedFile::class, $firstFile);
         $this->assertEquals(54654654, $firstFile->getSize());
         $this->assertEquals(0, $firstFile->getError());
         $this->assertEquals('file0.txt', $firstFile->getClientFilename());
         $this->assertEquals('text/plain', $firstFile->getClientMediaType());
 
         list(,$secondFile) = $uploadedFiles['second_upload'];
-        $this->assertInstanceOf(UploadedFile::class, $secondFile);        
+        $this->assertInstanceOf(UploadedFile::class, $secondFile);
         $this->assertEquals(4565467, $secondFile->getSize());
         $this->assertEquals(0, $secondFile->getError());
         $this->assertEquals('file3.txt', $secondFile->getClientFilename());
@@ -136,7 +136,7 @@ class FilesFactoryTest extends \PHPUnit_Framework_TestCase
      *
      * @return Enviroment
      */
-    private function getEnviromentMock(array $filesSuperglobal=[])
+    private function getEnviromentMock(array $filesSuperglobal = [])
     {
         $enviromentMock = $this->getMockBuilder(Enviroment::class)
                                ->disableOriginalConstructor()

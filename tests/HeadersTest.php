@@ -2,9 +2,7 @@
 namespace Test;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Enviroment;
 use Kambo\HttpMessage\Headers;
-use Kambo\HttpMessage\Factories\Enviroment\Superglobal\HeadersFactory;
 
 /**
  * Unit test for the Headers object.
@@ -95,9 +93,9 @@ class HeadersTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLine()
     {
-        $headers   = $this->getHeadersForTest();
-        $accept    = $headers->getLine('accept');
-        $expected  = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8';
+        $headers  = $this->getHeadersForTest();
+        $accept   = $headers->getLine('accept');
+        $expected = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8';
 
         $this->assertEquals($expected, $accept);
     }
@@ -185,8 +183,7 @@ class HeadersTest extends \PHPUnit_Framework_TestCase
             'PHP_AUTH_USER' => 'user',
             'PHP_AUTH_PW' => 'password'
         ];
-
-        $enviroment = new Enviroment($headersForTest, fopen('php://memory','r+'));
-        return HeadersFactory::fromEnviroment($enviroment);
+        
+        return new Headers($headersForTest);
     }
 }

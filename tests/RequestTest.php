@@ -4,7 +4,6 @@ namespace Test;
 // \HttpMessage
 use Kambo\HttpMessage\Request;
 use Kambo\HttpMessage\Uri;
-use Kambo\HttpMessage\Factories\String\UriFactory;
 
 /**
  * Unit test for the Request object.
@@ -127,7 +126,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $serverRequest = new Request('GET', $url);
 
         $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
-        $this->assertEquals($url, (string)$serverRequest->getUri());
     }
 
     /**
@@ -138,17 +136,16 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithUri()
     {
-        $url    = 'http://user:password@test.com:1111/path/123?q=abc#test';
-        $newUrl = 'http://foo.com/bar?parameter=value';
+        $url = 'http://user:password@test.com:1111/path/123?q=abc#test';
 
         $serverRequest = new Request('GET', $url);
-        $newRequest    = $serverRequest->withUri(UriFactory::create($newUrl));
+        $newRequest    = $serverRequest->withUri($this->getUriMockForTests());
 
         $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
-        $this->assertEquals($url, (string)$serverRequest->getUri());
-
         $this->assertInstanceOf(Uri::class, $newRequest->getUri());
-        $this->assertEquals($newUrl, (string)$newRequest->getUri());
+
+        $this->assertNotSame($serverRequest, $newRequest);
+        $this->assertNotSame($serverRequest->getUri(), $newRequest->getUri());
     }
 
     /**
@@ -160,17 +157,16 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithUriPreserveHost()
     {
-        $url    = 'http://user:password@test.com:1111/path/123?q=abc#test';
-        $newUrl = 'http://foo.com/bar?parameter=value';
+        $url = 'http://user:password@test.com:1111/path/123?q=abc#test';
 
         $serverRequest = new Request('GET', $url);
-        $newRequest    = $serverRequest->withUri(UriFactory::create($newUrl), true);
+        $newRequest    = $serverRequest->withUri($this->getUriMockForTests(), true);
 
         $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
-        $this->assertEquals($url, (string)$serverRequest->getUri());
-
         $this->assertInstanceOf(Uri::class, $newRequest->getUri());
-        $this->assertEquals($newUrl, (string)$newRequest->getUri());
+
+        $this->assertNotSame($serverRequest, $newRequest);
+        $this->assertNotSame($serverRequest->getUri(), $newRequest->getUri());
     }
 
     /**
@@ -182,19 +178,31 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithUriPreserveHostNoHostHeader()
     {
-        $url    = 'http://user:password@test.com:1111/path/123?q=abc#test';
-        $newUrl = 'http://foo.com/bar?parameter=value';
+        $url = 'http://user:password@test.com:1111/path/123?q=abc#test';
 
         $serverRequest = new Request('GET', $url);
         $newRequest    = $serverRequest->withoutHeader('Host');
-        $newRequest    = $newRequest->withUri(UriFactory::create($newUrl), true);
+        $newRequest    = $newRequest->withUri($this->getUriMockForTests(), true);
 
         $this->assertInstanceOf(Uri::class, $serverRequest->getUri());
-        $this->assertEquals($url, (string)$serverRequest->getUri());
-
         $this->assertInstanceOf(Uri::class, $newRequest->getUri());
-        $this->assertEquals($newUrl, (string)$newRequest->getUri());
+
+        $this->assertNotSame($serverRequest, $newRequest);
+        $this->assertNotSame($serverRequest->getUri(), $newRequest->getUri());
 
         $this->assertEquals(['foo.com'], $newRequest->getHeader('Host'));
+    }
+
+    /**
+     * Get mocked instance of URI object for the testing.
+     * 
+     * @return Uri Uri instance for the testing.
+     */
+    private function getUriMockForTests()
+    {
+        $uriMock = $this->getMockBuilder(Uri::class)->disableOriginalConstructor()->getMock();
+        $uriMock->method('getHost')->willReturn('foo.com');
+
+        return $uriMock;
     }
 }

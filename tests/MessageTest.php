@@ -9,9 +9,6 @@ use Kambo\HttpMessage\Message;
 use Kambo\HttpMessage\Headers;
 use Kambo\HttpMessage\Stream;
 
-use Kambo\HttpMessage\Enviroment\Enviroment;
-use Kambo\HttpMessage\Factories\Enviroment\Superglobal\HeadersFactory;
-
 /**
  * Unit test for the Message object.
  *
@@ -22,7 +19,7 @@ use Kambo\HttpMessage\Factories\Enviroment\Superglobal\HeadersFactory;
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
+     * Test get protocol version.
      *
      * @return void
      */
@@ -33,7 +30,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test setting new protocol version.
+     * Operation must be immutable - a new instance of object must be created and previous
+     * instance must retain its value.
      *
      * @return void
      */
@@ -47,6 +46,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test setting wrong protocol version - an exception should be raised.
      *
      * @return void
      *
@@ -59,170 +59,87 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test get all headers.
      *
      * @return void
      */
     public function testGetHeaders()
     {
-        $message  = $this->getMessageForTest($this->getHeadersForTest());
+        $serverTest = [
+            'HTTP_HOST' => 'test.com',
+            'HTTP_USER_AGENT' =>
+                'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '.
+                'Chrome/47.0.2526.111 Safari/537.36'
+        ];
+
+        $message  = $this->getMessageForTest($serverTest);
         $expected = [
             "host" => [
                 "test.com"
-            ],
-            "connection" => [
-                "keep-alive"
-            ],
-            "cache-control" => [
-                "max-age=0"
-            ],
-            "accept" => [
-                "text/html",
-                "application/xhtml+xml",
-                "application/xml;q=0.9",
-                "image/webp",
-                "*/*;q=0.8"
-            ],
-            "upgrade-insecure-requests" => [
-                "1"
             ],
             "user-agent" => [
                 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 '.
                 '(KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'
             ],
-            "dnt" => [
-                "1"
-            ],
-            "accept-encoding" => [
-                "gzip",
-                "deflate",
-                "sdch"
-            ],
-            "accept-language" => [
-                "cs-CZ",
-                "cs;q=0.8",
-                "en;q=0.6"
-            ],
-            "php-auth-user" => [
-                "user"
-            ],
-            "php-auth-pw" => [
-                "password"
-            ]
         ];
 
         $this->assertEquals($expected, $message->getHeaders());
     }
 
     /**
-     *
+     * Test get one header line.
      *
      * @return void
      */
     public function testGetHeaderLine()
     {
-        $message = $this->getMessageForTest($this->getHeadersForTest());
+        $serverTest = [
+            'HTTP_USER_AGENT' =>
+                'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '.
+                'Chrome/47.0.2526.111 Safari/537.36'
+        ];
+
+        $message = $this->getMessageForTest($serverTest);
         $expected = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36'.
         ' (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36';
         $this->assertEquals($expected, $message->getHeaderLine('user-agent'));
     }
 
     /**
-     *
+     * Test changing header.
+     * Operation must be immutable - a new instance of object must be created and previous
+     * instance must retain its value.
      *
      * @return void
      */
     public function testWithHeader()
     {
-        $message  = $this->getMessageForTest($this->getHeadersForTest());
+        $serverTest = [
+            'HTTP_HOST' => 'test.com',
+            'HTTP_USER_AGENT' =>
+                'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '.
+                'Chrome/47.0.2526.111 Safari/537.36'
+        ];
+
+        $message  = $this->getMessageForTest($serverTest);
         $expected = [
             "host" => [
                 "test.com"
-            ],
-            "connection" => [
-                "keep-alive"
-            ],
-            "cache-control" => [
-                "max-age=0"
-            ],
-            "accept" => [
-                "text/html",
-                "application/xhtml+xml",
-                "application/xml;q=0.9",
-                "image/webp",
-                "*/*;q=0.8"
-            ],
-            "upgrade-insecure-requests" => [
-                "1"
             ],
             "user-agent" => [
                 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 '.
                 '(KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'
             ],
-            "dnt" => [
-                "1"
-            ],
-            "accept-encoding" => [
-                "gzip",
-                "deflate",
-                "sdch"
-            ],
-            "accept-language" => [
-                "cs-CZ",
-                "cs;q=0.8",
-                "en;q=0.6"
-            ],
-            "php-auth-user" => [
-                "user"
-            ],
-            "php-auth-pw" => [
-                "password"
-            ]
         ];
 
         $newMessageExpected = [
             "host" => [
                 "foo.bar"
             ],
-            "connection" => [
-                "keep-alive"
-            ],
-            "cache-control" => [
-                "max-age=0"
-            ],
-            "accept" => [
-                "text/html",
-                "application/xhtml+xml",
-                "application/xml;q=0.9",
-                "image/webp",
-                "*/*;q=0.8"
-            ],
-            "upgrade-insecure-requests" => [
-                "1"
-            ],
             "user-agent" => [
                 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 '.
                 '(KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'
             ],
-            "dnt" => [
-                "1"
-            ],
-            "accept-encoding" => [
-                "gzip",
-                "deflate",
-                "sdch"
-            ],
-            "accept-language" => [
-                "cs-CZ",
-                "cs;q=0.8",
-                "en;q=0.6"
-            ],
-            "php-auth-user" => [
-                "user"
-            ],
-            "php-auth-pw" => [
-                "password"
-            ]
         ];
 
         $newMessage = $message->withHeader('host', 'foo.bar');
@@ -233,6 +150,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test with invalid header - an exception should be raised.
      *
      * @return void
      *
@@ -240,105 +158,44 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithHeaderInvalid()
     {
-        $message = $this->getMessageForTest($this->getHeadersForTest());
+        $message = $this->getMessageForTest(/*$this->getHeadersForTest()*/);
         $newMessage = $message->withHeader(['host'], 'foo.bar');
     }
 
     /**
-     *
+     * Test with added header method - adding new "New-header" header.
+     * Operation must be immutable - a new instance of object must be created and previous
+     * instance must retain its value.
      *
      * @return void
      */
     public function testWithAddedHeader()
     {
-        $message  = $this->getMessageForTest($this->getHeadersForTest());
+        $serverTest = [
+            'HTTP_HOST' => 'test.com',
+            'HTTP_USER_AGENT' =>
+                'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '.
+                'Chrome/47.0.2526.111 Safari/537.36'
+        ];
+
+        $message  = $this->getMessageForTest($serverTest);
         $expected = [
             "host" => [
                 "test.com"
-            ],
-            "connection" => [
-                "keep-alive"
-            ],
-            "cache-control" => [
-                "max-age=0"
-            ],
-            "accept" => [
-                "text/html",
-                "application/xhtml+xml",
-                "application/xml;q=0.9",
-                "image/webp",
-                "*/*;q=0.8"
-            ],
-            "upgrade-insecure-requests" => [
-                "1"
             ],
             "user-agent" => [
                 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 '.
                 '(KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'
             ],
-            "dnt" => [
-                "1"
-            ],
-            "accept-encoding" => [
-                "gzip",
-                "deflate",
-                "sdch"
-            ],
-            "accept-language" => [
-                "cs-CZ",
-                "cs;q=0.8",
-                "en;q=0.6"
-            ],
-            "php-auth-user" => [
-                "user"
-            ],
-            "php-auth-pw" => [
-                "password"
-            ]
         ];
 
         $newMessageExpected = [
             "host" => [
                 "test.com"
             ],
-            "connection" => [
-                "keep-alive"
-            ],
-            "cache-control" => [
-                "max-age=0"
-            ],
-            "accept" => [
-                "text/html",
-                "application/xhtml+xml",
-                "application/xml;q=0.9",
-                "image/webp",
-                "*/*;q=0.8"
-            ],
-            "upgrade-insecure-requests" => [
-                "1"
-            ],
             "user-agent" => [
                 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 '.
                 '(KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'
-            ],
-            "dnt" => [
-                "1"
-            ],
-            "accept-encoding" => [
-                "gzip",
-                "deflate",
-                "sdch"
-            ],
-            "accept-language" => [
-                "cs-CZ",
-                "cs;q=0.8",
-                "en;q=0.6"
-            ],
-            "php-auth-user" => [
-                "user"
-            ],
-            "php-auth-pw" => [
-                "password"
             ],
             "new-header" => [
                 "test"
@@ -353,6 +210,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test with added header method -  an exception should be raised.
      *
      * @return void
      *
@@ -360,102 +218,42 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithAddedHeaderInvalid()
     {
-        $message = $this->getMessageForTest($this->getHeadersForTest());
+        $message = $this->getMessageForTest();
         $newMessage = $message->withAddedHeader(['New-header'], 'test');
     }
 
     /**
-     *
+     * Test removing header - header 'user-agent' will be removed.
+     * Operation must be immutable - a new instance of object must be created and previous
+     * instance must retain its value.
      *
      * @return void
      */
     public function testWithoutHeader()
     {
-        $message = $this->getMessageForTest($this->getHeadersForTest());
+        $serverTest = [
+            'HTTP_HOST' => 'test.com',
+            'HTTP_USER_AGENT' =>
+                'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '.
+                'Chrome/47.0.2526.111 Safari/537.36'
+        ];
+
+        $message = $this->getMessageForTest($serverTest);
+
         $expected = [
             "host" => [
                 "test.com"
-            ],
-            "connection" => [
-                "keep-alive"
-            ],
-            "cache-control" => [
-                "max-age=0"
-            ],
-            "accept" => [
-                "text/html",
-                "application/xhtml+xml",
-                "application/xml;q=0.9",
-                "image/webp",
-                "*/*;q=0.8"
-            ],
-            "upgrade-insecure-requests" => [
-                "1"
             ],
             "user-agent" => [
                 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '.
                 'Chrome/47.0.2526.111 Safari/537.36'
             ],
-            "dnt" => [
-                "1"
-            ],
-            "accept-encoding" => [
-                "gzip",
-                "deflate",
-                "sdch"
-            ],
-            "accept-language" => [
-                "cs-CZ",
-                "cs;q=0.8",
-                "en;q=0.6"
-            ],
-            "php-auth-user" => [
-                "user"
-            ],
-            "php-auth-pw" => [
-                "password"
-            ]
         ];
 
         $newMessageExpected = [
             "host" => [
                 "test.com"
             ],
-            "connection" => [
-                "keep-alive"
-            ],
-            "cache-control" => [
-                "max-age=0"
-            ],
-            "accept" => [
-                "text/html",
-                "application/xhtml+xml",
-                "application/xml;q=0.9",
-                "image/webp",
-                "*/*;q=0.8"
-            ],
-            "upgrade-insecure-requests" => [
-                "1"
-            ],
-            "dnt" => [
-                "1"
-            ],
-            "accept-encoding" => [
-                "gzip",
-                "deflate",
-                "sdch"
-            ],
-            "accept-language" => [
-                "cs-CZ",
-                "cs;q=0.8",
-                "en;q=0.6"
-            ],
-            "php-auth-user" => [
-                "user"
-            ],
-            "php-auth-pw" => [
-                "password"
-            ]
         ];
 
         $newMessage = $message->withoutHeader('user-agent', 'test');
@@ -465,16 +263,15 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($newMessageExpected, $newMessage->getHeaders());
     }
 
-
     /**
-     *
+     * Test get body.
      *
      * @return void
      */
     public function testGetBody()
     {
         $expected = 'test message';
-        $body = new Stream(fopen('php://temp', 'r+'));
+        $body     = new Stream(fopen('php://temp', 'r+'));
         $body->write($expected);
 
         $message     = $this->getMessageForTest(null, $body);
@@ -484,15 +281,16 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $messageBody->getContents());
     }
 
-
     /**
-     *
+     * Test setting new body.
+     * Operation must be immutable - a new instance of object must be created and previous
+     * instance must retain its value.
      *
      * @return void
      */
     public function testWithBody()
     {
-        $expected = 'test message';
+        $expected       = 'test message';
         $expectedChange = 'test change';
 
         $newBody = new Stream(fopen('php://temp', 'r+'));
@@ -517,7 +315,11 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     // ------------ PRIVATE METHODS
 
     /**
+     * Get instance of message object for the test.
      *
+     * @param array|null  $headers Http headers in same format as in $_SERVER superglobal.
+     *                             Value will be injected into testing instance.
+     * @param Stream|null $name    Message body that will be injected into testing instance.
      *
      * @return Message Instance of message for the testing purpose
      */
@@ -531,9 +333,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $reflectionProperty->setValue($messageStub, '1.0');
 
         if (isset($headers)) {
+            $headersStub        = new Headers($headers);
             $reflectionProperty = $reflectionClass->getProperty('headers');
             $reflectionProperty->setAccessible(true);
-            $reflectionProperty->setValue($messageStub, $headers);
+            $reflectionProperty->setValue($messageStub, $headersStub);
         }
 
         if (isset($body)) {
@@ -543,31 +346,5 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         }
 
         return $messageStub;
-    }
-
-    /**
-     *
-     *
-     * @return Headers Instance of message for the testing purpose
-     */
-    private function getHeadersForTest()
-    {
-        $headersForTest = [
-            'HTTP_HOST' => 'test.com',
-            'HTTP_CONNECTION' => 'keep-alive',
-            'HTTP_CACHE_CONTROL' => 'max-age=0',
-            'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
-            'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 6.3; WOW64) '.
-            'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36',
-            'HTTP_DNT' => '1',
-            'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch',
-            'HTTP_ACCEPT_LANGUAGE' => 'cs-CZ,cs;q=0.8,en;q=0.6',
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW' => 'password'
-        ];
-
-        $enviroment = new Enviroment($headersForTest, fopen('php://memory','r+'));
-        return HeadersFactory::fromEnviroment($enviroment);
     }
 }

@@ -235,6 +235,6 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
             $additionalValues
         );
 
-        return new Enviroment($server, fopen('php://memory','r+'), ['cookies'], ['files']);
+        return new Enviroment($server, fopen('php://memory', 'r+'), ['cookies'], ['files']);
     }
 }
