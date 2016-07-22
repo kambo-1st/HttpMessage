@@ -69,60 +69,104 @@ class Enviroment implements EnviromentInterface
     /**
      * Get query string
      *
-     * @return string query string
+     * @return string|null query string
      */
     public function getQueryString()
     {
-        return $this->enviromentData['QUERY_STRING'];
+        return isset($this->enviromentData['QUERY_STRING']) ? $this->enviromentData['QUERY_STRING'] : null;
     }
 
     /**
      * Get request method
      *
-     * @return string 
+     * @return string|null
      */
     public function getRequestMethod()
     {
-        return $this->enviromentData['REQUEST_METHOD'];
+        return isset($this->enviromentData['REQUEST_METHOD']) ? $this->enviromentData['REQUEST_METHOD'] : null;
     }
 
     /**
      * Get request uri
      *
-     * @return string
+     * @return string|null
      */
     public function getRequestUri()
     {
-        return $this->enviromentData['REQUEST_URI'];
+        return isset($this->enviromentData['REQUEST_URI']) ? $this->enviromentData['REQUEST_URI'] : null;
     }
     /**
      * Get request scheme
      *
-     * @return string
+     * @return string|null
      */
     public function getRequestScheme()
     {
-        return $this->enviromentData['REQUEST_SCHEME'];
+        return isset($this->enviromentData['REQUEST_SCHEME']) ? $this->enviromentData['REQUEST_SCHEME'] : null;
     }
 
     /**
      * Get host
      *
-     * @return string
+     * @return string|null
      */
     public function getHost()
     {
-        return $this->enviromentData['HTTP_HOST'];
+        return isset($this->enviromentData['HTTP_HOST']) ? $this->enviromentData['HTTP_HOST'] : null;
     }
 
     /**
      * Get port
      *
-     * @return int
+     * @return int|null
      */
     public function getPort()
     {
-        return $this->enviromentData['SERVER_PORT'];
+        return isset($this->enviromentData['SERVER_PORT']) ? $this->enviromentData['SERVER_PORT'] : null;
+    }
+
+    /**
+     * Get protocol version
+     *
+     * @return string|null
+     */
+    public function getProtocolVersion()
+    {
+        $version = null;
+        if (isset($this->enviromentData['SERVER_PROTOCOL'])) {
+            $protocol = $this->enviromentData['SERVER_PROTOCOL'];
+            list(,$version) = explode("/", $protocol);
+        }
+
+        return $version;
+    }
+
+    /**
+     * Get auth user
+     *
+     * @return string|null
+     */
+    public function getAuthUser()
+    {
+        if (isset($this->enviromentData['PHP_AUTH_USER'])) {
+            return $this->enviromentData['PHP_AUTH_USER'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get auth password
+     *
+     * @return string|null
+     */
+    public function getAuthPassword()
+    {
+        if (isset($this->enviromentData['PHP_AUTH_PW'])) {
+            return $this->enviromentData['PHP_AUTH_PW'];
+        }
+
+        return null;
     }
 
     /**
@@ -155,7 +199,6 @@ class Enviroment implements EnviromentInterface
         return $this->files;
     }
 
-
     /**
      * Get server
      *
@@ -164,46 +207,5 @@ class Enviroment implements EnviromentInterface
     public function getServer()
     {
         return $this->enviromentData;
-    }
-
-    /**
-     * Get protocol version
-     *
-     * @return string
-     */
-    public function getProtocolVersion()
-    {
-        $protocol = $this->enviromentData['SERVER_PROTOCOL'];
-        list(,$version) = explode("/", $protocol);
-
-        return $version;
-    }
-
-    /**
-     * Get auth user
-     *
-     * @return string
-     */
-    public function getAuthUser()
-    {
-        if (isset($this->enviromentData['PHP_AUTH_USER'])) {
-            return $this->enviromentData['PHP_AUTH_USER'];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get auth password
-     *
-     * @return string
-     */
-    public function getAuthPassword()
-    {
-        if (isset($this->enviromentData['PHP_AUTH_PW'])) {
-            return $this->enviromentData['PHP_AUTH_PW'];
-        }
-
-        return null;
     }
 }
