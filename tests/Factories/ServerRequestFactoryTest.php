@@ -2,11 +2,11 @@
 namespace Test\Factories;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Enviroment;
+use Kambo\HttpMessage\Environment\Environment;
 use Kambo\HttpMessage\ServerRequest;
 
 // \HttpMessage\Factories
-use Kambo\HttpMessage\Factories\Enviroment\ServerRequestFactory;
+use Kambo\HttpMessage\Factories\Environment\ServerRequestFactory;
 
 /**
  * Unit test for the ServerRequestFactory object.
@@ -18,28 +18,28 @@ use Kambo\HttpMessage\Factories\Enviroment\ServerRequestFactory;
 class ServerRequestFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test create server request from enviroment.
+     * Test create server request from environment.
      * 
      * @return void
      */
-    public function testFromEnviroment()
+    public function testFromEnvironment()
     {
-        $enviromentMock = $this->getMockBuilder(Enviroment::class)
+        $environmentMock = $this->getMockBuilder(Environment::class)
                                ->disableOriginalConstructor()
                                ->getMock();
 
-        $enviromentMock->method('getRequestScheme')->will($this->returnValue('http'));
-        $enviromentMock->method('getHost')->will($this->returnValue('test.com'));
-        $enviromentMock->method('getPort')->will($this->returnValue('1111'));
-        $enviromentMock->method('getRequestUri')->will($this->returnValue('/path/123?q=abc'));
-        $enviromentMock->method('getQueryString')->will($this->returnValue('q=abc'));
-        $enviromentMock->method('getAuthUser')->will($this->returnValue('user'));
-        $enviromentMock->method('getAuthPassword')->will($this->returnValue('password'));
-        $enviromentMock->method('getRequestMethod')->will($this->returnValue('GET'));
-        $enviromentMock->method('getServer')->will($this->returnValue([]));
-        $enviromentMock->method('getCookies')->will($this->returnValue([]));
+        $environmentMock->method('getRequestScheme')->will($this->returnValue('http'));
+        $environmentMock->method('getHost')->will($this->returnValue('test.com'));
+        $environmentMock->method('getPort')->will($this->returnValue('1111'));
+        $environmentMock->method('getRequestUri')->will($this->returnValue('/path/123?q=abc'));
+        $environmentMock->method('getQueryString')->will($this->returnValue('q=abc'));
+        $environmentMock->method('getAuthUser')->will($this->returnValue('user'));
+        $environmentMock->method('getAuthPassword')->will($this->returnValue('password'));
+        $environmentMock->method('getRequestMethod')->will($this->returnValue('GET'));
+        $environmentMock->method('getServer')->will($this->returnValue([]));
+        $environmentMock->method('getCookies')->will($this->returnValue([]));
 
-        $serverRequest = (new ServerRequestFactory())->create($enviromentMock);
+        $serverRequest = (new ServerRequestFactory())->create($environmentMock);
         $this->assertInstanceOf(ServerRequest::class, $serverRequest);
     }
 }

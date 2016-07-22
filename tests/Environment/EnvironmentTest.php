@@ -2,19 +2,19 @@
 namespace Test;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Enviroment;
+use Kambo\HttpMessage\Environment\Environment;
 
 /**
- * Unit test for the enviroment object.
+ * Unit test for the environment object.
  *
  * @package Test
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-class EnviromentTest extends \PHPUnit_Framework_TestCase
+class EnvironmentTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test get query string from the enviroment
+     * Test get query string from the environment
      * 
      * @return void
      */
@@ -25,7 +25,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get query string from the enviroment if the query string is not provided.
+     * Test get query string from the environment if the query string is not provided.
      * 
      * @return void
      */
@@ -36,7 +36,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get request method from the enviroment
+     * Test get request method from the environment
      * 
      * @return void
      */
@@ -47,7 +47,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get request method from the enviroment if the request method is not provided.
+     * Test get request method from the environment if the request method is not provided.
      * 
      * @return void
      */
@@ -58,7 +58,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get request uri from the enviroment
+     * Test get request uri from the environment
      * 
      * @return void
      */
@@ -69,7 +69,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get request uri from the enviroment if the request uri is not provided.
+     * Test get request uri from the environment if the request uri is not provided.
      * 
      * @return void
      */
@@ -80,7 +80,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get request scheme from the enviroment
+     * Test get request scheme from the environment
      * 
      * @return void
      */
@@ -91,7 +91,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get request scheme from the enviroment if the request scheme is not provided.
+     * Test get request scheme from the environment if the request scheme is not provided.
      * 
      * @return void
      */
@@ -102,7 +102,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get host from the enviroment
+     * Test get host from the environment
      * 
      * @return void
      */
@@ -113,7 +113,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get host from the enviroment if the host is not provided.
+     * Test get host from the environment if the host is not provided.
      * 
      * @return void
      */
@@ -124,7 +124,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get port from the enviroment
+     * Test get port from the environment
      *
      * @return void
      */
@@ -135,7 +135,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get port from the enviroment if the port is not provided.
+     * Test get port from the environment if the port is not provided.
      *
      * @return void
      */
@@ -146,7 +146,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get protocol version from the enviroment
+     * Test get protocol version from the environment
      *
      * @return void
      */
@@ -157,7 +157,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get protocol version from the enviroment if the protocol version
+     * Test get protocol version from the environment if the protocol version
      * is not provided.
      *
      * @return void
@@ -169,7 +169,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get auth user from the enviroment
+     * Test get auth user from the environment
      * 
      * @return void
      */
@@ -182,7 +182,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get auth password from the enviroment
+     * Test get auth password from the environment
      * 
      * @return void
      */
@@ -195,7 +195,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get auth user from the enviroment - auth user was not provided.
+     * Test get auth user from the environment - auth user was not provided.
      * 
      * @return void
      */
@@ -208,7 +208,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get auth password from the enviroment - password was not provided.
+     * Test get auth password from the environment - password was not provided.
      * 
      * @return void
      */
@@ -221,7 +221,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get server variable from the enviroment
+     * Test get server variable from the environment
      * 
      * @return void
      */
@@ -237,7 +237,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get request body from the enviroment
+     * Test get request body from the environment
      * 
      * @return void
      */
@@ -247,7 +247,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test creating Enviroment with invalid body parameter - body must be resource.
+     * Test creating Environment with invalid body parameter - body must be resource.
      *
      * @expectedException \InvalidArgumentException
      * 
@@ -255,11 +255,11 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBodyInvalid()
     {
-        return new Enviroment([], 'invalid input');
+        return new Environment([], 'invalid input');
     }
 
     /**
-     * Test get cookies from the enviroment
+     * Test get cookies from the environment
      * 
      * @return void
      */
@@ -269,7 +269,7 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get files from the enviroment
+     * Test get files from the environment
      * 
      * @return void
      */
@@ -279,14 +279,14 @@ class EnviromentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get instance of Enviroment for test with preset values.
+     * Get instance of Environment for test with preset values.
      *
      * @param array $additionalValues Uri scheme.
      *
-     * @return Enviroment instance of Enviroment for test
+     * @return Environment instance of Environment for test
      */
     private function getTestObject(array $server = [])
     {
-        return new Enviroment($server, fopen('php://memory', 'r+'), ['cookies'], ['files']);
+        return new Environment($server, fopen('php://memory', 'r+'), ['cookies'], ['files']);
     }
 }

@@ -2,7 +2,6 @@
 namespace Test;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Enviroment;
 use Kambo\HttpMessage\Headers;
 use Kambo\HttpMessage\ServerRequest;
 use Kambo\HttpMessage\Stream;
@@ -10,7 +9,6 @@ use Kambo\HttpMessage\UploadedFile;
 use Kambo\HttpMessage\Uri;
 
 // \HttpMessage\Factories
-use Kambo\HttpMessage\Factories\Enviroment\ServerRequestFactory;
 use Kambo\HttpMessage\Factories\String\UriFactory;
 
 /**
@@ -36,7 +34,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test get server params - server variable should be same as the one
-     * which has been used for the enviroment initialization.
+     * which has been used for the instance initialization.
      * 
      * @return void
      */
@@ -423,7 +421,7 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test removing attribute from the enviroment
+     * Test removing attribute from the server request
      * 
      * @return void
      */

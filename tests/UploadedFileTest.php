@@ -5,7 +5,6 @@ namespace Test;
 use ReflectionClass;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Enviroment;
 use Kambo\HttpMessage\Stream;
 use Kambo\HttpMessage\UploadedFile;
 use Kambo\HttpMessage\Utils\UploadFile as UploadFileUtils;

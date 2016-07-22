@@ -3,8 +3,8 @@ namespace Test\Factories\Superglobal;
 
 // \HttpMessage
 use Kambo\HttpMessage\Headers;
-use Kambo\HttpMessage\Enviroment\Enviroment;
-use Kambo\HttpMessage\Factories\Enviroment\Superglobal\HeadersFactory;
+use Kambo\HttpMessage\Environment\Environment;
+use Kambo\HttpMessage\Factories\Environment\Superglobal\HeadersFactory;
 
 /**
  * Unit test for the HeadersFactory object.
@@ -16,7 +16,7 @@ use Kambo\HttpMessage\Factories\Enviroment\Superglobal\HeadersFactory;
 class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test creating headers from enviroment object.
+     * Test creating headers from environment object.
      * 
      * @return void
      */
@@ -49,14 +49,14 @@ class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $headers = (new HeadersFactory())->create($this->getEnviromentMock($serverSuperglobal));
+        $headers = (new HeadersFactory())->create($this->getEnvironmentMock($serverSuperglobal));
 
         $this->assertInstanceOf(Headers::class, $headers);
         $this->assertEquals($expectedHeaders, $headers->all());
     }
 
     /**
-     * Test creating headers from enviroment object with redirect headers.
+     * Test creating headers from environment object with redirect headers.
      * 
      * @return void
      */
@@ -80,14 +80,14 @@ class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $headers = (new HeadersFactory())->create($this->getEnviromentMock($serverSuperglobal));
+        $headers = (new HeadersFactory())->create($this->getEnvironmentMock($serverSuperglobal));
 
         $this->assertInstanceOf(Headers::class, $headers);
         $this->assertEquals($expectedHeaders, $headers->all());
     }
 
     /**
-     * Test creating headers from enviroment object with redirect headers - Non-prefixed
+     * Test creating headers from environment object with redirect headers - Non-prefixed
      * versions must be preferred.
      * 
      * @return void
@@ -114,30 +114,30 @@ class HeadersFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $headers = (new HeadersFactory())->create($this->getEnviromentMock($serverSuperglobal));
+        $headers = (new HeadersFactory())->create($this->getEnvironmentMock($serverSuperglobal));
 
         $this->assertInstanceOf(Headers::class, $headers);
         $this->assertEquals($expectedHeaders, $headers->all());
     }
 
     /**
-     * Get instance of mocked Enviroment object for testing purpose.
+     * Get instance of mocked Environment object for testing purpose.
      *
      * @param array $serverSuperglobal array in same format as server superglobal
      *                                 variable ($_SERVER).
      *
-     * @return Enviroment
+     * @return Environment
      */
-    private function getEnviromentMock(array $serverSuperglobal = [])
+    private function getEnvironmentMock(array $serverSuperglobal = [])
     {
-        $enviromentMock = $this->getMockBuilder(Enviroment::class)
+        $environmentMock = $this->getMockBuilder(Environment::class)
                                ->disableOriginalConstructor()
                                ->getMock();
 
-        $enviromentMock->method('getServer')->will(
+        $environmentMock->method('getServer')->will(
             $this->returnValue($serverSuperglobal)
         );
 
-        return $enviromentMock;
+        return $environmentMock;
     }
 }

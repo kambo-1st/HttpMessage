@@ -7,9 +7,6 @@ use InvalidArgumentException;
 // \Psr
 use Psr\Http\Message\UriInterface;
 
-// \HttpMessage
-use Kambo\HttpMessage\Enviroment;
-
 /**
  * Value object representing a URI.
  *

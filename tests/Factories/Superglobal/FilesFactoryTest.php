@@ -2,8 +2,8 @@
 namespace Test\Factories\Superglobal;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Enviroment;
-use Kambo\HttpMessage\Factories\Enviroment\Superglobal\FilesFactory;
+use Kambo\HttpMessage\Environment\Environment;
+use Kambo\HttpMessage\Factories\Environment\Superglobal\FilesFactory;
 use Kambo\HttpMessage\UploadedFile;
 
 /**
@@ -16,11 +16,11 @@ use Kambo\HttpMessage\UploadedFile;
 class FilesFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test creating headers from enviroment object with one file in one field.
+     * Test creating headers from environment object with one file in one field.
      *
      * @return void
      */
-    public function testCreateFromEnviroment()
+    public function testCreateFromEnvironment()
     {
         $uploadSuperglobal = [
             "upload" => [
@@ -32,8 +32,8 @@ class FilesFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $enviroment    = $this->getEnviromentMock($uploadSuperglobal);
-        $uploadedFiles = (new FilesFactory())->create($enviroment);
+        $environment    = $this->getEnvironmentMock($uploadSuperglobal);
+        $uploadedFiles = (new FilesFactory())->create($environment);
 
         $this->assertInternalType('array', $uploadedFiles);
         $this->assertArrayHasKey('upload', $uploadedFiles);
@@ -49,11 +49,11 @@ class FilesFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test creating headers from enviroment object with multiple files in multiple fields.
+     * Test creating headers from environment object with multiple files in multiple fields.
      *
      * @return void
      */
-    public function testCreateFromEnviromentMultipleFieldsAndFiles()
+    public function testCreateFromEnvironmentMultipleFieldsAndFiles()
     {
         $uploadSuperglobal = [
             "upload" => [
@@ -102,8 +102,8 @@ class FilesFactoryTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $enviroment    = $this->getEnviromentMock($uploadSuperglobal);
-        $uploadedFiles = (new FilesFactory())->create($enviroment);
+        $environment    = $this->getEnvironmentMock($uploadSuperglobal);
+        $uploadedFiles = (new FilesFactory())->create($environment);
 
         $this->assertInternalType('array', $uploadedFiles);
         $this->assertArrayHasKey('upload', $uploadedFiles);
@@ -129,23 +129,23 @@ class FilesFactoryTest extends \PHPUnit_Framework_TestCase
     // ------------ PRIVATE METHODS
 
     /**
-     * Get instance of mocked Enviroment object for testing purpose.
+     * Get instance of mocked Environment object for testing purpose.
      *
      * @param array $filesSuperglobal array in same format as files superglobal
      *                                variable ($_FILES).
      *
-     * @return Enviroment
+     * @return Environment
      */
-    private function getEnviromentMock(array $filesSuperglobal = [])
+    private function getEnvironmentMock(array $filesSuperglobal = [])
     {
-        $enviromentMock = $this->getMockBuilder(Enviroment::class)
+        $environmentMock = $this->getMockBuilder(Environment::class)
                                ->disableOriginalConstructor()
                                ->getMock();
 
-        $enviromentMock->method('getFiles')->will(
+        $environmentMock->method('getFiles')->will(
             $this->returnValue($filesSuperglobal)
         );
 
-        return $enviromentMock;
+        return $environmentMock;
     }
 }

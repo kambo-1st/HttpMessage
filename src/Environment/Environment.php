@@ -1,27 +1,27 @@
 <?php
-namespace Kambo\HttpMessage\Enviroment;
+namespace Kambo\HttpMessage\Environment;
 
 // \Spl
 use InvalidArgumentException;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Interfaces\Enviroment as EnviromentInterface;
+use Kambo\HttpMessage\Environment\Interfaces\Environment as EnvironmentInterface;
 
 /**
  * Contains information about server and HTTP request - headers, cookies, files and body data.
  *
- * @package Kambo\HttpMessage\Enviroment\Interfaces\Enviroment
+ * @package Kambo\HttpMessage\Environment\Interfaces\Environment
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-class Enviroment implements EnviromentInterface
+class Environment implements EnvironmentInterface
 {
     /**
-     * Enviroment data, must have same structure as $_SERVER superglobal.
+     * Server environment data, must have same structure as $_SERVER superglobal.
      *
      * @var array
      */
-    private $enviromentData;
+    private $server;
 
     /**
      * Raw data from the request body.
@@ -60,10 +60,10 @@ class Enviroment implements EnviromentInterface
             throw new InvalidArgumentException('Provided body must be of type resource.');
         }
 
-        $this->enviromentData = $server;
-        $this->body           = $body;
-        $this->cookies        = $cookie;
-        $this->files          = $files;
+        $this->server  = $server;
+        $this->body    = $body;
+        $this->cookies = $cookie;
+        $this->files   = $files;
     }
 
     /**
@@ -73,7 +73,7 @@ class Enviroment implements EnviromentInterface
      */
     public function getQueryString()
     {
-        return isset($this->enviromentData['QUERY_STRING']) ? $this->enviromentData['QUERY_STRING'] : null;
+        return isset($this->server['QUERY_STRING']) ? $this->server['QUERY_STRING'] : null;
     }
 
     /**
@@ -83,7 +83,7 @@ class Enviroment implements EnviromentInterface
      */
     public function getRequestMethod()
     {
-        return isset($this->enviromentData['REQUEST_METHOD']) ? $this->enviromentData['REQUEST_METHOD'] : null;
+        return isset($this->server['REQUEST_METHOD']) ? $this->server['REQUEST_METHOD'] : null;
     }
 
     /**
@@ -93,7 +93,7 @@ class Enviroment implements EnviromentInterface
      */
     public function getRequestUri()
     {
-        return isset($this->enviromentData['REQUEST_URI']) ? $this->enviromentData['REQUEST_URI'] : null;
+        return isset($this->server['REQUEST_URI']) ? $this->server['REQUEST_URI'] : null;
     }
     /**
      * Get request scheme
@@ -102,7 +102,7 @@ class Enviroment implements EnviromentInterface
      */
     public function getRequestScheme()
     {
-        return isset($this->enviromentData['REQUEST_SCHEME']) ? $this->enviromentData['REQUEST_SCHEME'] : null;
+        return isset($this->server['REQUEST_SCHEME']) ? $this->server['REQUEST_SCHEME'] : null;
     }
 
     /**
@@ -112,7 +112,7 @@ class Enviroment implements EnviromentInterface
      */
     public function getHost()
     {
-        return isset($this->enviromentData['HTTP_HOST']) ? $this->enviromentData['HTTP_HOST'] : null;
+        return isset($this->server['HTTP_HOST']) ? $this->server['HTTP_HOST'] : null;
     }
 
     /**
@@ -122,7 +122,7 @@ class Enviroment implements EnviromentInterface
      */
     public function getPort()
     {
-        return isset($this->enviromentData['SERVER_PORT']) ? $this->enviromentData['SERVER_PORT'] : null;
+        return isset($this->server['SERVER_PORT']) ? $this->server['SERVER_PORT'] : null;
     }
 
     /**
@@ -133,8 +133,8 @@ class Enviroment implements EnviromentInterface
     public function getProtocolVersion()
     {
         $version = null;
-        if (isset($this->enviromentData['SERVER_PROTOCOL'])) {
-            $protocol = $this->enviromentData['SERVER_PROTOCOL'];
+        if (isset($this->server['SERVER_PROTOCOL'])) {
+            $protocol = $this->server['SERVER_PROTOCOL'];
             list(,$version) = explode("/", $protocol);
         }
 
@@ -148,8 +148,8 @@ class Enviroment implements EnviromentInterface
      */
     public function getAuthUser()
     {
-        if (isset($this->enviromentData['PHP_AUTH_USER'])) {
-            return $this->enviromentData['PHP_AUTH_USER'];
+        if (isset($this->server['PHP_AUTH_USER'])) {
+            return $this->server['PHP_AUTH_USER'];
         }
 
         return null;
@@ -162,8 +162,8 @@ class Enviroment implements EnviromentInterface
      */
     public function getAuthPassword()
     {
-        if (isset($this->enviromentData['PHP_AUTH_PW'])) {
-            return $this->enviromentData['PHP_AUTH_PW'];
+        if (isset($this->server['PHP_AUTH_PW'])) {
+            return $this->server['PHP_AUTH_PW'];
         }
 
         return null;
@@ -206,6 +206,6 @@ class Enviroment implements EnviromentInterface
      */
     public function getServer()
     {
-        return $this->enviromentData;
+        return $this->server;
     }
 }

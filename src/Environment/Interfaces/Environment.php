@@ -1,14 +1,14 @@
 <?php
-namespace Kambo\HttpMessage\Enviroment\Interfaces;
+namespace Kambo\HttpMessage\Environment\Interfaces;
 
 /**
- * Enviroment interface
+ * Environment interface
  *
- * @package Kambo\HttpMessage\Enviroment\Interfaces
+ * @package Kambo\HttpMessage\Environment\Interfaces
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-interface Enviroment
+interface Environment
 {
     /**
      * Get query string

@@ -2,8 +2,8 @@
 namespace Test\Factories\Superglobal;
 
 // \HttpMessage
-use Kambo\HttpMessage\Enviroment\Enviroment;
-use Kambo\HttpMessage\Factories\Enviroment\Superglobal\UriFactory;
+use Kambo\HttpMessage\Environment\Environment;
+use Kambo\HttpMessage\Factories\Environment\Superglobal\UriFactory;
 use Kambo\HttpMessage\Uri;
 
 /**
@@ -17,26 +17,26 @@ class UriFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * Test creating URI object from enviroment.
+     * Test creating URI object from environment.
      *
      * @return void
      */
-    public function testFromEnviroment()
+    public function testFromEnvironment()
     {
 
-        $enviromentMock = $this->getMockBuilder(Enviroment::class)
+        $environmentMock = $this->getMockBuilder(Environment::class)
                                ->disableOriginalConstructor()
                                ->getMock();
 
-        $enviromentMock->method('getRequestScheme')->will($this->returnValue('http'));
-        $enviromentMock->method('getHost')->will($this->returnValue('test.com'));
-        $enviromentMock->method('getPort')->will($this->returnValue('1111'));
-        $enviromentMock->method('getRequestUri')->will($this->returnValue('/path/123?q=abc'));
-        $enviromentMock->method('getQueryString')->will($this->returnValue('q=abc'));
-        $enviromentMock->method('getAuthUser')->will($this->returnValue('user'));
-        $enviromentMock->method('getAuthPassword')->will($this->returnValue('password'));
+        $environmentMock->method('getRequestScheme')->will($this->returnValue('http'));
+        $environmentMock->method('getHost')->will($this->returnValue('test.com'));
+        $environmentMock->method('getPort')->will($this->returnValue('1111'));
+        $environmentMock->method('getRequestUri')->will($this->returnValue('/path/123?q=abc'));
+        $environmentMock->method('getQueryString')->will($this->returnValue('q=abc'));
+        $environmentMock->method('getAuthUser')->will($this->returnValue('user'));
+        $environmentMock->method('getAuthPassword')->will($this->returnValue('password'));
 
-        $uri = (new UriFactory())->create($enviromentMock);
+        $uri = (new UriFactory())->create($environmentMock);
 
         $this->assertInstanceOf(Uri::class, $uri);
         $this->assertEquals(null, $uri->getFragment());

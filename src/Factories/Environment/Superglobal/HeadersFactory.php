@@ -1,15 +1,15 @@
 <?php
-namespace Kambo\HttpMessage\Factories\Enviroment\Superglobal;
+namespace Kambo\HttpMessage\Factories\Environment\Superglobal;
 
 // \HttpMessage
 use Kambo\HttpMessage\Headers;
-use Kambo\HttpMessage\Enviroment\Enviroment;
-use Kambo\HttpMessage\Factories\Enviroment\Interfaces\Factory;
+use Kambo\HttpMessage\Environment\Environment;
+use Kambo\HttpMessage\Factories\Environment\Interfaces\Factory;
 
 /**
- * Create instance of Headers object from instance of Enviroment object
+ * Create instance of Headers object from instance of Environment object
  *
- * @package Kambo\HttpMessage\Factories\Enviroment\Superglobal
+ * @package Kambo\HttpMessage\Factories\Environment\Superglobal
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
@@ -30,15 +30,15 @@ class HeadersFactory implements Factory
     ];
 
     /**
-     * Create instance of Headers object from instance of Enviroment object
+     * Create instance of Headers object from instance of Environment object
      *
-     * @param Enviroment $enviroment enviroment data
+     * @param Environment $environment environment data
      *
-     * @return Headers Instance of Headers object from enviroment
+     * @return Headers Instance of Headers object from environment
      */
-    public function create(Enviroment $enviroment)
+    public function create(Environment $environment)
     {
-        return new Headers($this->resolveHeaders($enviroment->getServer()));
+        return new Headers($this->resolveHeaders($environment->getServer()));
     }
 
     /**
@@ -46,7 +46,7 @@ class HeadersFactory implements Factory
      *
      * @param array $headersForResolve array compatible with $_SERVER superglobal variable
      *
-     * @return Headers Instance of Headers object from enviroment
+     * @return Headers Instance of Headers object from environment
      */
     private function resolveHeaders($headersForResolve)
     {
