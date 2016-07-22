@@ -58,7 +58,7 @@ class HeadersFactory implements Factory
 
                 // Do not replace existing variables
                 if (array_key_exists($name, $headersForResolve)) {
-                     continue;
+                    continue;
                 }
             }
 

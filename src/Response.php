@@ -122,7 +122,7 @@ class Response extends Message implements ResponseInterface
         parent::__construct($headers, $body);
         $this->validateStatus($status);
 
-        $this->status  = $status;
+        $this->status = $status;
     }
 
     /**
