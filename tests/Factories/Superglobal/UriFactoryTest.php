@@ -25,8 +25,8 @@ class UriFactoryTest extends \PHPUnit_Framework_TestCase
     {
 
         $environmentMock = $this->getMockBuilder(Environment::class)
-                               ->disableOriginalConstructor()
-                               ->getMock();
+                                ->disableOriginalConstructor()
+                                ->getMock();
 
         $environmentMock->method('getRequestScheme')->will($this->returnValue('http'));
         $environmentMock->method('getHost')->will($this->returnValue('test.com'));
@@ -46,5 +46,31 @@ class UriFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('q=abc', $uri->getQuery());
         $this->assertEquals('http', $uri->getScheme());
         $this->assertEquals('user:password', $uri->getUserInfo());
+    }
+
+    /**
+     * Test creating URI object from environment - try to construct URI from
+     * invalid request URI ane exception must be raised.
+     *
+     * @expectedException \InvalidArgumentException
+     *
+     * @return void
+     */
+    public function testFromEnvironmentFail()
+    {
+
+        $environmentMock = $this->getMockBuilder(Environment::class)
+                                ->disableOriginalConstructor()
+                                ->getMock();
+
+        $environmentMock->method('getRequestScheme')->will($this->returnValue('http'));
+        $environmentMock->method('getHost')->will($this->returnValue('test.com'));
+        $environmentMock->method('getPort')->will($this->returnValue('1111'));
+        $environmentMock->method('getRequestUri')->will($this->returnValue('@'));
+        $environmentMock->method('getQueryString')->will($this->returnValue('q=abc'));
+        $environmentMock->method('getAuthUser')->will($this->returnValue('user'));
+        $environmentMock->method('getAuthPassword')->will($this->returnValue('password'));
+
+        $uri = (new UriFactory())->create($environmentMock);
     }
 }

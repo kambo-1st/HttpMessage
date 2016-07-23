@@ -1,6 +1,9 @@
 <?php
 namespace Kambo\HttpMessage\Factories\Environment\Superglobal;
 
+// \Spl
+use InvalidArgumentException;
+
 // \HttpMessage
 use Kambo\HttpMessage\Uri;
 use Kambo\HttpMessage\Environment\Environment;
@@ -27,11 +30,15 @@ class UriFactory implements Factory
         $scheme = $environment->getRequestScheme();
         $host   = $environment->getHost();
         $port   = $environment->getPort();
+        $query  = $environment->getQueryString();
+        $user   = $environment->getAuthUser();
+        $pass   = $environment->getAuthPassword();
 
-        $path  = parse_url('http://example.com' . $environment->getRequestUri(), PHP_URL_PATH);
-        $query = $environment->getQueryString();
-        $user  = $environment->getAuthUser();
-        $pass  = $environment->getAuthPassword();
+        // parse_url() requires a full URL - but only URL path is need it here.
+        $path = parse_url('http://example.com' . $environment->getRequestUri(), PHP_URL_PATH);
+        if ($path === false) {
+            throw new InvalidArgumentException('Uri path must be a string');
+        }
 
         return new Uri($scheme, $host, $port, $path, $query, '', $user, $pass);
     }
