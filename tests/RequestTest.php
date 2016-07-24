@@ -15,7 +15,7 @@ use Kambo\HttpMessage\Uri;
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test creating object with invalid parameters
+     * Test creating object with uri as string
      * 
      * @return void
      */
@@ -23,6 +23,18 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $serverRequest = new Request('GET', 'www.test.com', null, 'body');
         $this->assertEquals('body', (string)$serverRequest->getBody());
+    }
+
+    /**
+     * Test creating object with uri as instance of Uri class.
+     * 
+     * @return void
+     */
+    public function testObjectCreationWithUriObject()
+    {
+        $url = $this->getUriMockForTests();
+        $serverRequest = new Request('GET', $url);
+        $this->assertEquals($url, $serverRequest->getUri());
     }
 
     /**

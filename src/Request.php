@@ -67,7 +67,9 @@ class Request extends Message implements RequestInterface
 
         if (is_string($uri)) {
             $this->uri = (new UriFactory())->create($uri);
-        } elseif (!($uri instanceof UriInterface)) {
+        } elseif ($uri instanceof UriInterface) {
+            $this->uri = $uri;
+        } else {
             throw new InvalidArgumentException(
                 'URI must be a string or implement Psr\Http\Message\UriInterface'
             );

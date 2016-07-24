@@ -15,7 +15,7 @@ use Kambo\HttpMessage\Factories\String\UriFactory;
 class UriFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test creating url from string.
+     * Test creating URI from string.
      * 
      * @return void
      */
