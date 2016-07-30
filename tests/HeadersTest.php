@@ -1,8 +1,8 @@
 <?php
 namespace Test;
 
-// \HttpMessage
-use Kambo\HttpMessage\Headers;
+// \Http\Message
+use Kambo\Http\Message\Headers;
 
 /**
  * Unit test for the Headers object.

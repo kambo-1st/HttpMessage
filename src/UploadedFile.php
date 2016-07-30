@@ -1,6 +1,6 @@
 <?php
 
-namespace Kambo\HttpMessage;
+namespace Kambo\Http\Message;
 
 // \Spl
 use RuntimeException;
@@ -9,9 +9,9 @@ use InvalidArgumentException;
 // \Psr
 use Psr\Http\Message\UploadedFileInterface;
 
-// \HttpMessage
-use Kambo\HttpMessage\Stream;
-use Kambo\HttpMessage\Utils\UploadFile;
+// \Http\Message
+use Kambo\Http\Message\Stream;
+use Kambo\Http\Message\Utils\UploadFile;
 
 /**
  * Value object representing a file uploaded through an HTTP request.
@@ -20,7 +20,7 @@ use Kambo\HttpMessage\Utils\UploadFile;
  * state retain the internal state of the current instance and return
  * an instance that contains the changed state.
  *
- * @package Kambo\HttpMessage
+ * @package Kambo\Http\Message
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

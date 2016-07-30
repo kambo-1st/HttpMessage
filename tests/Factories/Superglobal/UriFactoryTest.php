@@ -1,10 +1,10 @@
 <?php
 namespace Test\Factories\Superglobal;
 
-// \HttpMessage
-use Kambo\HttpMessage\Environment\Environment;
-use Kambo\HttpMessage\Factories\Environment\Superglobal\UriFactory;
-use Kambo\HttpMessage\Uri;
+// \Http\Message
+use Kambo\Http\Message\Environment\Environment;
+use Kambo\Http\Message\Factories\Environment\Superglobal\UriFactory;
+use Kambo\Http\Message\Uri;
 
 /**
  * Unit test for the UriFactory object.

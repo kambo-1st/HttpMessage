@@ -1,13 +1,13 @@
 <?php
-namespace Kambo\HttpMessage\Factories\Environment\Interfaces;
+namespace Kambo\Http\Message\Factories\Environment\Interfaces;
 
-// \HttpMessage
-use Kambo\HttpMessage\Environment\Environment;
+// \Http\Message
+use Kambo\Http\Message\Environment\Environment;
 
 /**
  * Factory interface
  *
- * @package Kambo\HttpMessage\Factories\Environment\Interfaces
+ * @package Kambo\Http\Message\Factories\Environment\Interfaces
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

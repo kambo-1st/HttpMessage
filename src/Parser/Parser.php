@@ -1,6 +1,6 @@
 <?php
 
-namespace Kambo\HttpMessage\Parser;
+namespace Kambo\Http\Message\Parser;
 
 /**
  * Parse input data according their type

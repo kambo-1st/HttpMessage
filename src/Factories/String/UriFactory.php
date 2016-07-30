@@ -1,13 +1,13 @@
 <?php
-namespace Kambo\HttpMessage\Factories\String;
+namespace Kambo\Http\Message\Factories\String;
 
-// \HttpMessage
-use Kambo\HttpMessage\Uri;
+// \Http\Message
+use Kambo\Http\Message\Uri;
 
 /**
  * Create instances of Uri object from the string
  *
- * @package Kambo\HttpMessage\Factories\String
+ * @package Kambo\Http\Message\Factories\String
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

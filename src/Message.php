@@ -1,12 +1,12 @@
 <?php
-namespace Kambo\HttpMessage;
+namespace Kambo\Http\Message;
 
 // \Spl
 use InvalidArgumentException;
 
-// \HttpMessage
-use Kambo\HttpMessage\Stream;
-use Kambo\HttpMessage\Headers;
+// \Http\Message
+use Kambo\Http\Message\Stream;
+use Kambo\Http\Message\Headers;
 
 // \Psr
 use Psr\Http\Message\MessageInterface;
@@ -24,7 +24,7 @@ use Psr\Http\Message\StreamInterface;
  * @link http://www.ietf.org/rfc/rfc7230.txt
  * @link http://www.ietf.org/rfc/rfc7231.txt
  *
- * @package Kambo\HttpMessage
+ * @package Kambo\Http\Message
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

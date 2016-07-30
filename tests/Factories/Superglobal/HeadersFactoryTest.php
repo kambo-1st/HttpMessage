@@ -1,10 +1,10 @@
 <?php
 namespace Test\Factories\Superglobal;
 
-// \HttpMessage
-use Kambo\HttpMessage\Headers;
-use Kambo\HttpMessage\Environment\Environment;
-use Kambo\HttpMessage\Factories\Environment\Superglobal\HeadersFactory;
+// \Http\Message
+use Kambo\Http\Message\Headers;
+use Kambo\Http\Message\Environment\Environment;
+use Kambo\Http\Message\Factories\Environment\Superglobal\HeadersFactory;
 
 /**
  * Unit test for the HeadersFactory object.

@@ -1,5 +1,5 @@
 <?php
-namespace Kambo\HttpMessage;
+namespace Kambo\Http\Message;
 
 // \Spl
 use InvalidArgumentException;
@@ -7,14 +7,14 @@ use InvalidArgumentException;
 // \Psr
 use Psr\Http\Message\UriInterface;
 
-// \HttpMessage
-use Kambo\HttpMessage\Uri;
-use Kambo\HttpMessage\Message;
+// \Http\Message
+use Kambo\Http\Message\Uri;
+use Kambo\Http\Message\Message;
 
 /**
  * Shared methods for outgoing, client-side request and server request.
  *
- * @package Kambo\HttpMessage
+ * @package Kambo\Http\Message
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

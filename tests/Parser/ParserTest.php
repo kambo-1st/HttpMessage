@@ -1,8 +1,8 @@
 <?php
 namespace Test\Parser;
 
-// \HttpMessage
-use Kambo\HttpMessage\Parser\Parser;
+// \Http\Message
+use Kambo\Http\Message\Parser\Parser;
 
 /**
  * Unit test for the Parser object.

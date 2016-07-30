@@ -1,10 +1,10 @@
 <?php
-namespace Kambo\HttpMessage\Utils;
+namespace Kambo\Http\Message\Utils;
 
 /**
  * Simple wrapper for methods connected with upload.
  *
- * @package Kambo\HttpMessage\Utils
+ * @package Kambo\Http\Message\Utils
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  *

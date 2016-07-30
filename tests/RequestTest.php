@@ -1,9 +1,9 @@
 <?php
 namespace Test;
 
-// \HttpMessage
-use Kambo\HttpMessage\Request;
-use Kambo\HttpMessage\Uri;
+// \Http\Message
+use Kambo\Http\Message\Request;
+use Kambo\Http\Message\Uri;
 
 /**
  * Unit test for the Request object.

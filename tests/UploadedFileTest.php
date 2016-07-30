@@ -4,10 +4,10 @@ namespace Test;
 // \Spl
 use ReflectionClass;
 
-// \HttpMessage
-use Kambo\HttpMessage\Stream;
-use Kambo\HttpMessage\UploadedFile;
-use Kambo\HttpMessage\Utils\UploadFile as UploadFileUtils;
+// \Http\Message
+use Kambo\Http\Message\Stream;
+use Kambo\Http\Message\UploadedFile;
+use Kambo\Http\Message\Utils\UploadFile as UploadFileUtils;
 
 // \vfs
 use org\bovigo\vfs\vfsStream;

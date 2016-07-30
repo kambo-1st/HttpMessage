@@ -1,9 +1,9 @@
 <?php
 namespace Test;
 
-// \HttpMessage
-use Kambo\HttpMessage\Uri;
-use Kambo\HttpMessage\Factories\String\UriFactory;
+// \Http\Message
+use Kambo\Http\Message\Uri;
+use Kambo\Http\Message\Factories\String\UriFactory;
 
 /**
  * Unit test for the UriFactory object.

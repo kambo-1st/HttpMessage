@@ -4,10 +4,10 @@ namespace Test;
 // \Spl
 use ReflectionClass;
 
-// \HttpMessage
-use Kambo\HttpMessage\Message;
-use Kambo\HttpMessage\Headers;
-use Kambo\HttpMessage\Stream;
+// \Http\Message
+use Kambo\Http\Message\Message;
+use Kambo\Http\Message\Headers;
+use Kambo\Http\Message\Stream;
 
 /**
  * Unit test for the Message object.

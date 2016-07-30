@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Kambo\\HttpMessage\\": "src"
+            "Kambo\\Http\\Message\\": "src"
         }
     }
 }

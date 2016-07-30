@@ -1,8 +1,8 @@
 <?php
 namespace Test;
 
-// \HttpMessage
-use Kambo\HttpMessage\Uri;
+// \Http\Message
+use Kambo\Http\Message\Uri;
 
 /**
  * Unit test for the UriTest object.

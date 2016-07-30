@@ -1,15 +1,15 @@
 <?php
-namespace Kambo\HttpMessage\Factories\Environment\Superglobal;
+namespace Kambo\Http\Message\Factories\Environment\Superglobal;
 
-// \HttpMessage
-use Kambo\HttpMessage\UploadedFile;
-use Kambo\HttpMessage\Environment\Environment;
-use Kambo\HttpMessage\Factories\Environment\Interfaces\Factory;
+// \Http\Message
+use Kambo\Http\Message\UploadedFile;
+use Kambo\Http\Message\Environment\Environment;
+use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
 
 /**
  * Create instances of UploadedFile object from instance of Environment object
  *
- * @package Kambo\HttpMessage\Factories\Environment\Superglobal
+ * @package Kambo\Http\Message\Factories\Environment\Superglobal
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

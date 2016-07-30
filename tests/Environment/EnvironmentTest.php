@@ -1,8 +1,8 @@
 <?php
 namespace Test;
 
-// \HttpMessage
-use Kambo\HttpMessage\Environment\Environment;
+// \Http\Message
+use Kambo\Http\Message\Environment\Environment;
 
 /**
  * Unit test for the environment object.

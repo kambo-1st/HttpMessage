@@ -1,10 +1,10 @@
 <?php
 namespace Test\Factories\Superglobal;
 
-// \HttpMessage
-use Kambo\HttpMessage\Environment\Environment;
-use Kambo\HttpMessage\Factories\Environment\Superglobal\FilesFactory;
-use Kambo\HttpMessage\UploadedFile;
+// \Http\Message
+use Kambo\Http\Message\Environment\Environment;
+use Kambo\Http\Message\Factories\Environment\Superglobal\FilesFactory;
+use Kambo\Http\Message\UploadedFile;
 
 /**
  * Unit test for the FilesFactory object.

@@ -1,15 +1,15 @@
 <?php
 namespace Test;
 
-// \HttpMessage
-use Kambo\HttpMessage\Headers;
-use Kambo\HttpMessage\ServerRequest;
-use Kambo\HttpMessage\Stream;
-use Kambo\HttpMessage\UploadedFile;
-use Kambo\HttpMessage\Uri;
+// \Http\Message
+use Kambo\Http\Message\Headers;
+use Kambo\Http\Message\ServerRequest;
+use Kambo\Http\Message\Stream;
+use Kambo\Http\Message\UploadedFile;
+use Kambo\Http\Message\Uri;
 
-// \HttpMessage\Factories
-use Kambo\HttpMessage\Factories\String\UriFactory;
+// \Http\Message\Factories
+use Kambo\Http\Message\Factories\String\UriFactory;
 
 /**
  * Unit test for the ServerRequest object.

@@ -1,5 +1,5 @@
 <?php
-namespace Kambo\HttpMessage;
+namespace Kambo\Http\Message;
 
 /**
  * Headers
@@ -7,7 +7,7 @@ namespace Kambo\HttpMessage;
  * This class represents a collection of HTTP headers that is used in HTTP 
  * request and response objects.
  *
- * @package Kambo\HttpMessage
+ * @package Kambo\Http\Message
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

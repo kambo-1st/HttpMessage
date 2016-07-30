@@ -1,10 +1,10 @@
 <?php
-namespace Kambo\HttpMessage\Environment\Interfaces;
+namespace Kambo\Http\Message\Environment\Interfaces;
 
 /**
  * Environment interface
  *
- * @package Kambo\HttpMessage\Environment\Interfaces
+ * @package Kambo\Http\Message\Environment\Interfaces
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

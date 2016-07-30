@@ -1,16 +1,16 @@
 <?php
-namespace Kambo\HttpMessage\Environment;
+namespace Kambo\Http\Message\Environment;
 
 // \Spl
 use InvalidArgumentException;
 
-// \HttpMessage
-use Kambo\HttpMessage\Environment\Interfaces\Environment as EnvironmentInterface;
+// \Http\Message
+use Kambo\Http\Message\Environment\Interfaces\Environment as EnvironmentInterface;
 
 /**
  * Contains information about server and HTTP request - headers, cookies, files and body data.
  *
- * @package Kambo\HttpMessage\Environment\Interfaces\Environment
+ * @package Kambo\Http\Message\Environment\Interfaces\Environment
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

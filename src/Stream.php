@@ -1,5 +1,5 @@
 <?php
-namespace Kambo\HttpMessage;
+namespace Kambo\Http\Message;
 
 // \Spl
 use RuntimeException;
@@ -13,7 +13,7 @@ use Psr\Http\Message\StreamInterface;
  * It provides a wrapper around the most common operations, including serialization of
  * the entire stream to a string.
  *
- * @package Kambo\HttpMessage
+ * @package Kambo\Http\Message
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

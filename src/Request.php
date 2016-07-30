@@ -1,5 +1,5 @@
 <?php
-namespace Kambo\HttpMessage;
+namespace Kambo\Http\Message;
 
 // \Spl
 use InvalidArgumentException;
@@ -8,12 +8,12 @@ use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
-// \HttpMessage
-use Kambo\HttpMessage\Message;
-use Kambo\HttpMessage\Headers;
-use Kambo\HttpMessage\RequestTrait;
-use Kambo\HttpMessage\Factories\String\UriFactory;
-use Kambo\HttpMessage\Stream;
+// \Http\Message
+use Kambo\Http\Message\Message;
+use Kambo\Http\Message\Headers;
+use Kambo\Http\Message\RequestTrait;
+use Kambo\Http\Message\Factories\String\UriFactory;
+use Kambo\Http\Message\Stream;
 
 /**
  * Representation of an outgoing, client-side request.
@@ -34,7 +34,7 @@ use Kambo\HttpMessage\Stream;
  * the internal state of the current message and return an instance that
  * contains the changed state.
  *
- * @package Kambo\HttpMessage
+ * @package Kambo\Http\Message
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

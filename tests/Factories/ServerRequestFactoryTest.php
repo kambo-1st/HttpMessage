@@ -1,12 +1,12 @@
 <?php
 namespace Test\Factories;
 
-// \HttpMessage
-use Kambo\HttpMessage\Environment\Environment;
-use Kambo\HttpMessage\ServerRequest;
+// \Http\Message
+use Kambo\Http\Message\Environment\Environment;
+use Kambo\Http\Message\ServerRequest;
 
-// \HttpMessage\Factories
-use Kambo\HttpMessage\Factories\Environment\ServerRequestFactory;
+// \Http\Message\Factories
+use Kambo\Http\Message\Factories\Environment\ServerRequestFactory;
 
 /**
  * Unit test for the ServerRequestFactory object.

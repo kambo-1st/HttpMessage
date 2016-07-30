@@ -1,30 +1,30 @@
 <?php
-namespace Kambo\HttpMessage\Factories\Environment;
+namespace Kambo\Http\Message\Factories\Environment;
 
 // \Psr
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
-// \HttpMessage
-use Kambo\HttpMessage\Uri;
-use Kambo\HttpMessage\UploadedFile;
-use Kambo\HttpMessage\Headers;
-use Kambo\HttpMessage\ServerRequest;
-use Kambo\HttpMessage\Stream;
+// \Http\Message
+use Kambo\Http\Message\Uri;
+use Kambo\Http\Message\UploadedFile;
+use Kambo\Http\Message\Headers;
+use Kambo\Http\Message\ServerRequest;
+use Kambo\Http\Message\Stream;
 
-// \HttpMessage\Environment
-use Kambo\HttpMessage\Environment\Environment;
+// \Http\Message\Environment
+use Kambo\Http\Message\Environment\Environment;
 
-// \HttpMessage\Factories
-use Kambo\HttpMessage\Factories\Environment\Interfaces\Factory;
-use Kambo\HttpMessage\Factories\Environment\Superglobal\FilesFactory;
-use Kambo\HttpMessage\Factories\Environment\Superglobal\HeadersFactory;
-use Kambo\HttpMessage\Factories\Environment\Superglobal\UriFactory;
+// \Http\Message\Factories
+use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
+use Kambo\Http\Message\Factories\Environment\Superglobal\FilesFactory;
+use Kambo\Http\Message\Factories\Environment\Superglobal\HeadersFactory;
+use Kambo\Http\Message\Factories\Environment\Superglobal\UriFactory;
 
 /**
  * Create instance of ServerRequest object from instance of Environment object
  *
- * @package Kambo\HttpMessage\Factories\Environment
+ * @package Kambo\Http\Message\Factories\Environment
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

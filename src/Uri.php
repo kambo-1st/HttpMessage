@@ -1,5 +1,5 @@
 <?php
-namespace Kambo\HttpMessage;
+namespace Kambo\Http\Message;
 
 // \Spl
 use InvalidArgumentException;
@@ -22,7 +22,7 @@ use Psr\Http\Message\UriInterface;
  *
  * @link http://tools.ietf.org/html/rfc3986 (the URI specification)
  *
- * @package Kambo\HttpMessage
+ * @package Kambo\Http\Message
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */

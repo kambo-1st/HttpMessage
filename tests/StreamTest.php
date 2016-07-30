@@ -5,8 +5,8 @@ namespace Test;
 use ReflectionClass;
 use RuntimeException;
 
-// \HttpMessage
-use Kambo\HttpMessage\Stream;
+// \Http\Message
+use Kambo\Http\Message\Stream;
 
 // \vfs
 use org\bovigo\vfs\vfsStream;

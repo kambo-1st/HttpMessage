@@ -1,8 +1,8 @@
 <?php
 namespace Test;
 
-// \HttpMessage
-use Kambo\HttpMessage\Response;
+// \Http\Message
+use Kambo\Http\Message\Response;
 
 /**
  * Unit test for the Response object.
