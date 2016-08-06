@@ -11,7 +11,6 @@ use Psr\Http\Message\StreamInterface;
 // \Http\Message
 use Kambo\Http\Message\Message;
 use Kambo\Http\Message\Headers;
-use Kambo\Http\Message\Stream;
 
 /**
  * Representation of an outgoing, server-side response.

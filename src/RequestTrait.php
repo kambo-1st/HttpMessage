@@ -7,10 +7,6 @@ use InvalidArgumentException;
 // \Psr
 use Psr\Http\Message\UriInterface;
 
-// \Http\Message
-use Kambo\Http\Message\Uri;
-use Kambo\Http\Message\Message;
-
 /**
  * Shared methods for outgoing, client-side request and server request.
  *

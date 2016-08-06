@@ -1,14 +1,7 @@
 <?php
 namespace Kambo\Http\Message\Factories\Environment;
 
-// \Psr
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\UriInterface;
-
 // \Http\Message
-use Kambo\Http\Message\Uri;
-use Kambo\Http\Message\UploadedFile;
-use Kambo\Http\Message\Headers;
 use Kambo\Http\Message\ServerRequest;
 use Kambo\Http\Message\Stream;
 
