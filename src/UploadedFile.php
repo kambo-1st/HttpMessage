@@ -71,7 +71,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * Stream representation of the uploaded file.
      *
-     * @var Psr\Http\Message\StreamInterface
+     * @var \Psr\Http\Message\StreamInterface
      */
     private $stream;
 
