@@ -8,7 +8,7 @@ namespace Kambo\Http\Message\Environment\Interfaces;
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-interface Environment
+interface EnvironmentInterface
 {
     /**
      * Get query string

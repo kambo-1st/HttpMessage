@@ -7,7 +7,7 @@ use InvalidArgumentException;
 // \Http\Message
 use Kambo\Http\Message\Uri;
 use Kambo\Http\Message\Environment\Environment;
-use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
+use Kambo\Http\Message\Factories\Environment\Interfaces\FactoryInterface;
 
 /**
  * Create instance of Uri object from instance of Environment object
@@ -16,7 +16,7 @@ use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-class UriFactory implements Factory
+class UriFactory implements FactoryInterface
 {
     /**
      * Create instances of Uri object from instance of Environment object

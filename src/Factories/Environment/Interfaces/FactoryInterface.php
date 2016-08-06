@@ -11,7 +11,7 @@ use Kambo\Http\Message\Environment\Environment;
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-interface Factory
+interface FactoryInterface
 {
     /**
      * Create instances of objects from Environment

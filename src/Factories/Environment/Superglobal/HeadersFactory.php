@@ -4,7 +4,7 @@ namespace Kambo\Http\Message\Factories\Environment\Superglobal;
 // \Http\Message
 use Kambo\Http\Message\Headers;
 use Kambo\Http\Message\Environment\Environment;
-use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
+use Kambo\Http\Message\Factories\Environment\Interfaces\FactoryInterface;
 
 /**
  * Create instance of Headers object from instance of Environment object
@@ -13,7 +13,7 @@ use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-class HeadersFactory implements Factory
+class HeadersFactory implements FactoryInterface
 {
     /**
      * Special HTTP headers without "HTTP_" prefix for resolving headers

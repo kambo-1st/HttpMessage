@@ -4,7 +4,7 @@ namespace Kambo\Http\Message\Factories\Environment\Superglobal;
 // \Http\Message
 use Kambo\Http\Message\UploadedFile;
 use Kambo\Http\Message\Environment\Environment;
-use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
+use Kambo\Http\Message\Factories\Environment\Interfaces\FactoryInterface;
 
 /**
  * Create instances of UploadedFile object from instance of Environment object
@@ -13,7 +13,7 @@ use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-class FilesFactory implements Factory
+class FilesFactory implements FactoryInterface
 {
     /**
      * Create instances of UploadedFile object from instance of Environment object

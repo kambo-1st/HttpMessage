@@ -5,7 +5,7 @@ namespace Kambo\Http\Message\Environment;
 use InvalidArgumentException;
 
 // \Http\Message
-use Kambo\Http\Message\Environment\Interfaces\Environment as EnvironmentInterface;
+use Kambo\Http\Message\Environment\Interfaces\EnvironmentInterface;
 
 /**
  * Contains information about server and HTTP request - headers, cookies, files and body data.

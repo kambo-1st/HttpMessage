@@ -9,7 +9,7 @@ use Kambo\Http\Message\Stream;
 use Kambo\Http\Message\Environment\Environment;
 
 // \Http\Message\Factories
-use Kambo\Http\Message\Factories\Environment\Interfaces\Factory;
+use Kambo\Http\Message\Factories\Environment\Interfaces\FactoryInterface;
 use Kambo\Http\Message\Factories\Environment\Superglobal\FilesFactory;
 use Kambo\Http\Message\Factories\Environment\Superglobal\HeadersFactory;
 use Kambo\Http\Message\Factories\Environment\Superglobal\UriFactory;
@@ -21,7 +21,7 @@ use Kambo\Http\Message\Factories\Environment\Superglobal\UriFactory;
  * @author  Bohuslav Simek <bohuslav@simek.si>
  * @license MIT
  */
-class ServerRequestFactory implements Factory
+class ServerRequestFactory implements FactoryInterface
 {
     /**
      * Create instance of ServerRequest object from instance of Environment object
