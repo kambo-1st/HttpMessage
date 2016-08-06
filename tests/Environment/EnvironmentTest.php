@@ -259,6 +259,16 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test get post parameters from the environment
+     *
+     * @return void
+     */
+    public function testGetPost()
+    {
+        $this->assertEquals(['post'], $this->getTestObject()->getPost());
+    }
+
+    /**
      * Test get cookies from the environment
      * 
      * @return void
@@ -287,6 +297,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
      */
     private function getTestObject(array $server = [])
     {
-        return new Environment($server, fopen('php://memory', 'r+'), ['cookies'], ['files']);
+        return new Environment($server, fopen('php://memory', 'r+'), ['post'], ['cookies'], ['files']);
     }
 }

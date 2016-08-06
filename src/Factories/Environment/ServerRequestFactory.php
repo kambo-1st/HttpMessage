@@ -50,7 +50,7 @@ class ServerRequestFactory implements Factory
 
         $serverVariables = $environment->getServer();
 
-        return new ServerRequest(
+        $serverRequest = new ServerRequest(
             $requestMethod,
             $uri,
             $bodyStream,
@@ -60,5 +60,34 @@ class ServerRequestFactory implements Factory
             $uploadFiles,
             $protocol
         );
+
+        // php://input is not available with enctype="multipart/form-data".
+        if ($this->usePostAsParsed($requestMethod, $serverRequest)) {
+            $serverRequest = $serverRequest->withParsedBody($environment->getPost());
+        }
+
+        return $serverRequest;
+    }
+
+    /**
+     * Check if the body request should be taken from the $_POST super global
+     * php://input is not available with enctype="multipart/form-data". POST
+     * data are also used if the content type is "application/x-www-form-urlencoded"
+     * for performance reason.
+     *
+     * @param string        $requestMethod Request method GET, POST etc.
+     * @param ServerRequest $serverRequest Instance of server request
+     *
+     * @return Boolean True if the post data should be used as a parsed body
+     */
+    private function usePostAsParsed($requestMethod, ServerRequest $serverRequest)
+    {
+        $contentType = '';
+        if ($serverRequest->hasHeader('Content-Type')) {
+            $contentType = $serverRequest->getHeader('Content-Type')[0];
+        }
+
+        return ($requestMethod === 'POST'
+            && in_array($contentType, ['application/x-www-form-urlencoded', 'multipart/form-data']));
     }
 }

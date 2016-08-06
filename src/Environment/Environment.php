@@ -45,16 +45,24 @@ class Environment implements EnvironmentInterface
     private $files;
 
     /**
+     * An associative array of variables passed to the current script via the HTTP POST method.
+     *
+     * @var array
+     */
+    private $post;
+
+    /**
      * Constructor
      *
      * @param array    $server An associative array containing information such as headers, paths, 
      *                         and script locations. Must have same structure as $_SERVER.
      * @param resource $body   Raw data from the request body.
+     * @param array    $post   An associative array of variables passed to the current script via the HTTP POST method.
      * @param array    $cookie An associative array constructed from cookies, must have same structure as $_COOKIE. 
      * @param array    $files  An associative array of uploaded items, must have same structure as $_FILES.
      *
      */
-    public function __construct(array $server, $body, $cookie = [], $files = [])
+    public function __construct(array $server, $body, $post = [], $cookie = [], $files = [])
     {
         if (!is_resource($body)) {
             throw new InvalidArgumentException('Provided body must be of type resource.');
@@ -62,6 +70,7 @@ class Environment implements EnvironmentInterface
 
         $this->server  = $server;
         $this->body    = $body;
+        $this->post    = $post;
         $this->cookies = $cookie;
         $this->files   = $files;
     }
@@ -177,6 +186,16 @@ class Environment implements EnvironmentInterface
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * Get body
+     *
+     * @return resource
+     */
+    public function getPost()
+    {
+        return $this->post;
     }
 
     /**
