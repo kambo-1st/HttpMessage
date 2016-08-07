@@ -85,11 +85,12 @@ class UploadedFile implements UploadedFileInterface
     /**
      * Construct a new UploadedFile instance.
      *
-     * @param string      $file            The full path to the uploaded file provided by the client.
-     * @param string|null $clientName      The filename provided by the client.
-     * @param string|null $clientMediaType The file media type provided by the client.
-     * @param int|null    $size            The file size in bytes.
-     * @param int         $error           The UPLOAD_ERR_XXX code representing the status of the upload.
+     * @param string          $file            The full path to the uploaded file provided by the client.
+     * @param string|null     $clientName      The filename provided by the client.
+     * @param string|null     $clientMediaType The file media type provided by the client.
+     * @param int|null        $size            The file size in bytes.
+     * @param int             $error           The UPLOAD_ERR_XXX code representing the status of the upload.
+     * @param UploadFile|null $uploadFile      Helper for manipulating with uploaded files.
      */
     public function __construct(
         $file,
