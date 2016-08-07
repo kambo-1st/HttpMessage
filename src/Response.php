@@ -33,7 +33,18 @@ use Kambo\Http\Message\Headers;
  */
 class Response extends Message implements ResponseInterface
 {
-    private $status       = 200;
+    /**
+     * The response status code.
+     *
+     * @var int
+     */
+    private $status = 200;
+
+    /**
+     * The response reason phrase associated with the status code.
+     *
+     * @var string
+     */
     private $reasonPhrase = '';
 
     /**
@@ -112,9 +123,9 @@ class Response extends Message implements ResponseInterface
     /**
      * Create new outgoing, server-side response.
      *
-     * @param int                   $status  The response status code.
-     * @param Headers|null          $headers The response headers.
-     * @param StreamInterface|null  $body    The response body.
+     * @param int                          $status  The response status code.
+     * @param Headers|null                 $headers The response headers.
+     * @param StreamInterface|string|null  $body    The response body.
      */
     public function __construct($status = 200, Headers $headers = null, StreamInterface $body = null)
     {
