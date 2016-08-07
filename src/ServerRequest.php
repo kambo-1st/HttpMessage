@@ -21,7 +21,7 @@ use Kambo\Http\Message\RequestTrait;
 /**
  * Representation of an incoming, server-side HTTP request.
  *
- * Per the HTTP specification, this interface includes properties for
+ * Per the HTTP specification, this class includes properties for
  * each of the following:
  *
  * - Protocol version
@@ -46,7 +46,7 @@ use Kambo\Http\Message\RequestTrait;
  * during the application (e.g., body parameters may be deserialized based on
  * content type).
  *
- * Additionally, this interface recognizes the utility of introspecting a
+ * Additionally, this class recognizes the utility of introspecting a
  * request to derive and match additional parameters (e.g., via URI path
  * matching, decrypting cookie values, deserializing non-form-encoded body
  * content, matching authorization headers to users, etc). These parameters
