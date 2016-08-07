@@ -64,7 +64,6 @@ class Headers
         }
 
         $this->data[$name] = array_merge($data, $newValues);
-
     }
 
     /**
