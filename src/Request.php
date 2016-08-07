@@ -49,7 +49,7 @@ class Request extends Message implements RequestInterface
      *
      * @param string                      $requestMethod The request method
      * @param UriInterface|string         $uri           The request URI object
-     * @param HeadersInterface            $headers       The request headers collection
+     * @param Headers                     $headers       The request headers collection
      * @param StreamInterface|string|null $body          The request body object
      * @param string                      $protocol      The request version of the protocol
      *
