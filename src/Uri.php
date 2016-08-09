@@ -7,6 +7,9 @@ use InvalidArgumentException;
 // \Psr
 use Psr\Http\Message\UriInterface;
 
+// \Http\Message
+use Kambo\Http\Message\Utils\UriValidator;
+
 /**
  * Value object representing a URI.
  *
@@ -120,6 +123,13 @@ class Uri implements UriInterface
     private $port;
 
     /**
+     * Instance of uri validator
+     *
+     * @var UriValidator
+     */
+    private $validator;
+
+    /**
      * Create new Uri.
      *
      * @param string $scheme   Uri scheme.
@@ -149,6 +159,8 @@ class Uri implements UriInterface
         $this->fragment = $fragment;
         $this->user     = $user;
         $this->password = $password;
+
+        $this->validator = new UriValidator();
     }
 
     /**
@@ -374,7 +386,7 @@ class Uri implements UriInterface
      * user; an empty string for the user is equivalent to removing user
      * information.
      *
-     * @param string $user The user name to use for authority.
+     * @param string      $user     The user name to use for authority.
      * @param null|string $password The password associated with $user.
      *
      * @return self A new instance with the specified user information.
@@ -423,7 +435,7 @@ class Uri implements UriInterface
      * information.
      *
      * @param null|int $port The port to use with the new instance; a null value
-     *     removes the port information.
+     *                       removes the port information.
      *
      * @return self A new instance with the specified port.
      *
@@ -431,8 +443,10 @@ class Uri implements UriInterface
      */
     public function withPort($port)
     {
+        $this->validator->validatePort($port);
+
         $clone       = clone $this;
-        $clone->port = $this->validatePort($port);
+        $clone->port = $port;
 
         return $clone;
     }
@@ -463,7 +477,7 @@ class Uri implements UriInterface
      */
     public function withPath($path)
     {
-        $this->validatePath($path);
+        $this->validator->validatePath($path);
 
         $clone       = clone $this;
         $clone->path = $this->urlEncode((string) $path);
@@ -490,7 +504,7 @@ class Uri implements UriInterface
      */
     public function withQuery($query)
     {
-        $this->validateQuery($query);
+        $this->validator->validateQuery($query);
 
         $clone        = clone $this;
         $clone->query = $this->urlEncode((string) $query);
@@ -628,85 +642,6 @@ class Uri implements UriInterface
 
         // Ensure only one leading slash
         return '/' . ltrim($path, '/');
-    }
-
-    /**
-     * Validate Uri port.
-     * Value can be null or integer between 1 and 65535.
-     *
-     * @param  null|int $port The Uri port number.
-     *
-     * @return null|int
-     *
-     * @throws InvalidArgumentException If the port is invalid.
-     */
-    private function validatePort($port)
-    {
-        if (is_null($port) || (is_integer($port) && ($port >= 1 && $port <= 65535))) {
-            return $port;
-        }
-
-        throw new InvalidArgumentException('Uri port must be null or an integer between 1 and 65535 (inclusive)');
-    }
-
-    /**
-     * Validate Uri path. 
-     *
-     * Path must NOT contain query string or URI fragment. It can be object,
-     * but then the class must implement __toString method.
-     *
-     * @param  string|object $path The Uri path
-     *
-     * @return void
-     *
-     * @throws InvalidArgumentException If the path is invalid.
-     */
-    private function validatePath($path)
-    {
-        if (!is_string($path) && !method_exists($path, '__toString')) {
-            throw new InvalidArgumentException(
-                'Invalid path provided; must be a string'
-            );
-        }
-
-        if (strpos($path, '?') !== false) {
-            throw new InvalidArgumentException(
-                'Invalid path provided; must not contain a query string'
-            );
-        }
-
-        if (strpos($path, '#') !== false) {
-            throw new InvalidArgumentException(
-                'Invalid path provided; must not contain a URI fragment'
-            );
-        }
-    }
-
-    /**
-     * Validate query. 
-     *
-     * Path must NOT contain URI fragment. It can be object,
-     * but then the class must implement __toString method.
-     *
-     * @param  string|object $query The query path
-     *
-     * @return void
-     *
-     * @throws InvalidArgumentException If the query is invalid.
-     */
-    private function validateQuery($query)
-    {
-        if (!is_string($query) && !method_exists($query, '__toString')) {
-            throw new InvalidArgumentException(
-                'Query must be a string'
-            );
-        }
-
-        if (strpos($query, '#') !== false) {
-            throw new InvalidArgumentException(
-                'Query must not contain a URI fragment'
-            );
-        }
     }
 
     /**
