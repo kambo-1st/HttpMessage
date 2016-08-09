@@ -342,13 +342,13 @@ class Message implements MessageInterface
     /**
      * Normalize provided headers and ensure that the result object is Headers.
      *
-     * @param StreamInterface|string|null $body The request body object
+     * @param Headers|array $headers The request body object
      *
      * @return Headers Normalized headers
      *
      * @throws \InvalidArgumentException If an unsupported argument type is provided.
      */
-    private function normalizeHeaders($headers = [])
+    private function normalizeHeaders($headers)
     {
         if (is_array($headers)) {
             $headers = new Headers($headers);
