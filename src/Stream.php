@@ -232,7 +232,7 @@ class Stream implements StreamInterface
      *                    call returns fewer bytes.
      *
      * @return string Returns the data read from the stream, or an empty string
-     *     if no bytes are available.
+     *                if no bytes are available.
      *
      * @throws \RuntimeException if an error occurs.
      */
@@ -286,7 +286,6 @@ class Stream implements StreamInterface
 
         return isset($this->meta[$key]) ? $this->meta[$key] : null;
     }
-
 
     /**
      * Reads all data from the stream into a string, from the beginning to end.
