@@ -19,6 +19,28 @@ use Kambo\Http\Message\Stream;
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Test create instance of Message
+     *
+     * @return void
+     */
+    public function testCreate()
+    {
+        $message = new Message();
+        $this->assertInstanceOf(Message::class, $message);
+    }
+
+    /**
+     * Test create instance of Message
+     *
+     * @expectedException \InvalidArgumentException
+     * @return void
+     */
+    public function testCreateInstanceInvalidParameters()
+    {
+        $message = new Message('invalid headers');
+    }
+
+    /**
      * Test get protocol version.
      *
      * @return void
@@ -158,7 +180,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithHeaderInvalid()
     {
-        $message = $this->getMessageForTest(/*$this->getHeadersForTest()*/);
+        $message = $this->getMessageForTest();
         $newMessage = $message->withHeader(['host'], 'foo.bar');
     }
 

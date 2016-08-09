@@ -124,10 +124,10 @@ class Response extends Message implements ResponseInterface
      * Create new outgoing, server-side response.
      *
      * @param int                          $status  The response status code.
-     * @param Headers|null                 $headers The response headers.
+     * @param Headers|array                $headers The response headers.
      * @param StreamInterface|string|null  $body    The response body.
      */
-    public function __construct($status = 200, Headers $headers = null, StreamInterface $body = null)
+    public function __construct($status = 200, $headers = [], StreamInterface $body = null)
     {
         parent::__construct($headers, $body);
         $this->validateStatus($status);

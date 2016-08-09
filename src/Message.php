@@ -54,18 +54,18 @@ class Message implements MessageInterface
     /**
      * Create a new message
      *
-     * @param Headers                     $headers  The request headers collection
+     * @param Headers|array               $headers  The request headers collection
      * @param StreamInterface|string|null $body     The request body object
      * @param string                      $protocol The request version of the protocol
      *
      * @throws \InvalidArgumentException If an unsupported argument type is provided for the body.
      */
     public function __construct(
-        $headers = null,
+        $headers = [],
         $body = null,
         $protocol = '1.1'
     ) {
-        $this->headers         = $headers ? $headers : new Headers();
+        $this->headers         = $this->normalizeHeaders($headers);
         $this->body            = $this->normalizeBody($body);
         $this->protocolVersion = $protocol;
     }
@@ -314,11 +314,11 @@ class Message implements MessageInterface
     // ------------ PRIVATE METHODS
 
     /**
-     * Normalize provided body and ensure that the result object is stream.
+     * Normalize provided body and ensure that the result object is Stream.
      *
      * @param StreamInterface|string|null $body The request body object
      *
-     * @return Stream Provided body
+     * @return Stream Normalized body
      *
      * @throws \InvalidArgumentException If an unsupported argument type is provided.
      */
@@ -337,6 +337,28 @@ class Message implements MessageInterface
         }
 
         return $body;
+    }
+
+    /**
+     * Normalize provided headers and ensure that the result object is Headers.
+     *
+     * @param StreamInterface|string|null $body The request body object
+     *
+     * @return Headers Normalized headers
+     *
+     * @throws \InvalidArgumentException If an unsupported argument type is provided.
+     */
+    private function normalizeHeaders($headers = [])
+    {
+        if (is_array($headers)) {
+            $headers = new Headers($headers);
+        } elseif (!($headers instanceof Headers)) {
+            throw new InvalidArgumentException(
+                'Headers must be an array or instance of Headers'
+            );
+        }
+
+        return $headers;
     }
 
     /**

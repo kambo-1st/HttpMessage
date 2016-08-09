@@ -21,7 +21,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testObjectCreationWithBodyString()
     {
-        $serverRequest = new Request('GET', 'www.test.com', null, 'body');
+        $serverRequest = new Request('GET', 'www.test.com', [], 'body');
         $this->assertEquals('body', (string)$serverRequest->getBody());
     }
 
@@ -58,7 +58,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidBodyObjectCreation()
     {
-        $serverRequest = new Request('GET', 'www.test.com', null, new \stdClass);
+        $serverRequest = new Request('GET', 'www.test.com', [], new \stdClass);
     }
 
     /**

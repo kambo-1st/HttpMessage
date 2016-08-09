@@ -455,25 +455,19 @@ class ServerRequestTest extends \PHPUnit_Framework_TestCase
     /**
      * Get instance of ServerRequest for the test
      *
-     * @param string       $body        Body that will be injected into request.
-     * @param array        $cookies     Cookies in format compatible with $_COOKIES.
-     * @param Headers|null $headersMock Mock of headers object.
-     *     
+     * @param string        $body        Body that will be injected into request.
+     * @param array         $cookies     Cookies in format compatible with $_COOKIES.
+     * @param Headers|array $headersMock Mock of headers object.
+     *
      * @return ServerRequest ServerRequest for the test
      */
-    private function getServerRequestForTest($body = '', $cookies = [], $headersMock = null)
+    private function getServerRequestForTest($body = '', $cookies = [], $headersMock = [])
     {
         $serverGlobals  = ['HTTP_HOST' => 'test.com'];
         $bodyStreamMock = $this->getMockBuilder(Stream::class)
                                ->disableOriginalConstructor()
                                ->getMock();
         $bodyStreamMock->method('__toString')->will($this->returnValue($body));
-
-        if (!isset($headersMock)) {
-            $headersMock = $this->getMockBuilder(Headers::class)
-                                ->disableOriginalConstructor()
-                                ->getMock();
-        }
 
         $requestUri = new Uri(
             'http',

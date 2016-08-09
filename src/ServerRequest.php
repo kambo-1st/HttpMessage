@@ -116,7 +116,7 @@ class ServerRequest extends Message implements ServerRequestInterface
      * @param string          $requestMethod   The request method
      * @param UriInterface    $uri             The request URI object
      * @param StreamInterface $body            The request body object
-     * @param Headers         $headers         The request headers collection     
+     * @param Headers|array   $headers         The request headers collection
      * @param array           $serverVariables The server environment variables
      * @param array           $cookies         The request cookies collection
      * @param array           $uploadFiles     The request uploadedFiles collection
@@ -128,7 +128,7 @@ class ServerRequest extends Message implements ServerRequestInterface
         $requestMethod,
         Uri $uri,
         StreamInterface $body,
-        Headers $headers,
+        $headers,
         array $serverVariables,
         array $cookies,
         array $uploadFiles,

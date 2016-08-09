@@ -59,7 +59,7 @@ class Request extends Message implements RequestInterface
     public function __construct(
         $requestMethod,
         $uri,
-        $headers = null,
+        $headers = [],
         $body = null,
         $protocol = '1.1'
     ) {
