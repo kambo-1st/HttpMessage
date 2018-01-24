@@ -47,7 +47,7 @@ class Stream implements StreamInterface
      * @link http://php.net/manual/function.fopen.php
      */
     private $modes = [
-        'readable' => ['r', 'r+', 'w+', 'a+', 'x+', 'c+', 'w+b'],
+        'readable' => ['r', 'r+', 'w+', 'a+', 'x+', 'c+', 'w+b', 'rb', 'r+b'],
         'writable' => ['r+', 'w', 'w+', 'a', 'a+', 'x', 'x+', 'c', 'c+', 'w+b'],
     ];
 
